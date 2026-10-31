@@ -98,3 +98,7 @@
 .cs-tile .cs-drop .ic:nth-child(2){animation-delay:-.85s}
 .cs-tile .cs-drop .ic:nth-child(3){animation-delay:-.7s}
 .cs-tile .cs-drop .ic:nth-child(4){animation-delay:-.55s}
+
+/* ch-multi-visible: labelled Multi row and the add-both offer */
+.cs-multi-visible{font-size:var(--fs-label);color:var(--text-1)}
+.cs-offer{display:flex;align-items:center;gap:8px;flex-wrap:wrap;color:var(--text-2)}

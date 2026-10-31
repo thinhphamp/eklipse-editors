@@ -3,7 +3,8 @@ import { PanelHeader } from '../../shell/PanelHeader';
 import { useEditor, type TrackItem } from '../../state';
 import { usePremium } from '../../ui/premium';
 import { Icon } from '../../ui/Icon';
-import { ChannelStickerView, findLook, looks, platforms, platsFor, swatches } from './looks';
+import { ChannelStickerView, findLook, looks, platform, platforms, platsFor, swatches } from './looks';
+import { hasVariant } from '../../variant';
 import { MAX_STICKERS, isChannelSticker, loadChannel, platsOf, saveChannel, setGhost, slotY, span, stickerItem, timingLabel, timingOf, toSticker, type Timing } from './channel-set';
 import './channel-stickers.css';
 
@@ -29,7 +30,10 @@ export function ChannelStickers() {
   useEffect(() => { if (!selected && list[0]) actions.patch({ selectedElementId: list[0].id }); }, []);
   useEffect(() => { if (keep) saveChannel({ set: list.map(x => toSticker(x, state.duration)) }); }, [state.elements, keep]);
   useEffect(() => () => setGhost(null), []);
-  useEffect(() => { setNote(''); if (list.some(x => x.id === state.selectedElementId)) setExpanded(state.selectedElementId); }, [state.selectedElementId]);
+  // ch-multi-visible (round 3 keep, re-added on v3): labelled Multi row; after a second platform replaced the first, offer both.
+  const multiVisible = hasVariant('ch-multi-visible');
+  const [offer, setOffer] = useState<{ id: string; prev: string; next: string } | null>(null);
+  useEffect(() => { setNote(''); setOffer(null); if (list.some(x => x.id === state.selectedElementId)) setExpanded(state.selectedElementId); }, [state.selectedElementId]);
   useEffect(() => {
     const close = (e: PointerEvent) => { if (!(e.target as HTMLElement).closest('.side-panel')) setExpanded(null); };
     document.addEventListener('pointerdown', close); return () => document.removeEventListener('pointerdown', close);
@@ -52,17 +56,23 @@ export function ChannelStickers() {
     setGhost(null);
   }
   const update = (item: TrackItem, change: Partial<TrackItem>, style: Record<string, string|boolean> = {}) => actions.updateItem(item.id, { ...change, style: { ...item.style, ...style } });
+  function showBoth(item: TrackItem, prev: string, next: string) {
+    setOffer(null); update(item, {}, { multi: true, plats: platforms.map(p => p.id).filter(p => p === prev || p === next).join(',') });
+  }
   function setPlatform(item: TrackItem, id: string) {
     const plats = platsOf(item), on = plats.includes(id);
     // Multi-platform off: one platform (click replaces). On: toggle 1 to 4 platforms.
-    if (!isMultiOn(item)) { update(item, {}, { plats: id }); saveChannel({ lastPlat: id }); return; }
+    if (!isMultiOn(item)) {
+      setOffer(multiVisible && plats.length === 1 && plats[0] !== id ? { id: item.id, prev: plats[0], next: id } : null);
+      update(item, {}, { plats: id }); saveChannel({ lastPlat: id }); return;
+    }
     if (on && plats.length <= 1) { setNote('Keep at least one platform.'); return; }
     if (!on && plats.length >= 4) { setNote('Up to 4 platforms on one sticker.'); return; }
     setNote(''); update(item, {}, { plats: platforms.map(p => p.id).filter(p => p === id ? !on : plats.includes(p)).join(',') });
     if (!on) saveChannel({ lastPlat: id });
   }
   function setMultiPlatform(item: TrackItem, on: boolean) {
-    setNote(''); update(item, {}, on ? { multi: true } : { multi: false, plats: platsOf(item)[0] || saved.lastPlat });
+    setNote(''); setOffer(null); update(item, {}, on ? { multi: true } : { multi: false, plats: platsOf(item)[0] || saved.lastPlat });
   }
   function setTiming(item: TrackItem, timing: Timing) {
     const now = state.playhead, from = timing === 'custom' ? Math.min(now, state.duration - 5) : 0;
@@ -84,7 +94,7 @@ export function ChannelStickers() {
           <span className="cs-mini"><ChannelStickerView look={String(x.style?.look)} plats={platsOf(x)} color={String(x.style?.color || 'original')} name={x.label} size="7.5px" /></span>
           <span className="cs-item-text"><b>{x.label || 'No name yet'}</b><small>{timingLabel[timing]} · {fmt(x.start)}–{fmt(x.start + x.duration)}</small></span>
           <button className="cs-x" aria-label={`Remove sticker ${i + 1}`} title="Remove" onClick={e => { e.stopPropagation(); actions.removeItem(x.id); }}><Icon name="close" size={13} /></button>
-        </div>{open && <StickerSheet key={x.id} item={x} index={i} note={note}
+        </div>{open && <StickerSheet key={x.id} item={x} index={i} note={note} multiVisible={multiVisible} offer={offer?.id === x.id ? offer : null} onBoth={() => offer && showBoth(x, offer.prev, offer.next)}
           onName={v => { update(x, { label: v }); saveChannel({ lastName: v }); }} onPlatform={p => setPlatform(x, p)} onMulti={on => setMultiPlatform(x, on)}
           onColor={c => update(x, {}, { color: c })} onTiming={t => setTiming(x, t)}
           onRange={(a, b) => update(x, { start: a, duration: b - a }, { timing: 'custom' })} />}</div>;
@@ -113,8 +123,8 @@ export function ChannelStickers() {
   </div>;
 }
 
-function StickerSheet({ item, index, note, onName, onPlatform, onMulti, onColor, onTiming, onRange }: {
-  item: TrackItem; index: number; note: string; onName: (v: string) => void; onPlatform: (p: string) => void; onMulti: (on: boolean) => void; onColor: (c: string) => void;
+function StickerSheet({ item, index, note, multiVisible, offer, onBoth, onName, onPlatform, onMulti, onColor, onTiming, onRange }: {
+  item: TrackItem; index: number; note: string; multiVisible: boolean; offer: { prev: string; next: string } | null; onBoth: () => void; onName: (v: string) => void; onPlatform: (p: string) => void; onMulti: (on: boolean) => void; onColor: (c: string) => void;
   onTiming: (t: Timing) => void; onRange: (a: number, b: number) => void;
 }) {
   const { state } = useEditor();
@@ -133,7 +143,9 @@ function StickerSheet({ item, index, note, onName, onPlatform, onMulti, onColor,
     <div className="cs-line"><span title={multi ? 'Pick 1 to 4 platforms, same name' : 'Pick 1 platform'}>Platform</span>
       <div className="cs-plat-row"><div className="cs-plats">{platforms.map(p => <button key={p.id} title={p.label} aria-label={p.label} aria-pressed={plats.includes(p.id)} onClick={() => onPlatform(p.id)}
         style={{ background: `var(--ch-${p.id})`, color: p.light ? 'var(--ch-ink)' : 'var(--ch-white)' }}>{p.glyph}</button>)}</div>
-        <label className="cs-toggle small"><input type="checkbox" checked={multi} onChange={e => onMulti(e.target.checked)} /><span className="trk" />Multi</label></div></div>
+        {!multiVisible && <label className="cs-toggle small"><input type="checkbox" checked={multi} onChange={e => onMulti(e.target.checked)} /><span className="trk" />Multi</label>}</div></div>
+    {multiVisible && <div className="cs-line"><span /><label className="cs-toggle small cs-multi-visible"><input type="checkbox" checked={multi} onChange={e => onMulti(e.target.checked)} /><span className="trk" />Multi: show more than one platform</label></div>}
+    {multiVisible && offer && <p className="cs-hint cs-offer">Showing {platform(offer.next).label} only. <button className="cs-btn" onClick={onBoth}>Show {platform(offer.prev).label} too</button></p>}
     {note && <p className="cs-hint warn">{note}</p>}
     <div className="cs-line"><span>Colour</span>
       <div className="cs-swatches">

@@ -17,7 +17,7 @@
     },
     {
       "id": "pink",
-      "check": "(()=>{let c;try{c=JSON.parse(state.captions.text)}catch(e){return false}const s=c.style||{};return s.highlight && s.highlight !== 'None' && s.highlightColor === 'var(--art-fa90df)'})()",
+      "check": "(()=>{let c;try{c=JSON.parse(state.captions.text)}catch(e){return false}const s=c.style||{};return s.highlight && s.highlight !== 'None' && /fa90df/i.test(String(s.highlightColor||''))})()",
       "describe": "The spoken word is highlighted in pink"
     },
     {

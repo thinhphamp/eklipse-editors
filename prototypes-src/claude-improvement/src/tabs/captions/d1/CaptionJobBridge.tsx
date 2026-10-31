@@ -46,6 +46,13 @@ export function CaptionJobBridge() {
     if (state.modal !== 'export') { bypass.current = false; return; }
     if (job.phase === 'run' && !bypass.current) { actions.patch({ modal: '' }); setAsk(true); }
   }, [state.modal, job.phase, actions]);
+  // The job can end while the ask dialog is open: close it, and open Export when captions made it (the user pressed Export).
+  const openExport = () => { bypass.current = true; actions.patch({ modal: 'export' }); };
+  useEffect(() => {
+    if (!ask || job.phase === 'run') return;
+    setAsk(false);
+    if (job.phase === 'done') { openExport(); actions.notify('Captions are ready, export started'); }
+  }, [ask, job.phase]); // eslint-disable-line react-hooks/exhaustive-deps
   return <>
     {toast && <div className={`cj-toast ${toast === 'fail' ? 'fail' : ''}`} role="status">
       <span>{toast === 'ready' ? 'Captions are ready · added to your video' : "Couldn't generate captions"}</span>
@@ -57,8 +64,13 @@ export function CaptionJobBridge() {
     {ask && <div className="cj-shade" onMouseDown={() => setAsk(false)}><div className="cj-dialog" role="dialog" aria-modal="true" aria-label="Captions are still generating" onMouseDown={e => e.stopPropagation()}>
       <b>Captions are still generating</b>
       <p>About {captionJobSecondsLeft()} s left. Wait and export with captions, or export now without them.</p>
-      <div><button onClick={() => { setAsk(false); bypass.current = true; actions.patch({ modal: 'export' }); }}>Export without captions</button>
-        <button className="cj-acc" onClick={() => { setAsk(false); queueExportAfterCaptions(true); actions.notify('Export will start when captions are ready'); }}>Wait, then export</button></div>
+      <div><button onClick={() => { setAsk(false); openExport(); }}>Export without captions</button>
+        <button className="cj-acc" onClick={() => {
+          setAsk(false);
+          // Captions may have finished a moment ago: export now instead of queueing for a job that already ended.
+          if (getCaptionJob().phase !== 'run') { openExport(); return; }
+          queueExportAfterCaptions(true); actions.notify('Export will start when captions are ready');
+        }}>Wait, then export</button></div>
     </div></div>}
   </>;
 }
