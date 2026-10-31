@@ -1,0 +1,6 @@
+{
+  "id": "quick-differs",
+  "persona": "quick-user",
+  "scenario": "style-differs-from-last",
+  "behavior": "rusher"
+}

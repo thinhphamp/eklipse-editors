@@ -1,0 +1,5 @@
+{
+  "id": "explorer",
+  "patience": 3,
+  "brief": "You browse panels, read labels, and compare suggestions before choosing. You are willing to search when the item is not immediately visible. You try one option, and if it does not look right, you pick another."
+}

@@ -1,0 +1,27 @@
+/* pv-strip: icon strip beside the player + safe-zone tag above it (design-drafts/261030-preview-controls, C). */
+.pv-anchor{position:relative}
+.pv-strip{position:absolute;z-index:6;top:0;left:calc(100% + 10px);display:flex;flex-direction:column;align-items:center;gap:2px;padding:3px;border:1px solid var(--border);border-radius:8px;background:var(--bg-panel)}
+.pv-strip>button{position:relative;width:28px;height:28px;display:grid;place-items:center;padding:0;border:0;border-radius:5px;background:transparent;color:var(--text-2)}
+.pv-strip>button:hover:not(:disabled){background:var(--bg-hover);color:var(--text-1)}
+.pv-strip>button:disabled{opacity:.4;cursor:default}
+.pv-strip>button[aria-expanded="true"]{background:var(--bg-hover);color:var(--text-1)}
+.pv-strip>button.on{color:var(--accent-text)}
+.pv-strip>button.on::after{content:'';position:absolute;top:4px;right:4px;width:5px;height:5px;border-radius:50%;background:var(--accent)}
+.pv-strip>button.on-quiet{color:var(--text-1)}
+.pv-strip>.pv-pct{height:20px;font-size:var(--fs-micro);font-variant-numeric:tabular-nums;color:var(--text-3)}
+.pv-sep{width:16px;height:1px;margin:2px 0;background:var(--border)}
+.pv-menu{position:absolute;z-index:20;top:0;left:calc(100% + 6px);min-width:180px;padding:4px;border:1px solid var(--border);border-radius:8px;background:var(--bg-panel);box-shadow:0 6px 18px var(--shadow-ink)}
+.pv-menu-zoom{top:34px}
+.pv-menu hr{margin:4px 2px;border:0;border-top:1px solid var(--border)}
+.pv-menu button{display:flex;align-items:center;gap:8px;width:100%;height:30px;padding:0 10px;border:0;border-radius:5px;background:transparent;color:var(--text-1);font-size:var(--fs-label);text-align:left;white-space:nowrap}
+.pv-menu button:hover{background:var(--bg-hover)}
+.pv-menu button[aria-checked="true"]{background:var(--accent-soft);color:var(--accent-text)}
+.pv-check{width:14px;flex:0 0 14px;display:inline-grid;place-items:center}
+.pv-tag{position:absolute;left:2px;bottom:calc(100% + 6px);display:flex;align-items:center;gap:5px;color:var(--text-3);font-size:var(--fs-caption);line-height:14px;white-space:nowrap;pointer-events:none}
+.pv-tag i{width:6px;height:6px;border-radius:50%;background:var(--accent)}
+.preview-column:has(.pv-tag) .apply-my-look{margin-bottom:26px}
+.stage-label .pv-label-zone{color:var(--text-3)}
+.stage-layouts .pv-menu{left:auto;right:calc(100% + 6px)}
+/* Strip/tag are pinned to the zoomed phone in JS; the stage drops the 96 px gap the old top-right selects needed. */
+.stage.pv-on.stage-export,.stage.pv-on.stage-layouts{padding-top:40px}
+.pv-strip,.pv-tag{transition:left .12s ease-out}

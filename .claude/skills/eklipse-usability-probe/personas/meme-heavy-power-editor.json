@@ -1,0 +1,40 @@
+{
+  "id": "meme-heavy-power-editor",
+  "rank": 8,
+  "name": "Meme-heavy power editor",
+  "experience": "power",
+  "behavior": "Uses many tools per clip: own memes, text, split, sound effects; knows meme names and edits for 15 minutes.",
+  "knows": [
+    "memes",
+    "split",
+    "sound effects",
+    "text",
+    "captions",
+    "export"
+  ],
+  "does_not_know": [
+    "this editor's library layout"
+  ],
+  "patience": "high",
+  "words": [
+    "Bruh",
+    "Another One",
+    "stack a meme",
+    "sfx"
+  ],
+  "tier": "pro",
+  "fixtures": {
+    "storage": {
+      "ek-claude-brand": {
+        "handle": "pixelpanda",
+        "design": "sl-stw01",
+        "platform": "Twitch",
+        "auto": true
+      }
+    }
+  },
+  "provenance": [
+    "Heavy depth 2.9% of projects: 80.0% export, median 15.1 min",
+    "User memes 6.2%, text 5.8% (plans/261027-usability-probe-skill/personas.md)"
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "id": "ai-edit-accepter",
+  "rank": 3,
+  "name": "AI Edit accepter",
+  "experience": "returning",
+  "behavior": "Lets AI Edit add memes, zooms and sounds, and usually changes nothing before deciding whether to export.",
+  "knows": [
+    "AI edit",
+    "captions",
+    "export"
+  ],
+  "does_not_know": [
+    "what AI added and where",
+    "how to remove one AI item"
+  ],
+  "patience": "medium",
+  "words": [
+    "what did the AI add",
+    "get rid of that meme",
+    "keep the rest"
+  ],
+  "tier": "standard",
+  "fixtures": {
+    "storage": {
+      "ek-claude-brand": {
+        "handle": "pixelpanda",
+        "design": "sl-stw01",
+        "platform": "Twitch",
+        "auto": true
+      }
+    }
+  },
+  "provenance": [
+    "3,205 projects (16.4%) with AI Edit untouched: 44.4% export",
+    "72.9% export with one user edit (plans/261027-usability-probe-skill/personas.md)"
+  ]
+}

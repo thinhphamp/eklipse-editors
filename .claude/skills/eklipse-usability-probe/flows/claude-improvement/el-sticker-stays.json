@@ -1,0 +1,67 @@
+{
+  "id": "el-sticker-stays",
+  "flow": "E3",
+  "menu": "Elements",
+  "persona": "quick-user",
+  "target": "claude-improvement",
+  "weight": 0.2,
+  "mission": "Put a moving sticker on the clip and keep it on screen for a lot longer than it first shows. Export it.",
+  "start": {
+    "screen": "L00"
+  },
+  "checkpoints": [
+    {
+      "id": "sticker",
+      "check": "state.elements.some(x => x.category === 'Animated Stickers')",
+      "describe": "An animated sticker is on the clip"
+    },
+    {
+      "id": "longer",
+      "check": "state.elements.some(x => x.category === 'Animated Stickers' && x.duration > 8)",
+      "describe": "The sticker stays on screen longer than its default 5 seconds"
+    },
+    {
+      "id": "export",
+      "check": "state.exported === true",
+      "describe": "The clip export has finished"
+    }
+  ],
+  "bestPath": [
+    {
+      "do": "click",
+      "selector": ".rail nav button:has-text(\"Elements\")"
+    },
+    {
+      "do": "click",
+      "selector": "button.elt-tile:has-text('Bouncing ball')"
+    },
+    {
+      "do": "drag",
+      "selector": ".timeline-chip.element.kind-animated-stickers .chip-trim.right",
+      "to": ".timeline-content"
+    },
+    {
+      "do": "click",
+      "selector": ".tb-primary"
+    },
+    {
+      "do": "click",
+      "selector": ".export-primary"
+    }
+  ],
+  "bestTimeSeconds": null,
+  "budget": {
+    "minutes": 12
+  },
+  "why": {
+    "data": "Quick users take the first plausible control; element animations are Premium-gated on the Free plan, so the free adjustment tested is how long the sticker stays (own memes add +32.7 export points).",
+    "source": "plans/261027-usability-probe-skill/personas.md"
+  },
+  "input": {
+    "clip": null
+  },
+  "playerIds": [
+    "quick-match",
+    "quick-differs"
+  ]
+}

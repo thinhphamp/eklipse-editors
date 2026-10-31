@@ -1,0 +1,49 @@
+{
+  "id": "q5-no-facecam",
+  "flow": "Q5",
+  "menu": "Layouts",
+  "persona": "quick-user",
+  "target": "claude-improvement",
+  "weight": 0.15,
+  "mission": "There is no camera in this clip. Make the game fill the screen and export.",
+  "start": {
+    "screen": "L00"
+  },
+  "checkpoints": [
+    {
+      "id": "layout",
+      "check": "state.layoutId === 'Fullscreen' && state.outputRatio === '9:16'",
+      "describe": "Gameplay fills the vertical frame without a facecam"
+    },
+    {
+      "id": "export",
+      "check": "state.exported === true",
+      "describe": "The clip export has finished"
+    }
+  ],
+  "bestPath": [
+    {
+      "do": "click",
+      "selector": ".tb-primary"
+    },
+    {
+      "do": "click",
+      "selector": ".export-primary"
+    }
+  ],
+  "bestTimeSeconds": null,
+  "budget": {
+    "minutes": 12
+  },
+  "why": {
+    "data": "No layout is used in 14.3% of projects; those clips export at 54.7%.",
+    "source": "plans/261027-usability-probe-skill/personas.md"
+  },
+  "input": {
+    "clip": "no-facecam"
+  },
+  "playerIds": [
+    "quick-match",
+    "quick-differs"
+  ]
+}

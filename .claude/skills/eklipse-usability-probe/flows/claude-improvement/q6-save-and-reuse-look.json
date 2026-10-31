@@ -1,0 +1,90 @@
+{
+  "id": "q6-save-and-reuse-look",
+  "flow": "Q6",
+  "menu": "Captions",
+  "persona": "quick-user",
+  "target": "claude-improvement",
+  "weight": 0.15,
+  "mission": "Style your subtitles the way you like and keep that style for next time. Open your next clip, give it the same look in one go, and export it.",
+  "start": {
+    "screen": "L00"
+  },
+  "input": {
+    "clip": "two-clips"
+  },
+  "playerIds": [
+    "quick-match",
+    "quick-differs"
+  ],
+  "checkpoints": [
+    {
+      "id": "style-saved",
+      "check": "localStorage.getItem('ek-proto-templates') && JSON.parse(localStorage.getItem('ek-proto-templates')).some(t => t.project && t.project.captions && t.project.captions.preset)",
+      "describe": "A saved style includes the caption look"
+    },
+    {
+      "id": "style-applied",
+      "check": "state.clipIndex === 2 && state.captions.generated === true && state.captions.preset === state.savedCaptionPreset",
+      "describe": "The saved caption style is applied to the next clip"
+    },
+    {
+      "id": "export",
+      "check": "window.__verify.state.clipIndex === 2 && state.exported === true",
+      "describe": "The next clip has been exported"
+    }
+  ],
+  "bestPath": [
+    {
+      "do": "click",
+      "selector": ".rail nav button:has-text(\"Captions\")"
+    },
+    {
+      "do": "click",
+      "selector": "button[aria-label=\"Preset of style THE HOOK.\"]"
+    },
+    {
+      "do": "click",
+      "text": "Generate captions"
+    },
+    {
+      "do": "click",
+      "selector": ".rail nav button:has-text(\"Templates\")"
+    },
+    {
+      "do": "click",
+      "selector": ".side-panel button:has-text(\"Save this edit as a template\")"
+    },
+    {
+      "do": "key",
+      "key": "Enter"
+    },
+    {
+      "do": "click",
+      "text": "Next clip"
+    },
+    {
+      "do": "click",
+      "selector": ".rail nav button:has-text(\"Captions\")"
+    },
+    {
+      "do": "click",
+      "selector": ".side-panel button:has-text(\"Presets\")"
+    },
+    {
+      "do": "click",
+      "selector": ".tb-primary"
+    },
+    {
+      "do": "click",
+      "selector": ".export-primary"
+    }
+  ],
+  "bestTimeSeconds": null,
+  "budget": {
+    "minutes": 12
+  },
+  "why": {
+    "data": "Meeting request: save a caption look and apply it to the next clip in one action.",
+    "source": "plans/261027-usability-probe-skill/personas.md"
+  }
+}

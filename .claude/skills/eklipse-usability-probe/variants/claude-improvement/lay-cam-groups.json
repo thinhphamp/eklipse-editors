@@ -1,0 +1,30 @@
+{
+  "id": "lay-cam-groups",
+  "problem": "L2/Q5/Q2: find the layout by camera count",
+  "menu": "Layouts",
+  "stack": [
+    "el-jump",
+    "style-lastclip",
+    "brand-platforms",
+    "look-save",
+    "frame-handle",
+    "layout-describe"
+  ],
+  "targets": [
+    "lay-duo-cams",
+    "q5-no-facecam",
+    "q2-pick-layout"
+  ],
+  "untouched": [
+    "h1-full-polish",
+    "h2-meme-stack",
+    "h3-fix-ai-edit",
+    "h4-brand-setup",
+    "o1-first-ai-clip",
+    "q3-captions",
+    "q4-trim-start",
+    "q6-save-and-reuse-look",
+    "o3-own-upload"
+  ],
+  "source": "plans/261028-editor-menu-probes/reports/layouts-report-1-pain-points.md"
+}

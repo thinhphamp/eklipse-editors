@@ -1,0 +1,61 @@
+{
+  "id": "fx-cut-dead-air",
+  "flow": "F2",
+  "menu": "Effects",
+  "persona": "quick-user",
+  "target": "claude-improvement",
+  "weight": 0.2,
+  "mission": "There are a lot of awkward quiet gaps in this clip. Take them out so it keeps moving, then export.",
+  "start": {
+    "screen": "L00"
+  },
+  "checkpoints": [
+    {
+      "id": "cut",
+      "check": "state.removedRanges.length > initial.removedRanges.length",
+      "describe": "Silent parts are cut out of the clip"
+    },
+    {
+      "id": "export",
+      "check": "state.exported === true",
+      "describe": "The clip export has finished"
+    }
+  ],
+  "bestPath": [
+    {
+      "do": "click",
+      "selector": ".rail nav button:has-text('Effects')"
+    },
+    {
+      "do": "click",
+      "selector": ".effects-root-card:has-text('Remove silent moments')"
+    },
+    {
+      "do": "click",
+      "selector": ".effects-primary"
+    },
+    {
+      "do": "click",
+      "selector": ".tb-primary"
+    },
+    {
+      "do": "click",
+      "selector": ".export-primary"
+    }
+  ],
+  "bestTimeSeconds": null,
+  "budget": {
+    "minutes": 12
+  },
+  "why": {
+    "data": "Quick users want one tap results; the AI edit bundle (89.1% of projects) also includes silence removal.",
+    "source": "plans/261027-usability-probe-skill/personas.md"
+  },
+  "input": {
+    "clip": null
+  },
+  "playerIds": [
+    "quick-match",
+    "quick-differs"
+  ]
+}

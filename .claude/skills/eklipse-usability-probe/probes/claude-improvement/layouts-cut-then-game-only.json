@@ -1,0 +1,46 @@
+{
+  "id": "layouts-cut-then-game-only",
+  "feature": "Layouts",
+  "personaRefs": [
+    "meme-heavy-power-editor",
+    "returning-twitch-clipper"
+  ],
+  "target": "claude-improvement",
+  "start": {
+    "screen": "E18"
+  },
+  "goal": "Cut the clip in two where it is paused now. From that point on, show only the game with no camera. Keep the start as it is.",
+  "success": {
+    "check": "state.splitPoints.length >= 1 && state.layoutId === initial.layoutId && Object.values(state.segmentLayouts).some(l => ['Fullscreen', 'Blurred'].includes(l))",
+    "describe": "The clip is split and the later part uses a no-facecam layout while the start keeps its layout"
+  },
+  "budget": {
+    "steps": 8,
+    "scrolls": 3,
+    "minutes": 4
+  },
+  "bestPath": [
+    {
+      "do": "click",
+      "selector": ".video-block"
+    },
+    {
+      "do": "click",
+      "selector": "[aria-label=\"Split clip at current time\"]"
+    },
+    {
+      "do": "click",
+      "selector": ".rail nav button:has-text('Layouts')"
+    },
+    {
+      "do": "click",
+      "selector": ".layout-grid:not(.recent-grid) .layout-tile:has-text('Fullscreen')"
+    }
+  ],
+  "why": {
+    "data": "Split goes with +30.8 export points (same user); heavy-depth projects export 80.0%",
+    "source": "docs/knowledge/editor-direction-research.md"
+  },
+  "holdout": false,
+  "notes": "Split stays disabled until a clip segment is selected (prototype behaviour; a finding in itself)."
+}

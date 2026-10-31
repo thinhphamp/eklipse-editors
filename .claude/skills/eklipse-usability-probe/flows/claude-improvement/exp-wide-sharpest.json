@@ -1,0 +1,58 @@
+{
+  "id": "exp-wide-sharpest",
+  "flow": "X4",
+  "menu": "Export",
+  "persona": "heavy-editor",
+  "target": "claude-improvement",
+  "weight": 0.2,
+  "mission": "This recording goes to YouTube, so keep it wide. Export it in the best quality you can get.",
+  "start": {
+    "screen": "L00"
+  },
+  "checkpoints": [
+    {
+      "id": "wide",
+      "check": "state.outputRatio === '16:9'",
+      "describe": "The clip stays 16:9"
+    },
+    {
+      "id": "quality",
+      "check": "state.quality === '2160p60'",
+      "describe": "The highest quality is chosen"
+    },
+    {
+      "id": "export",
+      "check": "state.exported === true",
+      "describe": "The clip export has finished"
+    }
+  ],
+  "bestPath": [
+    {
+      "do": "click",
+      "selector": ".tb-primary"
+    },
+    {
+      "do": "click",
+      "selector": ".quality-option:has-text('Ultra HD 4K')"
+    },
+    {
+      "do": "click",
+      "selector": ".export-primary"
+    }
+  ],
+  "bestTimeSeconds": null,
+  "budget": {
+    "minutes": 12
+  },
+  "why": {
+    "data": "Heavy editors place 2+ platform stickers (9.7%); this combines the wide output with a quality choice at export.",
+    "source": "plans/261027-usability-probe-skill/personas.md"
+  },
+  "input": {
+    "clip": "horizontal-kept"
+  },
+  "playerIds": [
+    "heavy-explorer",
+    "heavy-meticulous"
+  ]
+}

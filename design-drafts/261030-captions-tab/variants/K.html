@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Captions tab · live word highlight + auto-scroll · round 4</title>
+<style>
+/* ===== Tokens: copied from prototypes-src/claude-improvement/src/theme/tokens.css (Eklipse dark) ===== */
+:root{
+  --color-ek-purple:#735EF4;--color-ek-purple-light:#A496F8;--color-ek-yellow:#FFA036;
+  --color-ek-grey-light:#A3A3BF;--color-ek-grey:#434359;--color-ek-grey-dark:#2B2B38;--color-ek-grey-darker:#1B1B26;
+  --color-ek-grey-black:#11111A;--color-ek-success:#46F88D;--color-ek-white:#FFFFFF;
+  --color-ek-text-secondary:#D0D0D0;--color-ek-border-secondary:#FFFFFF14;--color-ek-hover:#383849;--color-ek-black:#000000;
+  --font-ui:'Hanken Grotesk',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --bg-app:var(--color-ek-grey-black);--bg-panel:var(--color-ek-grey-darker);--bg-card:var(--color-ek-grey-dark);
+  --bg-hover:var(--color-ek-hover);--bg-inset:var(--color-ek-grey-black);
+  --border:var(--color-ek-grey);--border-subtle:var(--color-ek-border-secondary);
+  --text-1:var(--color-ek-white);--text-2:var(--color-ek-text-secondary);--text-3:var(--color-ek-grey-light);
+  --accent:var(--color-ek-purple);--accent-text:var(--color-ek-purple-light);
+  --accent-soft:color-mix(in srgb,var(--color-ek-purple) 22%,var(--color-ek-grey-dark));
+}
+@font-face{font-family:CaptionAnton;src:url(../../../prototypes-src/claude-improvement/public/fonts/captions/anton-400.woff2)}
+@font-face{font-family:'Hanken Grotesk';font-weight:400;src:url(../../../prototypes-src/claude-improvement/public/fonts/hanken-grotesk-latin-400-normal.woff2)}
+@font-face{font-family:'Hanken Grotesk';font-weight:600;src:url(../../../prototypes-src/claude-improvement/public/fonts/hanken-grotesk-latin-600-normal.woff2)}
+@font-face{font-family:'Hanken Grotesk';font-weight:700;src:url(../../../prototypes-src/claude-improvement/public/fonts/hanken-grotesk-latin-700-normal.woff2)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg-app);color:var(--text-1);font:15px/1.5 var(--font-ui)}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer}
+button:focus-visible{outline:2px solid var(--accent-text);outline-offset:2px}
+
+/* ===== Board ===== */
+.board{max-width:1280px;margin:0 auto;padding:40px 24px 80px}
+.kicker{color:var(--text-3);font-size:13px;letter-spacing:.04em;text-transform:uppercase}
+h1{font-size:30px;line-height:1.2;margin:8px 0 10px}
+.lead{color:var(--text-2);max-width:900px;margin:0 0 18px}
+.notes{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:28px}
+.notes h3{font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--text-3);margin:0 0 6px}
+.notes ul{margin:0;padding-left:18px;color:var(--text-2);font-size:14px}
+.notes li{margin:3px 0}.notes b{color:var(--text-1)}
+
+/* ===== Editor mock ===== */
+.editor{display:flex;height:760px;border:1px solid var(--border);border-radius:12px;overflow:hidden;background:var(--bg-panel)}
+.rail{width:56px;flex:0 0 56px;border-right:1px solid var(--border);display:flex;flex-direction:column;align-items:center;gap:4px;padding:12px 0;background:var(--bg-app)}
+.rail i{display:flex;flex-direction:column;align-items:center;font-style:normal;font-size:9px;line-height:1.1;text-align:center;color:var(--text-3);gap:3px;padding:6px 2px;width:50px;border-radius:8px}
+.rail i::before{content:"";width:18px;height:18px;border-radius:5px;border:1.5px solid currentColor}
+.rail i.on{color:var(--text-1);background:var(--bg-card)}
+.rail i.on::before{border-color:var(--accent-text);background:var(--accent-soft)}
+.side{position:relative;width:520px;flex:0 0 520px;display:flex;flex-direction:column;border-right:1px solid var(--border)}
+.side-head{padding:16px 16px 0}
+.side-head h4{font-size:18px;margin:0 0 8px}
+.mtabs{display:flex;gap:3px;height:40px;padding:2px;border-radius:6px;background:var(--bg-card)}
+.mtabs span{flex:1;display:grid;place-items:center;border-radius:5px;color:var(--text-2);font-size:13px}
+.mtabs span.on{background:var(--bg-hover);color:var(--text-1);font-weight:600}
+.texttools{display:flex;justify-content:space-between;align-items:center;margin:10px 0 6px}
+.texttools small{color:var(--text-3);font-size:12px}
+.ghost{height:30px;padding:0 12px;border-radius:7px;border:1px solid var(--border);background:var(--bg-card);font-size:12px;font-weight:600}
+.ghost.acc{background:var(--accent);border-color:var(--accent);color:var(--color-ek-white)}
+.lines{position:relative;flex:1;overflow:auto;padding:0 16px 40vh;scrollbar-width:thin}
+
+/* line rows (D1) + live highlight, after the reference */
+.line{position:relative;display:grid;grid-template-columns:96px 1fr 28px;align-items:start;gap:8px;padding:9px 10px;margin:2px 0;border-radius:10px;transition:background .2s}
+.line::before{content:"";position:absolute;left:-10px;top:8px;bottom:8px;width:3px;border-radius:3px;background:var(--accent);opacity:0;transition:opacity .2s}
+.line.now{background:var(--bg-card)}
+.line.now::before{opacity:1}
+.line time{padding-top:3px;font-size:12px;color:var(--text-3);font-variant-numeric:tabular-nums;cursor:pointer;border:0;background:none;text-align:left}
+.line.now time{color:var(--accent-text)}
+.words{font-size:16px;line-height:1.75;color:var(--text-1)}
+.line:not(.now) .words{color:var(--text-2)}
+.w{position:relative;padding:1px 3px;margin:0 -3px;border-radius:5px;cursor:pointer;transition:background .12s,color .12s}
+.w:hover{background:var(--bg-hover)}
+.w.spoken{text-decoration:underline;text-decoration-color:var(--accent);text-decoration-thickness:2px;text-underline-offset:5px}
+.w.cur{background:var(--accent);color:var(--color-ek-white);text-decoration:none}
+.line .edit{opacity:0;width:26px;height:26px;border:0;border-radius:6px;background:none;color:var(--text-3)}
+.line:hover .edit,.line.now .edit{opacity:1}
+.line .edit:hover{background:var(--bg-hover);color:var(--text-1)}
+.line input{width:100%;height:32px;padding:0 8px;border:1px solid var(--accent);border-radius:6px;background:var(--bg-inset);font-size:15px}
+.follow{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);display:flex;align-items:center;gap:6px;height:34px;padding:0 14px;border:1px solid var(--accent);border-radius:99px;background:var(--bg-panel);color:var(--text-1);font-size:12px;font-weight:700;box-shadow:0 8px 20px var(--color-ek-black);z-index:3}
+.follow[hidden]{display:none}
+
+/* stage + player */
+.stage{flex:1;min-width:0;display:flex;flex-direction:column;background:var(--bg-app)}
+.view{flex:1;min-height:0;display:grid;place-items:center;padding:18px}
+.phone{position:relative;height:100%;max-height:520px;aspect-ratio:9/16;border-radius:14px;overflow:hidden;border:1px solid var(--border);background:var(--color-ek-black)}
+.phone video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.cap{position:absolute;left:6%;right:6%;top:68%;transform:translateY(-50%);text-align:center;font:400 22px/1.15 CaptionAnton,var(--font-ui);text-transform:uppercase;color:var(--color-ek-white);-webkit-text-stroke:1.5px var(--color-ek-black);paint-order:stroke fill;pointer-events:none}
+.cap span{display:inline-block;padding:0 .12em;border-radius:.14em;transition:transform .12s}
+.cap span.cur{background:var(--accent);-webkit-text-stroke:0;transform:scale(1.08)}
+.controls{display:flex;align-items:center;gap:14px;padding:10px 18px;border-top:1px solid var(--border)}
+.controls .t{font-variant-numeric:tabular-nums;font-size:14px;font-weight:700}
+.controls .t span{color:var(--text-3);font-weight:400}
+.controls .mid{flex:1;display:flex;justify-content:center;gap:10px}
+.cbtn{width:36px;height:36px;border-radius:50%;border:0;background:none;color:var(--text-1);font-size:15px}
+.cbtn.play{background:var(--text-1);color:var(--bg-app)}
+.timeline{position:relative;height:64px;margin:0 18px 16px;border-radius:8px;background:var(--bg-panel);border:1px solid var(--border);cursor:pointer;overflow:hidden}
+.timeline .seg{position:absolute;top:12px;height:16px;border-radius:4px;background:var(--accent-soft);border:1px solid color-mix(in srgb,var(--accent) 55%,transparent)}
+.timeline .seg.now{background:var(--accent)}
+.timeline .film{position:absolute;left:0;right:0;bottom:8px;height:20px;border-radius:4px;background:repeating-linear-gradient(90deg,var(--bg-card) 0 22px,var(--bg-hover) 22px 24px)}
+.timeline .head{position:absolute;top:0;bottom:0;width:2px;background:var(--text-1);pointer-events:none}
+</style>
+</head>
+<body>
+<main class="board">
+  <span class="kicker">Design draft · captions-tab · round 4 · 30 Oct 2026</span>
+  <h1>Live word highlight, panel and player in sync</h1>
+  <p class="lead">Press play. The line being spoken lights up in the Text tab: words already said get an underline, and the current word gets the purple pill. The same word pops on the video. The list scrolls itself to keep the current line in view. Uses the demo clip and its real word timings (<code>src/fixtures/transcript.json</code>). Speech starts at 0:07.</p>
+
+  <div class="editor">
+    <nav class="rail" aria-hidden="true"><i>Templates</i><i>Channel stickers</i><i class="on">Captions</i><i>Elements</i><i>Effects</i><i>Audio</i></nav>
+    <section class="side">
+      <div class="side-head"><h4>Captions</h4>
+        <div class="mtabs"><span class="on">T Text</span><span>✧ Effects</span><span>▦ Presets</span></div>
+        <div class="texttools"><small id="count"></small><button class="ghost acc" id="add">+ Add line</button></div>
+      </div>
+      <div class="lines" id="lines" aria-label="Caption lines"></div>
+      <button class="follow" id="follow" hidden>↓ Back to current line</button>
+    </section>
+    <section class="stage">
+      <div class="view"><div class="phone">
+        <video id="video" src="../../../prototypes-src/claude-improvement/public/media/demo.mp4" poster="../../../prototypes-src/claude-improvement/public/media/demo-poster.jpg" playsinline preload="auto"></video>
+        <div class="cap" id="cap"></div>
+      </div></div>
+      <div class="controls">
+        <div class="t" id="time">0:00.0 <span>/ 1:00.0</span></div>
+        <div class="mid"><button class="cbtn" id="back" aria-label="Back 5 seconds">⏮</button><button class="cbtn play" id="play" aria-label="Play">▶</button><button class="cbtn" id="fwd" aria-label="Forward 5 seconds">⏭</button></div>
+        <div style="width:110px"></div>
+      </div>
+      <div class="timeline" id="timeline"><div class="film"></div><div class="head" id="head"></div></div>
+    </section>
+  </div>
+
+  <div class="notes">
+    <div><h3>Highlight</h3><ul>
+      <li><b>Current line</b>: card background + purple bar on the left, purple time.</li>
+      <li><b>Words already said</b> in that line: purple underline. <b>Current word</b>: purple pill.</li>
+      <li><b>Player</b>: the same word pops in the caption (pill + slight scale), so panel and video point at the same word.</li></ul></div>
+    <div><h3>Auto-scroll</h3><ul>
+      <li>When the line changes, the list scrolls smoothly so the current line sits about a third from the top.</li>
+      <li>If you scroll the list yourself while it plays, auto-scroll pauses and <b>"↓ Back to current line"</b> shows. Click it (or any word) to follow again.</li>
+      <li>Seeking on the timeline or with ⏮ ⏭ jumps the list too.</li></ul></div>
+    <div><h3>Click and edit</h3><ul>
+      <li><b>Click a word</b> → the video jumps to that word. <b>Click a time</b> → jumps to the line start.</li>
+      <li><b>Double-click a line</b> or use ✎ to edit it (text selected, Enter saves, Esc cancels). Playback pauses while you type.</li>
+      <li>Change from D1: a single click now seeks instead of editing, like the reference.</li></ul></div>
+  </div>
+</main>
+
+<script>
+/* Word timings: src/fixtures/transcript.json (text, startMs, endMs, sentence) */
+const WORDS=[["Reloading.",7100,7500,0],["He's",8860,9260,1],["not",9260,9460,1],["gonna",9460,9580,1],["hit.",9580,9980,1],["Ah,",15400,15800,2],["2A,",16820,17180,2],["Reyna",17380,17760,2],["and",17760,17960,2],["a",17960,18020,2],["Jett.",18020,18300,2],["3,",22320,22520,3],["2,",22520,22720,3],["1,",22760,22860,3],["A",22860,22980,3],["site,",22980,23160,3],["go",23240,23380,3],["go",23380,23460,3],["peek,",23460,23620,3],["go",23660,23760,3],["peek,",23760,23940,3],["go",23940,24000,3],["peek,",24000,24060,3],["I",24060,24120,3],["said.",24120,24320,3],["Spike",27440,27840,4],["down",27840,28240,4],["A.",28240,28700,4],["One",30060,30600,5],["more",30600,31100,5],["Reyna.",31100,31540,5],["I",31540,31840,6],["got",31840,32040,6],["spike.",32040,32480,6],["Reyna",32960,33160,7],["low,",33160,33440,7],["Reyna",33520,33900,7],["low",33900,34060,7],["Reyna.",34060,34700,7],["2A.",37020,37520,8],["Let's",38380,38820,9],["go",38820,38920,9],["B?",38920,39080,9],["There's",39500,39900,10],["2,",39900,40040,10],["2A.",40100,40360,10],["Last",41780,42660,11],["player",42660,43120,11],["standing.",43120,43660,11],["Oh,",43660,44440,12],["unfortunate.",44440,45140,12],["I'm",58700,59420,13],["out.",59420,59720,13]].map(([t,s,e,l])=>({t,s,e,l}));
+const DUR=60000;
+const $=id=>document.getElementById(id);
+const video=$('video'),linesEl=$('lines'),follow=$('follow');
+let lines=[],editing=null,following=true,lastLine=-2,lastWord=-2,clock=0,useVideo=false,playing=false,lastTs=0,autoScrolling=false;
+const fmt=ms=>{const s=Math.max(0,ms)/1000;return `${Math.floor(s/60)}:${(s%60).toFixed(1).padStart(4,'0')}`};
+function build(){
+  const map=new Map();WORDS.forEach((w,i)=>{w.i=i;if(!map.has(w.l))map.set(w.l,[]);map.get(w.l).push(w)});
+  lines=[...map.values()].map((ws,k)=>({k,words:ws,s:ws[0].s,e:ws[ws.length-1].e}));
+  $('count').textContent=`${lines.length} lines`;
+  linesEl.innerHTML=lines.map(L=>`<div class="line" data-line="${L.k}"><time data-seek="${L.s}" title="Go to this line">${fmt(L.s)} – ${fmt(L.e)}</time>${editing===L.k?`<input value="${L.words.map(w=>w.t).join(' ').replace(/"/g,'&quot;')}" aria-label="Line text">`:`<div class="words">${L.words.map(w=>`<span class="w" data-w="${w.i}" data-seek="${w.s}">${w.t}</span>`).join(' ')}</div>`}<button class="edit" data-edit="${L.k}" aria-label="Edit line" title="Edit line">✎</button></div>`).join('');
+  $('timeline').querySelectorAll('.seg').forEach(n=>n.remove());
+  $('timeline').insertAdjacentHTML('afterbegin',lines.map(L=>`<div class="seg" data-seg="${L.k}" style="left:${L.s/DUR*100}%;width:${Math.max(.6,(L.e-L.s)/DUR*100)}%"></div>`).join(''));
+  lastLine=lastWord=-2;
+  const inp=linesEl.querySelector('input');if(inp){inp.focus();inp.select()}
+}
+/* ---- clock: real video time when it plays, otherwise a timer ---- */
+const now=()=>useVideo?video.currentTime*1000:clock;
+function seek(ms){ms=Math.max(0,Math.min(DUR,ms));clock=ms;if(useVideo)video.currentTime=ms/1000;following=true;follow.hidden=true;lastLine=-2;update(true)}
+function setPlaying(p){playing=p;$('play').textContent=p?'❚❚':'▶';$('play').setAttribute('aria-label',p?'Pause':'Play');
+  if(p){video.play().then(()=>{useVideo=true}).catch(()=>{useVideo=false})}else video.pause()}
+video.addEventListener('loadeddata',()=>{useVideo=true});
+video.addEventListener('error',()=>{useVideo=false});
+video.addEventListener('ended',()=>setPlaying(false));
+function loop(ts){
+  if(playing&&!useVideo){clock+=ts-(lastTs||ts);if(clock>=DUR){clock=DUR;setPlaying(false)}}
+  lastTs=ts;update(false);requestAnimationFrame(loop);
+}
+/* ---- highlight both sides ---- */
+function update(jump){
+  const t=now();
+  $('time').innerHTML=`${fmt(t)} <span>/ ${fmt(DUR)}</span>`;$('head').style.left=`${t/DUR*100}%`;
+  const L=lines.findIndex(x=>t>=x.s&&t<x.e+250); // keep the line lit briefly after its last word
+  const W=L<0?-1:lines[L].words.findLastIndex(w=>w.s<=t); // the pill stays on the last word started, no flicker in gaps
+  if(L!==lastLine){
+    linesEl.querySelectorAll('.line.now').forEach(n=>n.classList.remove('now'));
+    $('timeline').querySelectorAll('.seg.now').forEach(n=>n.classList.remove('now'));
+    if(L>=0){const row=linesEl.querySelector(`[data-line="${L}"]`);row.classList.add('now');$('timeline').querySelector(`[data-seg="${L}"]`).classList.add('now');if(following)scrollToRow(row,jump)}
+  }
+  if(L!==lastLine||W!==lastWord){
+    linesEl.querySelectorAll('.w.cur,.w.spoken').forEach(n=>n.classList.remove('cur','spoken'));
+    if(L>=0)lines[L].words.forEach((w,j)=>{const el=linesEl.querySelector(`[data-w="${w.i}"]`);if(!el)return;if(j===W)el.classList.add('cur');else if(j<W)el.classList.add('spoken')});
+    // player: the line in chunks of ≤ 4 words, current word popped
+    if(L<0){$('cap').innerHTML=''}else{const ws=lines[L].words;const start=Math.floor(Math.max(0,W)/4)*4;
+      $('cap').innerHTML=ws.slice(start,start+4).map((w,j)=>`<span class="${start+j===W?'cur':''}">${w.t}</span>`).join(' ')}
+    lastLine=L;lastWord=W;
+  }
+}
+function scrollToRow(row,jump){
+  const target=row.offsetTop-linesEl.clientHeight*0.3;autoScrolling=true;
+  linesEl.scrollTo({top:Math.max(0,target),behavior:jump?'auto':'smooth'});
+  clearTimeout(scrollToRow.t);scrollToRow.t=setTimeout(()=>{autoScrolling=false},jump?60:600);
+}
+/* manual scroll pauses following while playing */
+const userScroll=()=>{if(autoScrolling||!playing)return;following=false;follow.hidden=false};
+linesEl.addEventListener('wheel',userScroll,{passive:true});linesEl.addEventListener('touchmove',userScroll,{passive:true});
+linesEl.addEventListener('keydown',e=>{if(['ArrowUp','ArrowDown','PageUp','PageDown'].includes(e.key))userScroll()});
+follow.onclick=()=>{following=true;follow.hidden=true;const row=linesEl.querySelector('.line.now');if(row)scrollToRow(row,false)};
+/* clicks */
+linesEl.addEventListener('click',e=>{const ed=e.target.closest('[data-edit]');if(ed){startEdit(+ed.dataset.edit);return}
+  const s=e.target.closest('[data-seek]');if(s&&!e.target.closest('input'))seek(+s.dataset.seek)});
+linesEl.addEventListener('dblclick',e=>{const row=e.target.closest('[data-line]');if(row&&!e.target.closest('input'))startEdit(+row.dataset.line)});
+function startEdit(k){setPlaying(false);editing=k;build();update(true)}
+function save(inp,keep){const L=lines[editing];if(!L){editing=null;return}
+  const parts=inp.value.trim().split(/\s+/).filter(Boolean);
+  if(keep&&parts.length&&parts.join(' ')!==L.words.map(w=>w.t).join(' ')){
+    const step=(L.e-L.s)/parts.length,at=WORDS.indexOf(L.words[0]);
+    WORDS.splice(at,L.words.length,...parts.map((t,i)=>({t,s:Math.round(L.s+i*step),e:Math.round(L.s+(i+1)*step),l:L.words[0].l})));
+  }
+  editing=null;build();update(true)}
+linesEl.addEventListener('keydown',e=>{const inp=e.target.closest('input');if(!inp)return;if(e.key==='Enter'){e.preventDefault();save(inp,true)}if(e.key==='Escape'){editing=null;build();update(true)}});
+linesEl.addEventListener('focusout',e=>{const inp=e.target.closest&&e.target.closest('input');if(inp&&editing!==null)setTimeout(()=>{if(document.contains(inp))save(inp,true)},0)});
+$('add').onclick=()=>{const t=Math.round(now()),under=lines.find(x=>t>=x.s&&t<x.e),s=under?under.e+50:t,l=Math.max(...WORDS.map(w=>w.l))+1;
+  const at=WORDS.findIndex(w=>w.s>=s);const nw=[{t:'New',s,e:s+600,l},{t:'line',s:s+600,e:s+1200,l}];WORDS.splice(at<0?WORDS.length:at,0,...nw);
+  build();editing=lines.findIndex(L=>L.words[0]===nw[0]);build();setPlaying(false)};
+$('play').onclick=()=>setPlaying(!playing);
+$('back').onclick=()=>seek(now()-5000);$('fwd').onclick=()=>seek(now()+5000);
+$('timeline').addEventListener('click',e=>{const r=e.currentTarget.getBoundingClientRect();seek((e.clientX-r.left)/r.width*DUR)});
+document.addEventListener('keydown',e=>{if(e.code==='Space'&&!e.target.closest('input,button')){e.preventDefault();setPlaying(!playing)}});
+build();update(true);requestAnimationFrame(loop);
+</script>
+</body>
+</html>

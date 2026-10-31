@@ -1,0 +1,39 @@
+{
+  "id": "elements-named-meme",
+  "feature": "Elements",
+  "personaRefs": [
+    "meme-heavy-power-editor",
+    "ai-edit-accepter",
+    "returning-twitch-clipper"
+  ],
+  "target": "claude-improvement",
+  "start": {
+    "screen": "default"
+  },
+  "goal": "Add the \"we are back\" meme to the clip.",
+  "success": {
+    "check": "state.elements.some(e => /we are back/i.test(e.label) && e.id.indexOf('ai-') !== 0)",
+    "describe": "The named meme is on the clip"
+  },
+  "budget": {
+    "steps": 8,
+    "scrolls": 4,
+    "minutes": 4
+  },
+  "bestPath": [
+    {
+      "do": "click",
+      "selector": ".rail nav button:has-text('Elements')"
+    },
+    {
+      "do": "click",
+      "selector": ".elements-tile:has-text('We are back')"
+    }
+  ],
+  "why": {
+    "data": "User-added memes: 6.2% of projects, +32.7 export points (same user)",
+    "source": "docs/knowledge/editor-direction-research.md"
+  },
+  "holdout": false,
+  "notes": "Prototype has 12 memes; production has hundreds. Findability result is weak until phase 3 catalog fidelity."
+}

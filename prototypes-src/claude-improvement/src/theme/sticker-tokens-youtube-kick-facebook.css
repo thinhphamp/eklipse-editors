@@ -1,0 +1,37 @@
+/* Brand colours for the youtube-kick-facebook sticker designs (hex allowed only in theme token files). */
+:root{
+  --stk-ykf-white:#ffffff;
+  --stk-ykf-black:#000000;
+  --stk-ykf-dark:#2a2b2d;
+  --stk-ykf-plate-border:#606165;
+  --stk-ykf-facebook-border:#5e77ae;
+  --stk-ykf-shadow-soft:#60708a66;
+  --stk-ykf-lower-shadow:#761013;
+  --stk-ykf-youtube-red:#ff0e15;
+  --stk-ykf-kick-green:#30fd33;
+  --stk-ykf-facebook-blue:#385ba6;
+  --stk-ykf-cyan:#29adfb;
+  --stk-ykf-blue:#4e7cfa;
+  --stk-ykf-pale-pink:#ffe7e7;
+  --stk-ykf-pale-blue:#e7effe;
+  --stk-ykf-neon-red:#ff1430;
+  --stk-ykf-neon-blue:#00c9ff;
+  --stk-ykf-purple:#9d00d2;
+  --stk-ykf-pink:#ec009d;
+  --stk-ykf-sparkle-pink:#e800a5;
+  --stk-ykf-pet-purple:#b477fb;
+  --stk-ykf-pet-pink:#ff8dfc;
+  --stk-ykf-pet-pale:#ffe3fe;
+  --stk-ykf-pet-cream:#fff2dc;
+  --stk-ykf-pet-gray:#aeb8be;
+  --stk-ykf-pet-orange:#f39829;
+  --stk-ykf-pet-tan:#d5a04b;
+  --stk-ykf-pet-blue:#55b9e8;
+  --stk-ykf-pet-ink:#3c3431;
+  --stk-ykf-fox-orange:#f07f1c;
+  --stk-ykf-fox-dark:#9e471c;
+  --stk-ykf-fox-pale:#ffd7a2;
+  --stk-ykf-pillow-blue:#a9dfe4;
+  --stk-ykf-pillow-dark:#579ba5;
+  --stk-ykf-pillow-pale:#dff8f6;
+}

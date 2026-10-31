@@ -1,0 +1,36 @@
+{
+  "id": "layouts-same-as-last-time",
+  "feature": "Layouts",
+  "personaRefs": [
+    "returning-twitch-clipper",
+    "ai-edit-accepter",
+    "own-footage-uploader"
+  ],
+  "target": "claude-improvement",
+  "scenario": "exported-no-style",
+  "start": {
+    "screen": "L00"
+  },
+  "goal": "Make this clip look like the ones I exported last week, same layout as last time.",
+  "success": {
+    "check": "state.layoutId === 'Game UI'",
+    "describe": "The clip uses Game UI, the layout of the last exported clips"
+  },
+  "budget": {
+    "steps": 6,
+    "scrolls": 2,
+    "minutes": 3
+  },
+  "bestPath": [
+    {
+      "do": "click",
+      "selector": ".recent-grid .layout-tile:has-text('Game UI')"
+    }
+  ],
+  "why": {
+    "data": "72.6% of web projects reuse the previous layout; 76.5% export vs 52.8% when not",
+    "source": "docs/knowledge/editor-direction-research.md"
+  },
+  "holdout": false,
+  "notes": "User state: exported before, no saved style. Only the \"Recently used\" row knows the last layout."
+}

@@ -1,0 +1,33 @@
+/* cap-d1 · W3: background caption job. Tokens only. */
+/* Ring around the Captions rail icon while generating; green / red dot when it finished off the tab. */
+.rail [data-tab="Captions"]{position:relative}
+.cj-run .rail [data-tab="Captions"]::before{content:"";position:absolute;top:6px;left:50%;width:31px;height:31px;margin-left:-15.5px;border-radius:50%;background:conic-gradient(var(--accent-text) calc(var(--cj-p,0) * 1turn),var(--border) 0);-webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 2.5px),var(--text-1) calc(100% - 2px));mask:radial-gradient(farthest-side,transparent calc(100% - 2.5px),var(--text-1) calc(100% - 2px));pointer-events:none}
+.cj-ready .rail [data-tab="Captions"]::after,.cj-fail .rail [data-tab="Captions"]::after{content:"";position:absolute;top:6px;right:14px;width:9px;height:9px;border-radius:50%;background:var(--success);border:2px solid var(--bg-app)}
+.cj-fail .rail [data-tab="Captions"]::after{background:var(--danger)}
+/* Toast off the Captions tab */
+.cj-toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);z-index:60;display:flex;align-items:center;gap:10px;padding:10px 10px 10px 14px;border:1px solid var(--border);border-radius:10px;background:var(--bg-card);box-shadow:var(--shadow-lg);font-size:var(--fs-body,13px);color:var(--text-1);white-space:nowrap}
+.cj-toast.fail{border-color:var(--danger)}
+.cj-toast button{height:30px;padding:0 12px;border:1px solid var(--border);border-radius:var(--radius-md);background:var(--bg-panel);font-weight:600;color:var(--text-1)}
+.cj-toast button[aria-label]{width:30px;padding:0}
+.cj-acc{border-color:var(--accent)!important;background:var(--accent)!important;color:var(--text-on-accent)!important}
+/* Export while generating */
+.cj-shade{position:fixed;inset:0;z-index:70;display:grid;place-items:center;background:var(--scrim)}
+.cj-dialog{width:400px;padding:20px;border:1px solid var(--border);border-radius:var(--radius-lg);background:var(--bg-panel);box-shadow:var(--shadow-lg);color:var(--text-1)}
+.cj-dialog b{display:block;margin-bottom:6px;font-size:var(--fs-title,18px)}
+.cj-dialog p{margin:0 0 16px;color:var(--text-2);font-size:var(--fs-body,13px)}
+.cj-dialog div{display:flex;justify-content:flex-end;gap:8px}
+.cj-dialog button{height:36px;padding:0 14px;border:1px solid var(--border);border-radius:var(--radius-md);background:var(--bg-card);font-weight:600;color:var(--text-1)}
+/* "Making magic…" panel */
+.cap-d1-magic{display:flex;flex-direction:column;align-items:center;text-align:center;padding:28px 8px 24px}
+.cap-d1-magic img{width:190px;height:auto;animation:cj-float 3.2s ease-in-out infinite;filter:drop-shadow(0 10px 18px color-mix(in srgb,var(--accent) 35%,transparent))}
+@keyframes cj-float{50%{transform:translateY(-6px)}}
+@media (prefers-reduced-motion:reduce){.cap-d1-magic img{animation:none}}
+.cap-d1-magic h2{margin:24px 0 6px;font-size:var(--fs-title,18px)}
+.cap-d1-magic>p{margin:0;max-width:340px;color:var(--text-2);font-size:var(--fs-reading,14px);line-height:1.45}
+.cap-d1-magic-bar{width:240px;height:4px;margin:18px 0 6px;border-radius:99px;background:var(--bg-inset);overflow:hidden}
+.cap-d1-magic-bar i{display:block;height:100%;border-radius:99px;background:var(--accent);transition:width .25s linear}
+.cap-d1-magic small{font-size:var(--fs-caption,11px);color:var(--text-3);font-variant-numeric:tabular-nums}
+.cap-d1-magic-info{display:flex;gap:12px;align-items:center;margin:24px 0 0;padding:14px 16px;border:1px solid color-mix(in srgb,var(--accent-text) 55%,transparent);border-radius:10px;background:color-mix(in srgb,var(--accent) 12%,var(--bg-panel));text-align:left}
+.cap-d1-magic-info span{flex:0 0 22px;width:22px;height:22px;border-radius:50%;border:1.5px solid var(--accent-text);color:var(--accent-text);display:grid;place-items:center;font-weight:700;font-size:var(--fs-label,12px)}
+.cap-d1-magic-info p{margin:0;font-size:var(--fs-body,13px);line-height:1.45;color:var(--text-1)}
+.cap-d1-magic-cancel{margin-top:16px;border:0;background:none;color:var(--text-3);font-size:var(--fs-label,12px);text-decoration:underline}

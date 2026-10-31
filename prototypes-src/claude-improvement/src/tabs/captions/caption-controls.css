@@ -1,0 +1,33 @@
+.caption-word{display:inline;border:0;background:transparent;color:inherit;font:inherit;line-height:1.5;padding:1px 3px;border-radius:3px}.caption-word:hover,.caption-word.selected{background:var(--accent-soft);color:var(--accent-text)}
+.captions-word-editor{position:sticky;bottom:0;z-index:12;padding:10px;background:var(--bg-panel);border:1px solid var(--border);border-radius:8px;box-shadow:0 -3px 10px var(--shadow-ink)}
+.captions-word-editor label{display:grid;gap:5px}.captions-word-editor input,.caption-save-name input,.caption-effect-fields input:not([type=range]),.captions-speaker-detail input{width:100%;min-width:0;box-sizing:border-box;background:var(--bg-inset);border:1px solid var(--border);color:var(--text-1);border-radius:4px;padding:5px;font:inherit}
+.captions-word-tools{flex-wrap:wrap;margin-top:6px}.captions-word-tools>div{display:flex;align-items:center;flex-wrap:wrap;gap:3px;width:100%}.captions-word-tools span{font-size:var(--fs-micro);min-width:70px}
+.captions-speaker-entry>button{display:flex;align-items:center;gap:12px;width:100%;min-height:70px;padding:8px 12px;border:0;border-bottom:1px solid var(--border);background:var(--bg-card);text-align:left}.captions-speaker-detail{box-sizing:border-box;padding:10px;display:grid;gap:8px}.captions-speaker-detail label{display:grid;gap:4px}
+.caption-save-name{display:flex;align-items:center;gap:8px;font-size:var(--fs-caption);max-width:70%}.caption-save-name input{width:160px}
+.caption-swatches{display:flex;align-items:center;gap:5px;padding:5px;flex-wrap:wrap}.caption-swatches>button{border:1px solid var(--border);border-radius:4px;min-width:22px;min-height:22px;font-size:var(--fs-micro)}.caption-effect-fields{padding:5px;border-bottom:1px solid var(--border)}
+.captions-mini-control{display:flex;gap:5px;flex-wrap:wrap}.captions-mini-control input[type=range]{width:100%}.captions-mini-control output{margin-left:auto}.captions-modal-sample{max-width:90%;padding:.1em;box-sizing:border-box}.captions-modal-sample .caption-word-line{width:100%}.captions-modal>footer>span{font-size:var(--fs-caption);color:var(--text-3);visibility:hidden}
+.captions-font{display:flex;align-items:center;justify-content:space-between;gap:10px}.captions-font select,.captions-config-card select{border:1px solid var(--border);background:var(--bg-inset);color:var(--text-1);border-radius:4px;padding:5px;max-width:100%}.captions-effect-card>.captions-segmented{margin:0 7px 6px}
+
+.captions-preset-tile{background-image:none;background-color:var(--bg-media)}.captions-preset-tile.selected{background-image:none;background-color:color-mix(in srgb,var(--accent) 22%,var(--bg-media))}
+.captions-line-dot{display:block;width:10px;height:10px;background:transparent!important}.captions-line-head small{display:none}
+.captions-text-actions[hidden]{display:none}
+.captions-preset-sample.black,.captions-preset-sample.dark{color:var(--bg-app);-webkit-text-stroke:.7px var(--text-1);text-shadow:0 0 3px var(--text-1)}
+.captions-preset-sample.thin{color:var(--text-1);-webkit-text-stroke:.25px var(--bg-app);text-shadow:0 1px 2px var(--bg-app)}.captions-preset-sample.blue{-webkit-text-stroke:.45px var(--bg-app);text-shadow:0 0 2px var(--text-1)}
+
+/* Same fixed toolbar size as the element toolbar. */
+.caption-toolbar{padding:3px;border-radius:6px;gap:0}
+.caption-toolbar button{min-width:40px;height:30px;padding:0 8px;font-size:var(--fs-label)}
+
+/* Style tab header card (reference C11: current effect name, "Text style", check mark). */
+.captions-style-current{display:flex;align-items:center;gap:12px;padding:12px 14px;margin-bottom:12px;border:1px solid var(--border);border-radius:var(--radius-md);background:var(--bg-panel)}
+.captions-style-current>span:first-child{font-family:CaptionBangers,var(--font-ui);font-size:18px}
+.captions-style-current b{display:block;font-size:var(--fs-body)}
+.captions-style-current small{display:block;font-size:var(--fs-caption);color:var(--text-3)}
+.captions-style-current i{margin-left:auto;font-style:normal;color:var(--accent-text)}
+/* Large sample in the modal preview, as in the reference (≈100 px words). */
+.captions-checker .captions-modal-sample{font-size:clamp(56px,6.5vw,104px)!important;line-height:1.05;text-align:center;max-width:90%}
+.captions-style-row-wrap{display:flex;align-items:stretch;gap:4px}
+.captions-style-row-wrap .captions-style-row{flex:1;display:flex;align-items:center;gap:10px}
+.captions-style-row-wrap .captions-style-row span{margin-left:auto;color:var(--text-3)}
+.captions-row-swatch{width:16px;height:16px;border-radius:4px;border:1px solid var(--border);flex:0 0 16px}
+.captions-row-remove{width:34px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-card);color:var(--text-2)}

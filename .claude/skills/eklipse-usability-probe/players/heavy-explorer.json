@@ -1,0 +1,6 @@
+{
+  "id": "heavy-explorer",
+  "persona": "heavy-editor",
+  "scenario": "exported-no-style",
+  "behavior": "explorer"
+}

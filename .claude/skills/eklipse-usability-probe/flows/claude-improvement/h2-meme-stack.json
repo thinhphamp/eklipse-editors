@@ -1,0 +1,110 @@
+{
+  "id": "h2-meme-stack",
+  "flow": "H2",
+  "menu": "Elements",
+  "persona": "heavy-editor",
+  "target": "claude-improvement",
+  "weight": 0.3,
+  "mission": "Cut out the dead part, add the “Another One” meme, put a title on top, add a sound effect, and export.",
+  "start": {
+    "screen": "L00"
+  },
+  "checkpoints": [
+    {
+      "id": "trim",
+      "check": "state.removedRanges.length > 0 || state.splitPoints.length > 0",
+      "describe": "A dead section is cut"
+    },
+    {
+      "id": "meme",
+      "check": "state.elements.some(x => /another one/i.test(x.label))",
+      "describe": "The named meme is on the clip"
+    },
+    {
+      "id": "title",
+      "check": "state.elements.some(x => x.category === 'Text Elements')",
+      "describe": "A title is on the clip"
+    },
+    {
+      "id": "sound",
+      "check": "state.audio.some(x => x.category !== 'Music')",
+      "describe": "A sound effect is on the clip"
+    },
+    {
+      "id": "export",
+      "check": "state.exported === true",
+      "describe": "The clip export has finished"
+    }
+  ],
+  "bestPath": [
+    {
+      "do": "click",
+      "selector": ".video-block"
+    },
+    {
+      "do": "click",
+      "selector": ".ruler",
+      "positionRatio": 0.3
+    },
+    {
+      "do": "click",
+      "selector": "button[aria-label='Split clip at current time']"
+    },
+    {
+      "do": "click",
+      "selector": ".rail nav button:has-text('Elements')"
+    },
+    {
+      "do": "click",
+      "selector": ".elt-tile:has-text('Title 1')"
+    },
+    {
+      "do": "click",
+      "selector": ".elements-back"
+    },
+    {
+      "do": "type",
+      "selector": "input[placeholder^='Search memes']",
+      "text": "Another One"
+    },
+    {
+      "do": "click",
+      "selector": ".elt-tile:has-text('Another One')"
+    },
+    {
+      "do": "click",
+      "text": "Audio"
+    },
+    {
+      "do": "click",
+      "text": "Sound Effects"
+    },
+    {
+      "do": "click",
+      "selector": ".audio-row-title"
+    },
+    {
+      "do": "click",
+      "selector": ".tb-primary"
+    },
+    {
+      "do": "click",
+      "selector": ".export-primary"
+    }
+  ],
+  "bestTimeSeconds": null,
+  "budget": {
+    "minutes": 12
+  },
+  "why": {
+    "data": "Own memes, text and split edits are associated with higher export points.",
+    "source": "plans/261027-usability-probe-skill/personas.md"
+  },
+  "input": {
+    "clip": null
+  },
+  "playerIds": [
+    "heavy-explorer",
+    "heavy-meticulous"
+  ]
+}

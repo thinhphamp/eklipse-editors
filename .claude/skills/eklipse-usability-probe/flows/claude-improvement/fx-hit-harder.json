@@ -1,0 +1,62 @@
+{
+  "id": "fx-hit-harder",
+  "flow": "F7",
+  "menu": "Effects",
+  "persona": "one-and-done",
+  "target": "claude-improvement",
+  "weight": 0.2,
+  "mission": "Make the best moment in this clip hit harder. Just make it feel more intense, then export.",
+  "start": {
+    "screen": "L00"
+  },
+  "checkpoints": [
+    {
+      "id": "fx",
+      "check": "state.effects.some(x => ['Zoom','Effects','Speed Control'].includes(x.category) && x.start > 0)",
+      "describe": "An effect sits on the best moment, after the start"
+    },
+    {
+      "id": "export",
+      "check": "state.exported === true",
+      "describe": "The clip export has finished"
+    }
+  ],
+  "bestPath": [
+    {
+      "do": "click",
+      "selector": ".ruler",
+      "positionRatio": 0.5
+    },
+    {
+      "do": "click",
+      "selector": ".rail nav button:has-text('Effects')"
+    },
+    {
+      "do": "click",
+      "text": "Zoom"
+    },
+    {
+      "do": "click",
+      "selector": ".tb-primary"
+    },
+    {
+      "do": "click",
+      "selector": ".export-primary"
+    }
+  ],
+  "bestTimeSeconds": null,
+  "budget": {
+    "minutes": 12
+  },
+  "why": {
+    "data": "One-and-done users give a vague outcome and stop at the first thing that looks done (no persona number for effects; AI edit bundle 89.1% also zoom).",
+    "source": "plans/261027-usability-probe-skill/personas.md"
+  },
+  "input": {
+    "clip": null
+  },
+  "playerIds": [
+    "once-novice",
+    "once-rusher"
+  ]
+}

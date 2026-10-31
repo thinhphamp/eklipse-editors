@@ -1,0 +1,10 @@
+/* Base look for native form controls so no screen ever shows a browser-default control.
+   :where() keeps specificity at zero: any component style still wins. */
+:where(button:not([class])){height:32px;padding:0 12px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-card);color:var(--text-1);font:inherit;font-size:var(--fs-body);cursor:pointer}
+:where(button:not([class])):hover{background:var(--bg-hover)}
+:where(select){height:32px;padding:0 8px;border:1px solid var(--border);border-radius:var(--radius-sm);background-color:var(--bg-card);color:var(--text-1);font:inherit;font-size:var(--fs-body)}
+:where(input[type=text],input[type=number],input[type=search],input:not([type]),textarea){padding:6px 8px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-inset);color:var(--text-1);font:inherit;font-size:var(--fs-body)}
+:where(input[type=checkbox],input[type=radio]){accent-color:var(--accent)}
+:where(input[type=range]){appearance:none;-webkit-appearance:none;height:4px;margin:8px 0;border-radius:2px;background:var(--border);accent-color:var(--accent);cursor:pointer}
+:where(input[type=range])::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:14px;height:14px;border-radius:50%;background:var(--accent);border:2px solid var(--text-on-accent)}
+:where(input[type=range])::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:var(--accent);border:2px solid var(--text-on-accent)}

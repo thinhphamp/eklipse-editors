@@ -1,0 +1,31 @@
+{
+  "id": "quick-user",
+  "rank": 1,
+  "name": "Quick user",
+  "experience": "returning",
+  "behavior": "Light editor who reuses the last layout, keeps defaults and wants a familiar clip ready with very few choices.",
+  "knows": [
+    "my usual layout",
+    "export",
+    "captions",
+    "title",
+    "facecam"
+  ],
+  "does_not_know": [
+    "tool names in this editor",
+    "keyboard shortcuts"
+  ],
+  "patience": "low",
+  "words": [
+    "same as last time",
+    "my usual",
+    "post this"
+  ],
+  "tier": "light",
+  "fixtures": {
+    "storage": {}
+  },
+  "provenance": [
+    "Light editing is 68.1% of projects; layout reused in 72.6% (plans/261027-usability-probe-skill/personas.md)"
+  ]
+}

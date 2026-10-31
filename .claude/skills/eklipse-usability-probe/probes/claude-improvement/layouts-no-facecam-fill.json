@@ -1,0 +1,34 @@
+{
+  "id": "layouts-no-facecam-fill",
+  "feature": "Layouts",
+  "personaRefs": [
+    "no-facecam-clipper",
+    "first-clip-newcomer",
+    "returning-twitch-clipper"
+  ],
+  "target": "claude-improvement",
+  "start": {
+    "screen": "L00"
+  },
+  "goal": "I don't use a camera, it's just the game. I want the game to take up the whole tall frame with no empty box for a face.",
+  "success": {
+    "check": "['Fullscreen', 'Blurred'].includes(state.layoutId)",
+    "describe": "A layout with no facecam area is applied"
+  },
+  "budget": {
+    "steps": 6,
+    "scrolls": 3,
+    "minutes": 3
+  },
+  "bestPath": [
+    {
+      "do": "click",
+      "selector": ".layout-grid:not(.recent-grid) .layout-tile:has-text('Fullscreen')"
+    }
+  ],
+  "why": {
+    "data": "\"No layout\" projects: 14.3% of web projects, 54.7% export",
+    "source": "plans/261027-usability-probe-skill/personas.md"
+  },
+  "holdout": true
+}

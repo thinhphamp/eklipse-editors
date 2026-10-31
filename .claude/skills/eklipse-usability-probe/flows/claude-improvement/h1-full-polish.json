@@ -1,0 +1,114 @@
+{
+  "id": "h1-full-polish",
+  "flow": "H1",
+  "persona": "heavy-editor",
+  "target": "claude-improvement",
+  "weight": 0.35,
+  "mission": "Pick a layout, add bold captions and music, zoom in on the big moment, add your channel name, then export.",
+  "start": {
+    "screen": "L00"
+  },
+  "checkpoints": [
+    {
+      "id": "layout",
+      "check": "state.layoutId !== ''",
+      "describe": "A layout is selected"
+    },
+    {
+      "id": "captions",
+      "check": "state.captions.generated === true",
+      "describe": "Captions are generated"
+    },
+    {
+      "id": "music",
+      "check": "state.audio.some(x => x.category === 'Music' || x.category === 'Uploaded')",
+      "describe": "Music is on the clip"
+    },
+    {
+      "id": "uploaded-song",
+      "check": "state.audio.some(x => x.category === 'Uploaded')",
+      "describe": "Your own audio file is on the clip"
+    },
+    {
+      "id": "zoom",
+      "check": "state.effects.some(x => x.category === 'Zoom')",
+      "describe": "A zoom effect is on the clip"
+    },
+    {
+      "id": "sticker",
+      "check": "state.elements.some(x => x.category === 'Social Stickers')",
+      "describe": "A channel sticker is on the clip"
+    },
+    {
+      "id": "export",
+      "check": "state.exported === true",
+      "describe": "The clip export has finished"
+    }
+  ],
+  "bestPath": [
+    {
+      "do": "click",
+      "selector": ".tpl-card:has(strong:text-is('Game UI'))"
+    },
+    {
+      "do": "click",
+      "selector": ".rail nav button:has-text('Captions')"
+    },
+    {
+      "do": "click",
+      "text": "Generate captions"
+    },
+    {
+      "do": "click",
+      "selector": ".rail nav button:has-text('Audio')"
+    },
+    {
+      "do": "click",
+      "selector": ".audio-tabs button:nth-child(2)"
+    },
+    {
+      "do": "click",
+      "selector": ".audio-row-title"
+    },
+    {
+      "do": "click",
+      "text": "Use sample upload"
+    },
+    {
+      "do": "click",
+      "selector": ".rail nav button:has-text('Effects')"
+    },
+    {
+      "do": "click",
+      "text": "Zoom"
+    },
+    {
+      "do": "click",
+      "selector": ".rail nav button:has-text('Channel stickers')"
+    },
+    {
+      "do": "click",
+      "selector": ".tb-primary"
+    },
+    {
+      "do": "click",
+      "selector": ".export-primary"
+    }
+  ],
+  "bestTimeSeconds": null,
+  "budget": {
+    "minutes": 12
+  },
+  "why": {
+    "data": "Caption style changed in 62.5% of projects in the discussed heavy-editor flow.",
+    "source": "plans/261027-usability-probe-skill/personas.md"
+  },
+  "input": {
+    "clip": "song-not-in-library",
+    "missionExtra": "The song you want is not in the music list; you have it as a file."
+  },
+  "playerIds": [
+    "heavy-explorer",
+    "heavy-meticulous"
+  ]
+}

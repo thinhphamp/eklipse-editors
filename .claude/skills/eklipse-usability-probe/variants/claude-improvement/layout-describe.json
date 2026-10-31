@@ -1,0 +1,20 @@
+{
+  "id": "layout-describe",
+  "problem": "Q2: describe layouts so the right one is picked first",
+  "stack": [
+    "el-jump",
+    "style-lastclip",
+    "brand-platforms"
+  ],
+  "targets": [
+    "q2-pick-layout"
+  ],
+  "untouched": [
+    "h2-meme-stack",
+    "h3-fix-ai-edit",
+    "h4-brand-setup",
+    "o2-make-vertical",
+    "o3-own-upload"
+  ],
+  "source": "targets from reports/flow-night.html; untouched = flows night-0011 did not run for this variant"
+}

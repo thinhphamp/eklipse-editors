@@ -1,0 +1,74 @@
+{
+  "id": "el-clear-ai-extras",
+  "flow": "E4",
+  "menu": "Elements",
+  "persona": "quick-user",
+  "target": "claude-improvement",
+  "weight": 0.2,
+  "mission": "The AI put memes, zooms and sounds on my clip and I want a plain clip. Take all of that off and export.",
+  "start": {
+    "screen": "L00"
+  },
+  "checkpoints": [
+    {
+      "id": "had-ai",
+      "check": "[...initial.elements, ...initial.effects, ...initial.audio].some(x => x.ai)",
+      "describe": "The clip started with AI additions"
+    },
+    {
+      "id": "all-gone",
+      "check": "[...state.elements, ...state.effects, ...state.audio].every(x => !x.ai)",
+      "describe": "Nothing the AI added is left"
+    },
+    {
+      "id": "export",
+      "check": "state.exported === true",
+      "describe": "The clip export has finished"
+    }
+  ],
+  "bestPath": [
+    {
+      "do": "click",
+      "selector": ".ai-review .tb-secondary"
+    },
+    {
+      "do": "click",
+      "selector": ".ai-item-remove"
+    },
+    {
+      "do": "click",
+      "selector": ".ai-item-remove"
+    },
+    {
+      "do": "click",
+      "selector": ".ai-item-remove"
+    },
+    {
+      "do": "click",
+      "selector": ".ai-item-remove"
+    },
+    {
+      "do": "click",
+      "selector": ".tb-primary"
+    },
+    {
+      "do": "click",
+      "selector": ".export-primary"
+    }
+  ],
+  "bestTimeSeconds": null,
+  "budget": {
+    "minutes": 12
+  },
+  "why": {
+    "data": "AI memes left untouched export 44.4%; a quick user who dislikes the AI extras needs a fast way to clear them (AI edit on in 20.1% of projects).",
+    "source": "plans/261027-usability-probe-skill/personas.md"
+  },
+  "input": {
+    "clip": "ai-bundle"
+  },
+  "playerIds": [
+    "quick-match",
+    "quick-differs"
+  ]
+}

@@ -1,0 +1,11 @@
+.brand-variant-title{font-size:var(--fs-label);font-weight:700;color:var(--text-1)}
+.brand-platforms,.brand-multi{display:flex;flex-direction:column;gap:6px}
+.brand-platform-chips{display:flex;flex-wrap:wrap;gap:6px}
+.brand-platform-chips button{height:28px;padding:0 10px;border:1px solid var(--border);border-radius:14px;background:var(--bg-card);color:var(--text-1);font-size:var(--fs-label)}
+.brand-platform-chips button.on{border-color:var(--accent);background:var(--accent);color:var(--text-on-accent);font-weight:700}
+.brand-variant-miss{font-size:var(--fs-label);color:var(--text-3)}
+.brand-multi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.brand-multi-tile{height:62px;padding:2px 0;display:grid;grid-template-rows:1fr auto;place-items:center;overflow:hidden;border:1px solid var(--border);border-radius:6px;background:var(--bg-card);container-type:inline-size}
+.brand-multi-tile.on{border-color:var(--accent)}
+.brand-multi-tile span{display:grid;place-items:center;pointer-events:none}
+.brand-multi-tile small{font-size:var(--fs-micro);color:var(--text-muted);line-height:1.2}

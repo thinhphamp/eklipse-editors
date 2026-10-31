@@ -1,0 +1,53 @@
+{
+  "id": "o1-first-ai-clip",
+  "flow": "O1",
+  "menu": "Export",
+  "persona": "one-and-done",
+  "target": "claude-improvement",
+  "weight": 0.5,
+  "mission": "This is your first clip. See what was added for you, then export it.",
+  "start": {
+    "screen": "L00"
+  },
+  "checkpoints": [
+    {
+      "id": "review",
+      "check": "state.aiReviewOpen === true || state.aiReviewDone === true",
+      "describe": "The AI additions have been reviewed"
+    },
+    {
+      "id": "export",
+      "check": "state.exported === true",
+      "describe": "The clip export has finished"
+    }
+  ],
+  "bestPath": [
+    {
+      "do": "click",
+      "selector": ".ai-review .tb-secondary"
+    },
+    {
+      "do": "click",
+      "selector": ".tb-primary"
+    },
+    {
+      "do": "click",
+      "selector": ".export-primary"
+    }
+  ],
+  "bestTimeSeconds": null,
+  "budget": {
+    "minutes": 12
+  },
+  "why": {
+    "data": "Export under two minutes is associated with 79.0% return for first projects.",
+    "source": "plans/261027-usability-probe-skill/personas.md"
+  },
+  "input": {
+    "clip": "ai-bundle"
+  },
+  "playerIds": [
+    "once-novice",
+    "once-rusher"
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "id": "lay-cam-off-hud",
+  "flow": "L1",
+  "menu": "Layouts",
+  "persona": "quick-user",
+  "target": "claude-improvement",
+  "weight": 0.2,
+  "mission": "Your camera box is sitting on top of the game's ammo and kill info. Keep your face in the clip, but stop it covering that game info, then export it.",
+  "start": {
+    "screen": "L00"
+  },
+  "checkpoints": [
+    {
+      "id": "layout",
+      "check": "state.layoutId === 'Game UI'",
+      "describe": "A layout that keeps the facecam clear of the game UI is applied"
+    },
+    {
+      "id": "export",
+      "check": "state.exported === true",
+      "describe": "The clip export has finished"
+    }
+  ],
+  "bestPath": [
+    {
+      "do": "click",
+      "selector": ".tpl-card:has(strong:text-is('Game UI'))"
+    },
+    {
+      "do": "click",
+      "selector": ".tb-primary"
+    },
+    {
+      "do": "click",
+      "selector": ".export-primary"
+    }
+  ],
+  "bestTimeSeconds": null,
+  "budget": {
+    "minutes": 12
+  },
+  "why": {
+    "data": "Quick users reuse or pick a layout and export; picking the right one by its effect, not its name, is the Layouts job (72.6% reuse the previous layout).",
+    "source": "plans/261027-usability-probe-skill/personas.md"
+  },
+  "input": {
+    "clip": null
+  },
+  "playerIds": [
+    "quick-match",
+    "quick-differs"
+  ]
+}

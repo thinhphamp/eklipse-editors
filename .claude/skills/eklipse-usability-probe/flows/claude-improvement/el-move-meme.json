@@ -1,0 +1,67 @@
+{
+  "id": "el-move-meme",
+  "flow": "E2",
+  "menu": "Elements",
+  "persona": "heavy-editor",
+  "target": "claude-improvement",
+  "weight": 0.2,
+  "mission": "Add a meme that reacts to the fight, then move it so it shows up later in the clip, not at the very start. Export it.",
+  "start": {
+    "screen": "L00"
+  },
+  "checkpoints": [
+    {
+      "id": "meme",
+      "check": "state.elements.some(x => ['Gifs','Memes'].includes(x.category))",
+      "describe": "A meme is on the clip"
+    },
+    {
+      "id": "moved",
+      "check": "state.elements.some(x => ['Gifs','Memes'].includes(x.category) && x.start > 0.5)",
+      "describe": "The meme sits at a later moment"
+    },
+    {
+      "id": "export",
+      "check": "state.exported === true",
+      "describe": "The clip export has finished"
+    }
+  ],
+  "bestPath": [
+    {
+      "do": "click",
+      "selector": ".rail nav button:has-text(\"Elements\")"
+    },
+    {
+      "do": "click",
+      "selector": "button.elt-tile:has-text('Big Speaker') >> nth=0"
+    },
+    {
+      "do": "drag",
+      "selector": ".timeline-chip.element.kind-memes .chip-label",
+      "to": ".timeline-content"
+    },
+    {
+      "do": "click",
+      "selector": ".tb-primary"
+    },
+    {
+      "do": "click",
+      "selector": ".export-primary"
+    }
+  ],
+  "bestTimeSeconds": null,
+  "budget": {
+    "minutes": 12
+  },
+  "why": {
+    "data": "Own memes add +32.7 export points; heavy editors also time their memes (H3 shows moved AI memes export at 72.9%).",
+    "source": "plans/261027-usability-probe-skill/personas.md"
+  },
+  "input": {
+    "clip": null
+  },
+  "playerIds": [
+    "heavy-explorer",
+    "heavy-meticulous"
+  ]
+}

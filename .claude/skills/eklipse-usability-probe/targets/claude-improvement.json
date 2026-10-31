@@ -1,0 +1,162 @@
+{
+  "id": "claude-improvement",
+  "kind": "prototype",
+  "root": "prototypes-src/claude-improvement",
+  "build": "npm run build",
+  "dist": "dist",
+  "page": "prototype.html",
+  "verifyParam": "verify&capjob=3",
+  "viewport": {
+    "width": 1280,
+    "height": 800
+  },
+  "screens": {
+    "file": "scripts/screen-ids.txt",
+    "extra": [
+      "default",
+      "R01",
+      "R02",
+      "H01"
+    ]
+  },
+  "stateType": "src/state/types.ts#EditorState",
+  "storageKeys": {
+    "brand": "ek-claude-brand",
+    "lastLayouts": "ek-claude-last-layouts",
+    "templates": "ek-proto-templates",
+    "quality": "ek-claude-quality",
+    "captionStyles": "eklipse-caption-styles",
+    "timelineHeight": "ek-proto-timeline-height",
+    "history": "ek-claude-history"
+  },
+  "features": [
+    "Layouts",
+    "Elements",
+    "Captions",
+    "Timeline",
+    "AI Edit review",
+    "My styles",
+    "Audio",
+    "Effects",
+    "Export",
+    "Brand sticker"
+  ],
+  "uiLabels": [
+    "Layouts",
+    "Elements",
+    "Effects",
+    "Audio",
+    "Captions",
+    "Export",
+    "Small facecam",
+    "Circle facecam",
+    "Game UI",
+    "Split",
+    "Blurred",
+    "Fullscreen",
+    "Basecam",
+    "Mosaic",
+    "Dual facecam",
+    "Duo Split",
+    "Half",
+    "Recently used",
+    "All layouts",
+    "My styles",
+    "Make vertical",
+    "Social Stickers",
+    "Text Elements",
+    "Reactions",
+    "Animated Stickers",
+    "Gifs",
+    "Twitch Emotes",
+    "Custom Elements",
+    "Brand",
+    "Brand sticker",
+    "Title",
+    "Keep all",
+    "AI review",
+    "Socials"
+  ],
+  "scenarios": {
+    "demo": {
+      "describe": "Prototype default: two demo styles (\"My FPS clips\", \"Just chatting\") and demo recent layouts (Split, Circle facecam)",
+      "storage": {}
+    },
+    "fresh-user": {
+      "describe": "First clip ever: no saved style, nothing exported, so no \"Your style\" card and no \"Recently used\" row",
+      "storage": {
+        "ek-claude-history": "none"
+      }
+    },
+    "exported-no-style": {
+      "describe": "Has exported clips (last two: Game UI, then Split), never saved a style",
+      "storage": {
+        "ek-claude-history": "none",
+        "ek-claude-last-layouts": [
+          "Game UI",
+          "Split"
+        ]
+      }
+    },
+    "style-matches-last": {
+      "describe": "Saved style \"My usual\" uses Game UI, the same layout as the last exported clips",
+      "storage": {
+        "ek-claude-history": "none",
+        "ek-claude-last-layouts": [
+          "Game UI",
+          "Split"
+        ],
+        "ek-proto-templates": [
+          {
+            "name": "My usual",
+            "layout": "Game UI",
+            "fields": {
+              "Layout": true,
+              "Text": false,
+              "Captions": false,
+              "Gifs": false,
+              "Stickers": false,
+              "Sound Effects": false,
+              "Video Effects": false,
+              "AI Word Censoring": false,
+              "AI Remove Silences": false
+            },
+            "project": {
+              "layoutId": "Game UI"
+            }
+          }
+        ]
+      }
+    },
+    "style-differs-from-last": {
+      "describe": "Saved style \"My FPS clips\" uses Split, but the last exported clips used Game UI",
+      "storage": {
+        "ek-claude-history": "none",
+        "ek-claude-last-layouts": [
+          "Game UI",
+          "Split"
+        ],
+        "ek-proto-templates": [
+          {
+            "name": "My FPS clips",
+            "layout": "Split",
+            "fields": {
+              "Layout": true,
+              "Text": false,
+              "Captions": false,
+              "Gifs": false,
+              "Stickers": false,
+              "Sound Effects": false,
+              "Video Effects": false,
+              "AI Word Censoring": false,
+              "AI Remove Silences": false
+            },
+            "project": {
+              "layoutId": "Split"
+            }
+          }
+        ]
+      }
+    }
+  }
+}

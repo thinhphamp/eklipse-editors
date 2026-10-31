@@ -1,0 +1,83 @@
+{
+  "id": "fx-funny-voice-line",
+  "flow": "F6",
+  "menu": "Effects",
+  "persona": "heavy-editor",
+  "target": "claude-improvement",
+  "weight": 0.2,
+  "mission": "Add a funny talking voice that says \"no way\" at one point in the clip, then export.",
+  "start": {
+    "screen": "L00"
+  },
+  "checkpoints": [
+    {
+      "id": "voice",
+      "check": "state.audio.some(x => x.category === 'Text to speech' && /no way/i.test(x.label))",
+      "describe": "A spoken voice line saying the words is on the clip"
+    },
+    {
+      "id": "export",
+      "check": "state.exported === true",
+      "describe": "The clip export has finished"
+    }
+  ],
+  "bestPath": [
+    {
+      "do": "click",
+      "selector": ".ruler",
+      "positionRatio": 0.4
+    },
+    {
+      "do": "click",
+      "selector": ".rail nav button:has-text('Effects')"
+    },
+    {
+      "do": "click",
+      "selector": ".effects-root-card:has-text('Turn your text into speech')"
+    },
+    {
+      "do": "click",
+      "selector": "textarea"
+    },
+    {
+      "do": "key",
+      "key": "ControlOrMeta+a"
+    },
+    {
+      "do": "type",
+      "text": "no way",
+      "selector": "textarea"
+    },
+    {
+      "do": "click",
+      "selector": ".effects-voice:has-text('Beast')"
+    },
+    {
+      "do": "click",
+      "text": "Generate speech"
+    },
+    {
+      "do": "click",
+      "selector": ".tb-primary"
+    },
+    {
+      "do": "click",
+      "selector": ".export-primary"
+    }
+  ],
+  "bestTimeSeconds": null,
+  "budget": {
+    "minutes": 12
+  },
+  "why": {
+    "data": "Heavy editors explore the voice list before committing; text to speech is a Premium feature in the real editor.",
+    "source": "plans/261027-usability-probe-skill/personas.md"
+  },
+  "input": {
+    "clip": null
+  },
+  "playerIds": [
+    "heavy-explorer",
+    "heavy-meticulous"
+  ]
+}

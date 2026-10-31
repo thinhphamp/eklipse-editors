@@ -1,0 +1,69 @@
+{
+  "id": "fx-bleep-swearing",
+  "flow": "F1",
+  "menu": "Effects",
+  "persona": "quick-user",
+  "target": "claude-improvement",
+  "weight": 0.2,
+  "mission": "This clip has swearing in it and you want it TikTok-safe. Cover each swear word with a beep sound instead of letting people hear it, then export.",
+  "start": {
+    "screen": "L00"
+  },
+  "checkpoints": [
+    {
+      "id": "beeps",
+      "check": "state.audio.some(x => x.label === 'Censor beep')",
+      "describe": "A bleep sound sits over the swear words"
+    },
+    {
+      "id": "export",
+      "check": "state.exported === true",
+      "describe": "The clip export has finished"
+    }
+  ],
+  "bestPath": [
+    {
+      "do": "click",
+      "selector": ".rail nav button:has-text('Effects')"
+    },
+    {
+      "do": "click",
+      "selector": ".effects-root-card:has-text('Make your videos TikTok friendly')"
+    },
+    {
+      "do": "click",
+      "selector": ".effects-censor-select"
+    },
+    {
+      "do": "click",
+      "text": "Censorship beep"
+    },
+    {
+      "do": "click",
+      "text": "Run censor"
+    },
+    {
+      "do": "click",
+      "selector": ".tb-primary"
+    },
+    {
+      "do": "click",
+      "selector": ".export-primary"
+    }
+  ],
+  "bestTimeSeconds": null,
+  "budget": {
+    "minutes": 12
+  },
+  "why": {
+    "data": "Quick users take the first plausible control; the AI edit bundle (89.1% of projects) also includes word censoring, so the manual path is the one a quick user retraces.",
+    "source": "plans/261027-usability-probe-skill/personas.md"
+  },
+  "input": {
+    "clip": null
+  },
+  "playerIds": [
+    "quick-match",
+    "quick-differs"
+  ]
+}

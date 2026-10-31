@@ -1,0 +1,72 @@
+@import '../../theme/sticker-tokens-channel.css';
+/* Channel sticker looks (ch-stickers). Sized in em; every look reads --c (tint) and --on (text on tint). */
+
+.cs-stk{display:inline-flex;align-items:center;font-family:var(--font-ui);font-weight:800;color:var(--ch-white);white-space:nowrap;line-height:1;letter-spacing:-.02em}
+.cs-stk .ic{display:grid;place-items:center;flex:0 0 auto;font-style:normal;font-weight:900;color:var(--on)}
+.cs-stk .nm{display:flex;align-items:center;max-width:13em;overflow:hidden;text-overflow:ellipsis}
+.cs-stk.long .nm{font-size:.8em}
+/* several platforms in a single icon slot */
+.cs-stk .ic.many{display:flex;align-items:center;justify-content:center;gap:.3em;width:auto!important;min-width:2em;padding:0 .45em;border-radius:1em}
+.cs-stk .ic.many span{font-size:.85em}
+
+/* Eklipse family, cut to StreamLadder proportions */
+.cs-block .ic{width:2em;height:2em;background:var(--c);border-radius:.3em 0 0 .3em}
+.cs-block .nm{height:2em;padding:0 .75em;background:var(--ch-plate);border:.1em solid var(--c);border-left:0;border-radius:0 .3em .3em 0}
+.cs-round .ic{position:relative;z-index:1;width:2.2em;height:2.2em;border-radius:50%;background:var(--c);margin-right:-1em}
+.cs-round .nm{height:1.9em;padding:0 .85em 0 1.35em;background:var(--ch-plate);border:.1em solid var(--c);border-radius:0 1em 1em 0}
+.cs-fade{height:2em;padding:0 .85em 0 .3em;gap:1em;border-radius:1em 0 0 1em;background:linear-gradient(90deg,var(--c) 0 26%,var(--ch-plate) 66%)}
+.cs-fade .ic{width:1.5em;height:1.5em}
+.cs-cap .ic{position:relative;z-index:1;width:2.3em;height:2.3em;border-radius:50%;background:var(--c)}
+.cs-cap .nm{height:1.9em;padding:0 .9em 0 1.4em;margin-left:-1.1em;background:var(--ch-plate);border-radius:0 1em 1em 0;box-shadow:0 .12em .22em var(--ch-shadow)}
+.cs-solid{height:1.9em;padding:0 .8em;gap:.45em;background:var(--c);color:var(--on);border-radius:.25em;box-shadow:0 .12em .22em var(--ch-shadow)}
+.cs-under{flex-direction:column;align-items:flex-start;gap:.22em;padding:.42em .85em .38em;background:var(--ch-plate);border-radius:1em}
+.cs-under .row,.cs-follow .row{display:flex;align-items:center;gap:.4em}
+.cs-under .ul{height:.14em;width:100%;background:var(--c);border-radius:.2em}
+.cs-under .ic{width:1.3em;height:1.3em;border-radius:.25em;background:var(--c);font-size:.8em}
+.cs-row{height:2em;padding:0 .8em 0 .35em;gap:.45em;background:var(--ch-plate);border:.1em solid var(--c);border-radius:1em}
+.cs-row .icons,.cs-stack .icons,.cs-glow .icons,.cs-bounce .icons,.cs-drop .icons{display:flex;gap:.2em}
+.cs-row .ic,.cs-stack .ic,.cs-glow .ic,.cs-bounce .ic{width:1.35em;height:1.35em;border-radius:50%;background:var(--pc);color:var(--po);font-size:.8em}
+.cs-stack{flex-direction:column;gap:.25em}
+.cs-stack .ic{border-radius:.3em}
+.cs-stack .nm{height:1.8em;padding:0 .8em;background:var(--c);color:var(--on);border-radius:.3em}
+
+/* StreamLadder family, now tinted */
+.cs-neon{height:2.5em;padding:0 1.1em;background:var(--ch-black);border-radius:.3em;text-transform:uppercase;letter-spacing:.06em;color:color-mix(in srgb,var(--c) 20%,var(--ch-white));text-shadow:-.08em 0 var(--c),.08em 0 color-mix(in srgb,var(--c) 35%,var(--ch-neon-blue)),0 0 .55em var(--c)}
+.cs-sparkle{height:2.5em;padding:0 1.2em;gap:.5em;background:linear-gradient(90deg,color-mix(in srgb,var(--c) 55%,var(--ch-white)),var(--c));border-radius:1.3em;color:var(--on)}
+.cs-sparkle::before,.cs-sparkle::after{content:"✦";font-size:.8em;color:var(--ch-star)}
+.cs-soft{height:2.5em;padding:0 .9em 0 .4em;gap:.6em;background:color-mix(in srgb,var(--c) 16%,var(--ch-white));color:color-mix(in srgb,var(--c) 85%,var(--ch-black));border-radius:.4em}
+.cs-soft .ic{width:1.8em;height:1.8em;border-radius:.35em;background:color-mix(in srgb,var(--c) 85%,var(--ch-black));color:var(--ch-white)}
+.cs-glow{height:2.6em;padding:0 1em;gap:.45em;background:var(--c);color:var(--on);border-radius:.6em;box-shadow:0 0 .8em color-mix(in srgb,var(--c) 60%,var(--ch-white))}
+.cs-glow .ic{background:color-mix(in srgb,var(--c) 70%,var(--ch-black));color:var(--ch-white)}
+.cs-live{height:2.5em;background:var(--ch-plate);border-radius:.3em;overflow:hidden}
+.cs-live .ic{width:2.5em;height:2.5em;background:var(--c)}
+.cs-live .nm{padding:0 .8em}
+.cs-live .lv{margin-right:.6em;padding:.25em .45em;border-radius:.25em;background:var(--ch-live);font-size:.7em;letter-spacing:.06em}
+.cs-follow{flex-direction:column;align-items:center;gap:.25em;padding:.55em 1.2em .45em;background:var(--ch-plate);border-radius:1.4em}
+.cs-follow .ic-plain{font-style:normal;color:var(--c)}
+.cs-follow small{font-size:.62em;letter-spacing:.14em;color:var(--c)}
+.cs-follow .ul{height:.2em;width:70%;background:var(--c);border-radius:.2em}
+
+/* animated (premium) */
+.cs-slide{height:2.2em;gap:.4em}
+.cs-slide .ic{width:2.2em;height:2.2em;border-radius:.4em;background:var(--c);animation:cs-slide-ic 2.4s ease-in-out infinite}
+.cs-slide .nm{height:2.2em;padding:0 1em;background:var(--ch-plate);border-bottom:.2em solid var(--c);animation:cs-slide-nm 2.4s ease-in-out infinite}
+@keyframes cs-slide-ic{0%,15%{transform:translateX(-1.2em);opacity:0}35%,100%{transform:none;opacity:1}}
+@keyframes cs-slide-nm{0%,30%{clip-path:inset(0 100% 0 0)}55%,100%{clip-path:inset(0 0 0 0)}}
+.cs-pulse{height:2.6em;padding:0 1em 0 .5em;gap:.6em;background:var(--ch-plate);border-radius:.7em;border:.18em solid var(--c);animation:cs-edge 1.8s ease-in-out infinite}
+.cs-pulse .ic{width:1.8em;height:1.8em;border-radius:.4em;background:var(--c)}
+@keyframes cs-edge{50%{box-shadow:0 0 .9em var(--c)}}
+.cs-bell{height:2.6em;padding:0 1.1em 0 .5em;gap:.6em;background:linear-gradient(90deg,color-mix(in srgb,var(--c) 45%,var(--ch-white)),color-mix(in srgb,var(--c) 30%,var(--ch-mint-soft)));color:color-mix(in srgb,var(--c) 30%,var(--ch-bell-ink));border-radius:1.3em;animation:cs-bell 2.6s ease-in-out infinite}
+.cs-bell .ic{width:1.8em;height:1.8em;border-radius:50%;background:color-mix(in srgb,var(--c) 30%,var(--ch-bell-ink));color:var(--ch-white);font-size:.8em}
+@keyframes cs-bell{0%,60%,100%{transform:scale(1)}70%{transform:scale(1.08)}80%{transform:scale(.97)}}
+.cs-bounce{flex-direction:column;gap:.3em}
+.cs-bounce .ic{width:1.45em;height:1.45em;animation:cs-bnc 1.6s ease-in-out infinite}
+.cs-bounce .nm{height:1.9em;padding:0 .9em;background:var(--ch-plate);border-radius:.35em;border-bottom:.14em solid var(--c)}
+.cs-drop{height:2em;padding:0 .8em 0 .35em;gap:.45em;background:var(--c);color:var(--on);border-radius:.35em;box-shadow:.22em .22em 0 color-mix(in srgb,var(--c) 45%,var(--ch-black))}
+.cs-drop .ic{width:1.35em;height:1.35em;border-radius:.3em;background:var(--ch-plate);color:var(--ch-white);font-size:.8em;animation:cs-drp 2.4s ease-out infinite}
+.cs-bounce .ic:nth-child(2),.cs-drop .ic:nth-child(2){animation-delay:.15s}
+.cs-bounce .ic:nth-child(3),.cs-drop .ic:nth-child(3){animation-delay:.3s}
+.cs-bounce .ic:nth-child(4),.cs-drop .ic:nth-child(4){animation-delay:.45s}
+@keyframes cs-bnc{0%,60%,100%{transform:none}30%{transform:translateY(-.45em)}}
+@keyframes cs-drp{0%,10%{transform:translateY(-1.2em);opacity:0}30%,100%{transform:none;opacity:1}}
+@media (prefers-reduced-motion:reduce){.cs-stk,.cs-stk *{animation:none!important}}

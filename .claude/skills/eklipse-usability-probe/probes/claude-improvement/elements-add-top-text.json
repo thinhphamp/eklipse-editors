@@ -1,0 +1,56 @@
+{
+  "id": "elements-add-top-text",
+  "feature": "Elements",
+  "personaRefs": [
+    "first-clip-newcomer",
+    "ai-edit-accepter",
+    "returning-twitch-clipper",
+    "own-footage-uploader"
+  ],
+  "target": "claude-improvement",
+  "start": {
+    "screen": "default"
+  },
+  "goal": "Put a big line of text on the video that says INSANE CLUTCH so people know what happens.",
+  "success": {
+    "check": "state.elements.some(e => e.category === 'Text Elements' && /insane clutch/i.test(e.label))",
+    "describe": "A text element reading INSANE CLUTCH is on the clip (new or the existing placeholder rewritten)"
+  },
+  "budget": {
+    "steps": 8,
+    "scrolls": 3,
+    "minutes": 4
+  },
+  "bestPath": [
+    {
+      "do": "click",
+      "selector": ".rail nav button:has-text('Elements')"
+    },
+    {
+      "do": "click",
+      "selector": ".elements-text-tile >> nth=0"
+    },
+    {
+      "do": "click",
+      "selector": ".elements-text-edit textarea"
+    },
+    {
+      "do": "key",
+      "key": "ControlOrMeta+a"
+    },
+    {
+      "do": "type",
+      "selector": ".elements-text-edit textarea",
+      "text": "INSANE CLUTCH"
+    }
+  ],
+  "firstClickAlso": [
+    "^Title"
+  ],
+  "why": {
+    "data": "Text goes with +45.9 export points (same user) but is used in only 5.8% of projects",
+    "source": "docs/knowledge/editor-direction-research.md"
+  },
+  "holdout": false,
+  "notes": "The default project already has an ENTER TEXT HERE placeholder; rewriting it also meets the goal. The Title chip path is shorter in theory but did not open an editable text field in best-path (check in phase 6 logs)."
+}

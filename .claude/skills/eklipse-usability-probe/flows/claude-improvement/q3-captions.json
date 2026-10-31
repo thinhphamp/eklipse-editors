@@ -1,0 +1,61 @@
+{
+  "id": "q3-captions",
+  "flow": "Q3",
+  "menu": "Captions",
+  "persona": "quick-user",
+  "target": "claude-improvement",
+  "weight": 0.1,
+  "mission": "Add subtitles to what you say, keep the look simple, and export.",
+  "start": {
+    "screen": "L00"
+  },
+  "checkpoints": [
+    {
+      "id": "captions",
+      "check": "state.captions.generated === true",
+      "describe": "Captions are generated"
+    },
+    {
+      "id": "export",
+      "check": "state.exported === true",
+      "describe": "The clip export has finished"
+    }
+  ],
+  "bestPath": [
+    {
+      "do": "click",
+      "text": "Captions"
+    },
+    {
+      "do": "click",
+      "text": "Generate captions"
+    },
+    {
+      "do": "click",
+      "selector": ".tb-primary"
+    },
+    {
+      "do": "click",
+      "text": "Wait, then export"
+    },
+    {
+      "do": "click",
+      "selector": ".export-primary"
+    }
+  ],
+  "bestTimeSeconds": null,
+  "budget": {
+    "minutes": 12
+  },
+  "why": {
+    "data": "Captions are associated with 29.4 more export points for the same user.",
+    "source": "plans/261027-usability-probe-skill/personas.md"
+  },
+  "input": {
+    "clip": null
+  },
+  "playerIds": [
+    "quick-match",
+    "quick-differs"
+  ]
+}

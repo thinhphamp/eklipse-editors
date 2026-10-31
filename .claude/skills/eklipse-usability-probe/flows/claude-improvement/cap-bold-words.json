@@ -1,0 +1,70 @@
+{
+  "id": "cap-bold-words",
+  "flow": "C5",
+  "menu": "Captions",
+  "persona": "one-and-done",
+  "target": "claude-improvement",
+  "weight": 0.2,
+  "mission": "I want big bold words on screen while I talk, then export it.",
+  "start": {
+    "screen": "L00"
+  },
+  "checkpoints": [
+    {
+      "id": "captions",
+      "check": "state.captions.generated === true",
+      "describe": "Captions are generated"
+    },
+    {
+      "id": "bold",
+      "check": "(()=>{let c;try{c=JSON.parse(state.captions.text)}catch(e){return false}const s=c.style||{};return Number(s.weight)>=700 && (s.singleWord===true || /word/i.test(String(s.format||c.format||'')) || Number(s.size)>=58)})()",
+      "describe": "The caption text is large (bold look)"
+    },
+    {
+      "id": "export",
+      "check": "state.exported === true",
+      "describe": "The clip export has finished"
+    }
+  ],
+  "bestPath": [
+    {
+      "do": "click",
+      "selector": ".rail nav button:has-text(\"Captions\")"
+    },
+    {
+      "do": "click",
+      "selector": "button[aria-label=\"Preset of style THE HOOK.\"]"
+    },
+    {
+      "do": "click",
+      "text": "Generate captions"
+    },
+    {
+      "do": "click",
+      "selector": ".tb-primary"
+    },
+    {
+      "do": "click",
+      "text": "Wait, then export"
+    },
+    {
+      "do": "click",
+      "selector": ".export-primary"
+    }
+  ],
+  "bestTimeSeconds": null,
+  "budget": {
+    "minutes": 12
+  },
+  "why": {
+    "data": "One-and-done users stop at the first working result, so the flow tests whether a bold look is reachable inside the generate step.",
+    "source": "plans/261027-usability-probe-skill/personas.md"
+  },
+  "input": {
+    "clip": null
+  },
+  "playerIds": [
+    "once-novice",
+    "once-rusher"
+  ]
+}

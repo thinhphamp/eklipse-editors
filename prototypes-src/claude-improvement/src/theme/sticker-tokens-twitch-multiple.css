@@ -1,0 +1,27 @@
+/* Brand colours for the twitch-multiple sticker designs (hex allowed only in theme token files). */
+:root{
+  --stk-tm-white:#ffffff;
+  --stk-tm-black:#050505;
+  --stk-tm-ink:#111111;
+  --stk-tm-charcoal:#3b3b3d;
+  --stk-tm-shadow:#00000045;
+  --stk-tm-blue:#287cf3;
+  --stk-tm-blue-glow:#287cf36b;
+  --stk-tm-teal:#198f7c;
+  --stk-tm-teal-glow:#35d8bc80;
+  --stk-tm-purple:#9146ff;
+  --stk-tm-purple-dark:#5b21b6;
+  --stk-tm-purple-bright:#a72cff;
+  --stk-tm-purple-light:#c499ff;
+  --stk-tm-purple-glow:#9146ff73;
+  --stk-tm-magenta:#d329ff;
+  --stk-tm-live:#ff1838;
+  --stk-tm-cyan:#2db5ee;
+  --stk-tm-lavender:#eee7ff;
+  --stk-tm-red:#ff243c;
+  --stk-tm-neon-blue:#00cfff;
+  --stk-tm-hot-pink:#ed16c8;
+  --stk-tm-pink:#f27cda;
+  --stk-tm-pink-light:#f6b8ec;
+  --stk-tm-mint:#72dfd1;
+}

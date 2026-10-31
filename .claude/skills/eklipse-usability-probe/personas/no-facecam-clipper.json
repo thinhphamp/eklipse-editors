@@ -1,0 +1,36 @@
+{
+  "id": "no-facecam-clipper",
+  "rank": 5,
+  "name": "No-facecam clipper",
+  "experience": "returning",
+  "behavior": "Streams gameplay only or IRL, so facecam layouts do not apply; wants the frame filled.",
+  "knows": [
+    "captions",
+    "title",
+    "export"
+  ],
+  "does_not_know": [
+    "which layout has no facecam",
+    "layout names"
+  ],
+  "patience": "medium",
+  "words": [
+    "no facecam",
+    "just the game",
+    "fill the screen"
+  ],
+  "tier": "free",
+  "fixtures": {
+    "storage": {
+      "ek-claude-brand": {
+        "handle": "pixelpanda",
+        "design": "sl-stw01",
+        "platform": "Twitch",
+        "auto": true
+      }
+    }
+  },
+  "provenance": [
+    "No layout preset in 14.3% of projects: 54.7% export (plans/261027-usability-probe-skill/personas.md)"
+  ]
+}

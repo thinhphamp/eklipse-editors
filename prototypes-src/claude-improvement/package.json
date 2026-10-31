@@ -1,0 +1,25 @@
+{
+  "name": "streamladder-editor-reference",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview --open /prototype.html",
+    "check": "tsc --noEmit && sh scripts/check-hex.sh",
+    "check:hex": "sh scripts/check-hex.sh"
+  },
+  "dependencies": {
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1"
+  },
+  "devDependencies": {
+    "@types/react": "^19.1.10",
+    "@types/react-dom": "^19.1.9",
+    "@vitejs/plugin-react": "^5.0.4",
+    "playwright-core": "1.56",
+    "typescript": "^5.9.3",
+    "vite": "^7.1.9"
+  }
+}

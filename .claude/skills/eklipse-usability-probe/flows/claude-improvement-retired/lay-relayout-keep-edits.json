@@ -1,0 +1,58 @@
+{
+  "id": "lay-relayout-keep-edits",
+  "flow": "L5",
+  "menu": "Layouts",
+  "persona": "heavy-editor",
+  "target": "claude-improvement",
+  "weight": 0.2,
+  "mission": "You already put captions and stickers on this clip. Switch to a layout where the game fills the screen with a small camera in the corner, keep your captions and stickers, and export.",
+  "start": {
+    "screen": "default"
+  },
+  "checkpoints": [
+    {
+      "id": "layout",
+      "check": "state.layoutId === 'Small facecam'",
+      "describe": "The small-facecam layout is applied"
+    },
+    {
+      "id": "kept",
+      "check": "state.captions.generated === true && state.elements.length >= initial.elements.length",
+      "describe": "Captions and stickers are still there"
+    },
+    {
+      "id": "export",
+      "check": "state.exported === true",
+      "describe": "The clip export has finished"
+    }
+  ],
+  "bestPath": [
+    {
+      "do": "click",
+      "selector": ".layout-tile:has-text('Small facecam')"
+    },
+    {
+      "do": "click",
+      "selector": ".tb-primary"
+    },
+    {
+      "do": "click",
+      "selector": ".export-primary"
+    }
+  ],
+  "bestTimeSeconds": null,
+  "budget": {
+    "minutes": 12
+  },
+  "why": {
+    "data": "Heavy editors change layout late, after captions and elements; a layout change must not cost earlier edits.",
+    "source": "plans/261027-usability-probe-skill/personas.md"
+  },
+  "input": {
+    "clip": null
+  },
+  "playerIds": [
+    "heavy-explorer",
+    "heavy-meticulous"
+  ]
+}

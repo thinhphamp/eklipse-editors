@@ -1,0 +1,226 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Flow",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "flow",
+    "persona",
+    "target",
+    "weight",
+    "mission",
+    "start",
+    "checkpoints",
+    "bestPath",
+    "budget",
+    "why",
+    "input",
+    "playerIds"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+    },
+    "flow": {
+      "type": "string",
+      "pattern": "^[A-Z][0-9]+$"
+    },
+    "persona": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+$"
+    },
+    "target": {
+      "type": "string",
+      "minLength": 1
+    },
+    "weight": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "mission": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 300
+    },
+    "start": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "screen"
+      ],
+      "properties": {
+        "screen": {
+          "type": "string"
+        },
+        "storage": {
+          "type": "object"
+        }
+      }
+    },
+    "checkpoints": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "check",
+          "describe"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9-]+$"
+          },
+          "check": {
+            "type": "string",
+            "minLength": 3
+          },
+          "describe": {
+            "type": "string",
+            "minLength": 3
+          }
+        }
+      }
+    },
+    "bestPath": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "do"
+        ],
+        "properties": {
+          "do": {
+            "enum": [
+              "click",
+              "type",
+              "key",
+              "scroll",
+              "drag"
+            ]
+          },
+          "role": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "selector": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          },
+          "key": {
+            "type": "string"
+          },
+          "dy": {
+            "type": "number"
+          },
+          "to": {
+            "type": "string"
+          },
+          "positionRatio": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          }
+        }
+      }
+    },
+    "bestTimeSeconds": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "budget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "minutes"
+      ],
+      "properties": {
+        "minutes": {
+          "type": "number",
+          "minimum": 0.5,
+          "maximum": 120
+        }
+      }
+    },
+    "why": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "data",
+        "source"
+      ],
+      "properties": {
+        "data": {
+          "type": "string",
+          "minLength": 5
+        },
+        "source": {
+          "type": "string",
+          "minLength": 3
+        }
+      }
+    },
+    "playerIds": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9-]+$"
+      }
+    },
+    "input": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "clip"
+      ],
+      "properties": {
+        "clip": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "ai-bundle",
+            "horizontal-kept",
+            "no-facecam",
+            "vertical-upload",
+            "song-not-in-library",
+            "two-clips",
+            null
+          ]
+        },
+        "missionExtra": {
+          "type": "string",
+          "minLength": 5,
+          "maxLength": 300
+        }
+      }
+    },
+    "menu": {
+      "type": "string",
+      "enum": [
+        "Layouts",
+        "Captions",
+        "Elements",
+        "Effects",
+        "Audio",
+        "Export"
+      ]
+    }
+  }
+}

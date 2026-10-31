@@ -1,0 +1,36 @@
+{
+  "id": "horizontal-keeper",
+  "rank": 6,
+  "name": "Horizontal keeper",
+  "experience": "returning",
+  "behavior": "Leaves horizontal footage at 16:9, often a Premium clip; may not notice it, or keeps it on purpose for YouTube.",
+  "knows": [
+    "YouTube",
+    "export",
+    "captions"
+  ],
+  "does_not_know": [
+    "that the clip is still 16:9",
+    "how to make it vertical"
+  ],
+  "patience": "medium",
+  "words": [
+    "for YouTube",
+    "make it a short",
+    "it has black bars"
+  ],
+  "tier": "legacy-premium",
+  "fixtures": {
+    "storage": {
+      "ek-claude-brand": {
+        "handle": "pixelpanda",
+        "design": "sl-stw01",
+        "platform": "Twitch",
+        "auto": true
+      }
+    }
+  },
+  "provenance": [
+    "16:9 kept in 8.2% of projects: 41.0% export, lowest group; Premium clips 17.2% (plans/261027-usability-probe-skill/personas.md)"
+  ]
+}

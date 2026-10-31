@@ -1,0 +1,447 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Elements menu · ideas · round 1</title>
+<style>
+/* ===== Tokens: copied from prototypes-src/claude-improvement/src/theme/tokens.css (Eklipse dark) ===== */
+@font-face{font-family:'Hanken Grotesk';font-weight:400;src:url('../../prototypes-src/claude-improvement/public/fonts/hanken-grotesk-latin-400-normal.woff2') format('woff2')}
+@font-face{font-family:'Hanken Grotesk';font-weight:600;src:url('../../prototypes-src/claude-improvement/public/fonts/hanken-grotesk-latin-600-normal.woff2') format('woff2')}
+@font-face{font-family:'Hanken Grotesk';font-weight:700;src:url('../../prototypes-src/claude-improvement/public/fonts/hanken-grotesk-latin-700-normal.woff2') format('woff2')}
+:root{
+  --color-ek-purple:#735EF4;--color-ek-purple-light:#A496F8;--color-ek-yellow:#FFA036;
+  --color-ek-grey-light:#A3A3BF;--color-ek-grey:#434359;--color-ek-grey-dark:#2B2B38;--color-ek-grey-darker:#1B1B26;
+  --color-ek-grey-black:#11111A;--color-ek-success:#46F88D;--color-ek-danger:#EF3149;--color-ek-white:#FFFFFF;
+  --color-ek-text-secondary:#D0D0D0;--color-ek-border-secondary:#FFFFFF14;--color-ek-hover:#383849;--color-ek-black:#000000;
+  --font-ui:'Hanken Grotesk',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --bg-app:var(--color-ek-grey-black);--bg-panel:var(--color-ek-grey-darker);--bg-card:var(--color-ek-grey-dark);
+  --bg-hover:var(--color-ek-hover);--bg-inset:var(--color-ek-grey-black);
+  --border:var(--color-ek-grey);--border-subtle:var(--color-ek-border-secondary);
+  --text-1:var(--color-ek-white);--text-2:var(--color-ek-text-secondary);--text-3:var(--color-ek-grey-light);
+  --accent:var(--color-ek-purple);--accent-text:var(--color-ek-purple-light);
+  --accent-soft:color-mix(in srgb,var(--color-ek-purple) 22%,var(--color-ek-grey-dark));
+  --premium:var(--color-ek-yellow);--success:var(--color-ek-success);--danger:var(--color-ek-danger);
+  /* text preset art, same values as --art-* in tokens.css */
+  --art-a8ff00:#A8FF00;--art-f4f400:#F4F400;--art-47fa4b:#47FA4B;--art-d0b7ff:#D0B7FF;--art-ff403b:#FF403B;
+  --art-ffda00:#FFDA00;--art-13f3d0:#13F3D0;--art-e877e9:#E877E9;--art-fe1791:#FE1791;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg-app);color:var(--text-1);font:15px/1.5 var(--font-ui)}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer}
+button:focus-visible,input:focus-visible{outline:2px solid var(--accent-text);outline-offset:2px}
+
+/* ===== Board chrome ===== */
+.board{max-width:1180px;margin:0 auto;padding:48px 24px 96px}
+.board-head{max-width:800px;margin-bottom:32px}
+.kicker{color:var(--text-3);font-size:13px;letter-spacing:.04em;text-transform:uppercase}
+.board-head h1{font-size:32px;line-height:1.2;margin:8px 0 12px;letter-spacing:-.01em}
+.board-head p{color:var(--text-2);margin:0 0 8px}
+.block{padding:40px 0;border-top:1px solid var(--border-subtle)}
+.block>h2{font-size:24px;margin:0 0 6px}
+.block>p{color:var(--text-2);margin:0 0 20px;max-width:800px}
+.compare{display:grid;grid-template-columns:1.25fr 1fr;gap:24px;align-items:start}
+.compare img{width:100%;border:1px solid var(--border);border-radius:10px;display:block}
+figure{margin:0}
+figcaption{font-size:13px;color:var(--text-3);margin-top:8px}
+table.map{width:100%;border-collapse:collapse;font-size:14px}
+.map th,.map td{text-align:left;vertical-align:top;padding:9px 12px;border-bottom:1px solid var(--border-subtle)}
+.map th{color:var(--text-3);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.04em}
+.map td:first-child{color:var(--text-1);font-weight:600;white-space:nowrap}
+.map td{color:var(--text-2)}
+.from{display:inline-block;font-size:11px;padding:1px 7px;border-radius:99px;background:var(--bg-card);color:var(--text-3);margin-left:4px}
+.from.new{background:var(--accent-soft);color:var(--accent-text)}
+
+.idea{display:grid;grid-template-columns:574px 1fr;gap:40px;padding:48px 0;border-top:1px solid var(--border-subtle)}
+.idea-notes h2{font-size:24px;line-height:1.2;margin:0 0 6px}
+.tag{display:inline-block;font-size:12px;padding:2px 10px;border-radius:99px;background:var(--bg-card);color:var(--text-2);margin-bottom:12px}
+.tag.rec{background:var(--accent);color:var(--color-ek-white)}
+.one{font-size:17px;color:var(--text-2);margin:0 0 16px}
+.idea-notes h3{font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--text-3);margin:20px 0 6px}
+.idea-notes ul{margin:0;padding-left:18px;color:var(--text-2)}
+.idea-notes li{margin:3px 0}
+.idea-notes li b{color:var(--text-1);font-weight:600}
+.scen{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 10px;align-items:center}
+.scen span{font-size:12px;color:var(--text-3);margin-right:4px}
+.scen button{font-size:12px;padding:4px 10px;border-radius:99px;border:1px solid var(--border);background:none;color:var(--text-2)}
+.scen button.on{background:var(--bg-card);color:var(--text-1);border-color:var(--accent)}
+ol.qs{color:var(--text-2);max-width:820px;padding-left:20px}
+ol.qs li{margin:8px 0}
+ol.qs b{color:var(--text-1)}
+
+/* ===== Editor mock: rail + 520px side panel ===== */
+.editor{position:relative;display:flex;height:800px;border:1px solid var(--border);border-radius:12px;overflow:hidden;background:var(--bg-panel)}
+.rail{width:52px;flex:0 0 52px;border-right:1px solid var(--border);display:flex;flex-direction:column;align-items:center;gap:4px;padding:12px 0;background:var(--bg-app)}
+.rail i{display:flex;flex-direction:column;align-items:center;font-style:normal;font-size:9px;line-height:1.1;text-align:center;color:var(--text-3);gap:3px;padding:6px 2px;width:48px;border-radius:8px}
+.rail i::before{content:"";width:18px;height:18px;border-radius:5px;border:1.5px solid currentColor}
+.rail i.on{color:var(--text-1);background:var(--bg-card)}
+.rail i.on::before{border-color:var(--accent-text);background:var(--accent-soft)}
+.rail i.ask{opacity:.45}
+.panel{position:relative;width:520px;overflow:auto;padding:18px 16px 40px;scrollbar-width:thin}
+.ph{padding-bottom:12px;margin-bottom:12px;border-bottom:1px solid var(--border-subtle)}
+.ph h4{font-size:18px;line-height:1.2;margin:0 0 4px}
+.ph p{font-size:14px;margin:0;color:var(--text-3)}
+.back{border:0;background:none;color:var(--text-3);font-size:13px;padding:0;margin-bottom:8px}
+.toast{position:absolute;left:68px;right:16px;bottom:14px;padding:10px 14px;border-radius:10px;background:var(--bg-card);border:1px solid var(--accent);font-size:13px;opacity:0;transform:translateY(8px);transition:.2s;pointer-events:none}
+.toast.show{opacity:1;transform:none}
+
+/* top tabs (production: icon + label, filled when active) */
+.ttabs{display:flex;gap:4px;margin-bottom:12px}
+.ttab{display:flex;align-items:center;gap:7px;height:38px;padding:0 14px;border-radius:8px;border:0;background:none;color:var(--text-3);font-weight:600;font-size:14px}
+.ttab svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.8}
+.ttab:hover{color:var(--text-1)}
+.ttab.on{background:var(--bg-card);color:var(--text-1)}
+.ttab .n{font-size:11px;font-weight:600;padding:0 6px;border-radius:99px;background:var(--bg-inset);color:var(--text-3)}
+.ttab.on .n{background:var(--accent-soft);color:var(--accent-text)}
+.ttabs.seg{background:var(--bg-inset);padding:3px;border-radius:10px}
+.ttabs.seg .ttab{flex:1;justify-content:center;height:34px;padding:0 8px}
+/* sub-tabs (production: underline) */
+.stabs{display:flex;align-items:center;gap:2px;border-bottom:1px solid var(--border-subtle);margin-bottom:12px}
+.stab{position:relative;border:0;background:none;padding:8px 10px 10px;font-size:14px;color:var(--text-3)}
+.stab.on{color:var(--accent-text);font-weight:600}
+.stab.on::after{content:"";position:absolute;left:10px;right:10px;bottom:-1px;height:2px;border-radius:2px;background:var(--accent)}
+.gridbtn{margin-left:auto;width:32px;height:32px;border-radius:8px;border:1px solid var(--border);background:none;display:grid;place-items:center;padding:0;color:var(--text-2)}
+.gridbtn svg{width:16px;height:16px;fill:currentColor}
+.pills{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 12px}
+.pill{height:30px;padding:0 12px;border-radius:99px;border:1px solid var(--border);background:none;font-size:12px;color:var(--text-2)}
+.pill.on{background:var(--color-ek-white);color:var(--color-ek-black);border-color:var(--color-ek-white)}
+/* search */
+.search{display:flex;gap:0;margin-bottom:12px}
+.search label{flex:1;display:flex;align-items:center;gap:8px;height:40px;padding:0 12px;border:1px solid var(--border);border-right:0;border-radius:8px 0 0 8px;background:var(--bg-inset)}
+.search label:focus-within{border-color:var(--accent)}
+.search input{flex:1;border:0;background:none;outline:none;min-width:0}
+.search svg{width:16px;height:16px;stroke:var(--text-3);fill:none;stroke-width:2}
+.search button{height:40px;padding:0 16px;border-radius:0 8px 8px 0;border:1px solid var(--border);background:var(--bg-card);font-weight:600;font-size:14px}
+.search.solo label{border-right:1px solid var(--border);border-radius:8px}
+.search .clear{border:0;background:none;color:var(--text-3);padding:0;height:auto}
+.sticky{position:sticky;top:-18px;z-index:2;background:var(--bg-panel);padding-top:6px;margin-top:-6px}
+
+/* section headers */
+.sec{margin:18px 0 8px;display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.sec h5{font-size:15px;margin:0}
+.sec h5 small{font-weight:400;color:var(--text-3);margin-left:6px;font-size:12px}
+.sec button{border:0;background:none;color:var(--accent-text);font-size:12px;padding:0}
+
+/* tiles: production shape (thumb + length + name), prototype style */
+.grid{display:grid;grid-template-columns:repeat(var(--cols,3),1fr);gap:10px}
+.shelf{display:grid;grid-auto-flow:column;grid-auto-columns:31%;gap:10px;overflow-x:auto;padding-bottom:4px;scrollbar-width:thin}
+.t{display:block;border:0;background:none;padding:0;text-align:left;min-width:0}
+.th{position:relative;aspect-ratio:16/10;border-radius:10px;overflow:hidden;background:var(--bg-card);border:1.5px solid var(--border-subtle);display:grid;place-items:center}
+.t:hover .th{border-color:var(--accent)}
+.th video,.th img{width:100%;height:100%;object-fit:cover;display:block}
+.th img.fit{object-fit:contain;padding:10%}
+.th .len{position:absolute;right:6px;bottom:6px;font-size:11px;font-weight:600;padding:1px 6px;border-radius:5px;background:color-mix(in srgb,var(--color-ek-black) 75%,transparent)}
+.th .snd{position:absolute;left:6px;bottom:6px;width:20px;height:20px;border-radius:5px;display:grid;place-items:center;background:color-mix(in srgb,var(--color-ek-black) 75%,transparent)}
+.th .snd svg{width:12px;height:12px;stroke:var(--text-1);fill:none;stroke-width:2}
+.th .kind{position:absolute;left:6px;top:6px;font-size:10px;font-weight:700;padding:1px 6px;border-radius:5px;background:color-mix(in srgb,var(--color-ek-black) 70%,transparent);color:var(--text-2)}
+.th .add{position:absolute;right:6px;top:6px;height:22px;padding:0 8px;border-radius:6px;background:var(--accent);font-size:11px;font-weight:600;display:none;align-items:center}
+.t:hover .add{display:flex}
+.t .nm{display:block;font-size:13px;color:var(--text-2);margin-top:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.glyph{font-size:30px;color:var(--accent-text)}
+.txt{font-weight:800;font-size:13px;line-height:1.05;text-align:center;text-transform:uppercase;padding:6px}
+.txt.o{-webkit-text-stroke:.6px var(--color-ek-black);paint-order:stroke}
+.txt.box{background:var(--c);color:var(--color-ek-black)!important;padding:4px 8px;border-radius:4px}
+.react{font-size:12px;color:var(--text-2);text-align:left;padding:8px 10px;width:100%}
+.react b{display:block;font-size:11px;color:var(--accent-text)}
+.fxs{width:100%;height:100%;display:grid;place-items:center;font-weight:700;font-size:13px;background:linear-gradient(135deg,color-mix(in srgb,var(--color-ek-purple) 50%,var(--color-ek-grey-dark)),var(--color-ek-grey-dark))}
+.upload{display:flex;flex-direction:column;align-items:center;gap:2px;padding:18px;border:1px dashed var(--border);border-radius:10px;color:var(--text-3);font-size:12px;text-align:center}
+.upload strong{color:var(--text-1);font-size:14px}
+.empty{border:1px dashed var(--border);border-radius:10px;padding:18px;color:var(--text-3);font-size:13px;text-align:center}
+.empty b{color:var(--text-1)}
+.empty .pill{margin:8px 4px 0}
+.hook{display:flex;gap:12px;align-items:center;width:100%;padding:12px 14px;border-radius:10px;border:1px solid var(--border-subtle);background:var(--bg-card);text-align:left;margin-bottom:12px}
+.hook i{font-style:normal;width:34px;height:34px;border-radius:8px;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent-text);font-weight:700}
+.hook small{display:block;color:var(--text-3);font-size:12px}
+.note{font-size:12px;color:var(--premium);margin:0 0 10px}
+
+/* B: on this clip */
+.onclip{background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:10px;padding:10px 12px;margin-bottom:12px}
+.onclip-h{display:flex;justify-content:space-between;align-items:center;font-size:13px;font-weight:600;margin-bottom:8px}
+.onclip-h small{font-weight:400;color:var(--text-3)}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{display:flex;align-items:center;gap:6px;height:34px;padding:0 4px 0 4px;border-radius:8px;background:var(--bg-inset);border:1px solid var(--border-subtle);font-size:12px;color:var(--text-2)}
+.chip .mini{width:36px;height:24px;border-radius:5px;overflow:hidden;background:var(--bg-hover);display:grid;place-items:center;font-size:9px;font-weight:800}
+.chip .mini video,.chip .mini img{width:100%;height:100%;object-fit:cover}
+.chip .ai{font-size:9px;font-weight:800;padding:0 4px;border-radius:4px;background:var(--accent-soft);color:var(--accent-text)}
+.chip .x{width:22px;height:22px;border:0;background:none;color:var(--text-3);padding:0;border-radius:5px}
+.chip .x:hover{background:var(--bg-hover);color:var(--text-1)}
+.aihint{font-size:12px;color:var(--text-3);margin:8px 0 0}
+
+/* C: category cards */
+.cards{display:grid;gap:10px}
+.cat{display:grid;grid-template-columns:1fr 210px;gap:12px;align-items:center;width:100%;padding:12px;border-radius:12px;border:1px solid var(--border-subtle);background:var(--bg-card);text-align:left}
+.cat:hover{border-color:var(--accent)}
+.cat h6{margin:0 0 2px;font-size:16px;display:flex;align-items:center;gap:8px}
+.cat h6 svg{width:18px;height:18px;stroke:var(--accent-text);fill:none;stroke-width:1.8}
+.cat p{margin:0;font-size:12px;color:var(--text-3)}
+.cat .peek{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}
+.cat .peek .th{border-radius:6px}
+.cat .peek .txt{font-size:8px;padding:2px}
+.mini-row{display:flex;gap:8px;align-items:center;margin-top:12px;padding:10px 12px;border-radius:10px;border:1px dashed var(--border);color:var(--text-2);font-size:13px;width:100%;background:none;text-align:left}
+.mini-row small{color:var(--text-3)}
+</style>
+</head>
+<body>
+<main class="board">
+  <header class="board-head">
+    <span class="kicker">Design draft · elements-menu · round 1 · 30 Oct 2026</span>
+    <h1>Elements: production's organisation, prototype's style</h1>
+    <p>Production splits Elements into top tabs (<b>Meme · Audio · Texts · Effects</b>) with sub-tabs, a search bar and a media grid. The prototype has one long scroll of sections and no memes at all. Audio stays its own rail tab, so Elements becomes <b>Meme · Texts · Effects</b>.</p>
+    <p>Three ways to do it below. Every mock is clickable: tabs, sub-tabs, search, grid size, adding a tile. Use the scenario chips to switch between first-time, returning, after AI Edit and no-results states.</p>
+  </header>
+
+  <section class="block">
+    <h2>Today</h2>
+    <p>Left: production Elements → Meme. Right: what moves where. Memes are the biggest gap: 12 meme videos exist in the prototype's media folder but the Elements tab never shows them.</p>
+    <div class="compare">
+      <figure><img src="../../mvumbxsc-image.png" alt="Production editor, Elements menu, Meme tab: search bar and a 3-column meme video grid"><figcaption>Production · Elements → Meme (mvumbxsc-image.png)</figcaption></figure>
+      <table class="map">
+        <tr><th>Tab</th><th>Sub-tabs (proposal)</th></tr>
+        <tr><td>Meme</td><td>Memes <span class="from new">new</span>, GIFs, Stickers, Emotes, Uploads <span class="from">was Custom Elements</span></td></tr>
+        <tr><td>Texts</td><td>AI hook title card, Titles, Intro, Outro, Reactions</td></tr>
+        <tr><td>Effects</td><td>Open question 1: overlay effects, or the 9 effects from the Effects rail tab</td></tr>
+        <tr><td>Audio</td><td>Stays on the rail <span class="from">as today</span></td></tr>
+        <tr><td>Channel stickers</td><td>Own rail tab <span class="from">ch-stickers</span></td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- ============ A ============ -->
+  <section class="idea" id="A">
+    <div>
+      <div class="scen" data-for="A"></div>
+      <div class="editor"><div class="rail" data-rail></div><div class="panel" data-panel></div><div class="toast"></div></div>
+    </div>
+    <div class="idea-notes">
+      <span class="tag">A · Production port</span>
+      <h2>Same tabs as production, nothing more</h2>
+      <p class="one">Top tabs Meme · Texts · Effects, underline sub-tabs, search with a Search button, grid-size toggle. Returning users from production find everything where it was.</p>
+      <h3>How it works</h3>
+      <ul>
+        <li>Opens on <b>Meme → Memes</b>. Tabs and sub-tab are remembered per user.</li>
+        <li>Search applies to the open sub-tab only, like production.</li>
+        <li>Tiles show length and a sound icon for memes with audio; hover plays the preview, <b>+ Add</b> or click adds at the playhead and opens today's edit page.</li>
+        <li>Grid toggle: 3 columns (default) or 2 large.</li>
+      </ul>
+      <h3>Pros</h3>
+      <ul><li>Zero relearning for production users; easiest port.</li><li>Each tab is short and focused.</li></ul>
+      <h3>Cons</h3>
+      <ul><li>Search finds nothing if you're in the wrong sub-tab ("GG" is a GIF, not a meme).</li><li>Three levels (tab → sub-tab → tile) before anything is added.</li><li>No view of what is already on the clip (AI memes).</li></ul>
+      <h3>Edge cases</h3>
+      <ul><li><b>No results</b>: message + "Clear search".</li><li><b>Uploads empty</b>: upload box only (10 MB, png/jpeg/gif, premium as today).</li><li><b>16:9 clip</b>: memes are added at the same size, centred on the game area.</li></ul>
+    </div>
+  </section>
+
+  <!-- ============ B ============ -->
+  <section class="idea" id="B">
+    <div>
+      <div class="scen" data-for="B"></div>
+      <div class="editor"><div class="rail" data-rail></div><div class="panel" data-panel></div><div class="toast"></div></div>
+    </div>
+    <div class="idea-notes">
+      <span class="tag rec">B · Recommended</span>
+      <h2>Production tabs + one search + "On this clip"</h2>
+      <p class="one">Same Meme · Texts · Effects tabs, plus an <b>All</b> tab with a shelf per type, one search across every tab, and a strip of the elements already on the clip.</p>
+      <h3>How it works</h3>
+      <ul>
+        <li><b>All</b> (default): Recently used (returning users), then a shelf for Memes, Texts, GIFs, Stickers, Emotes, Effects; "See all" opens that tab.</li>
+        <li><b>One search</b> on top, sticky. Tabs show result counts, so "GG" in Meme says "0" and All shows it under GIFs.</li>
+        <li><b>On this clip</b>: what's already added, AI items tagged. Click to edit, × to remove. Hidden when the clip is empty.</li>
+        <li>Sub-tabs become pills (prototype style) inside each tab.</li>
+      </ul>
+      <h3>Pros</h3>
+      <ul><li>Production structure is still there for people who know it.</li><li>Search can't miss because of the wrong tab.</li><li>Fixing AI memes in one place; repo data: untouched AI memes export 44.4% vs 72.9% when edited.</li></ul>
+      <h3>Cons</h3>
+      <ul><li>One more tab than production.</li><li>On this clip repeats the timeline; needs to stay one row.</li></ul>
+      <h3>Edge cases</h3>
+      <ul><li><b>First time</b>: no Recent, no On this clip; All starts with Memes.</li><li><b>After AI Edit</b>: 3 AI memes listed with "AI" tag and "Swap" in the edit page.</li><li><b>No results anywhere</b>: suggests GIFs/Emotes search terms and Upload.</li><li><b>Many items on clip</b>: chips wrap to 2 rows, then "+N more".</li></ul>
+    </div>
+  </section>
+
+  <!-- ============ C ============ -->
+  <section class="idea" id="C">
+    <div>
+      <div class="scen" data-for="C"></div>
+      <div class="editor"><div class="rail" data-rail></div><div class="panel" data-panel></div><div class="toast"></div></div>
+    </div>
+    <div class="idea-notes">
+      <span class="tag">C · Drill-in</span>
+      <h2>Three big doors, then a full gallery</h2>
+      <p class="one">Elements opens on three category cards (Meme, Texts, Effects) with a live peek. Pick one to get production's gallery with sub-tabs; back returns to the doors.</p>
+      <h3>How it works</h3>
+      <ul>
+        <li>Landing: search, three cards with 3 previews each, Recently used (returning), Upload row.</li>
+        <li>Card → gallery page, "← Elements", pills for sub-tabs, grid toggle (same as the prototype's "Full page" today).</li>
+        <li>Searching on the landing shows results grouped by type.</li>
+      </ul>
+      <h3>Pros</h3>
+      <ul><li>Calm first screen; the three types are obvious to first-time users.</li><li>Gallery pages get the full panel height.</li><li>Works the same on a narrow/mobile panel.</li></ul>
+      <h3>Cons</h3>
+      <ul><li>Always one extra click before a meme, for the heavy users who add memes most.</li><li>Further from production's layout than A or B.</li></ul>
+      <h3>Edge cases</h3>
+      <ul><li><b>First time</b>: no Recent row.</li><li><b>No results</b>: grouped empty state with Upload.</li><li><b>Back</b> keeps the search and scroll position.</li></ul>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>Questions before round 2</h2>
+    <ol class="qs">
+      <li><b>What is in production's Elements → Effects?</b> Overlay effect videos, or the same effects as the prototype's Effects tab (Zoom Blur, Shake, Glitch…)? If the same, the Effects rail tab could fold into Elements; if overlays, Effects stays on the rail and the Elements tab needs another name to avoid two "Effects". A screenshot of that tab settles it. (Mocks show the 9 prototype effects as a stand-in.)</li>
+      <li><b>Tab order</b>: production's Meme · Texts · Effects, or Texts first? Text has the bigger export gap in the repo data (+45.9 vs +32.7 for own memes).</li>
+      <li><b>Meme sub-tabs</b>: production shows only "Meme". Are GIFs, stickers and emotes elsewhere in production, or new here?</li>
+      <li><b>Meme sound</b>: memes are videos with audio. Add them with sound on (100%) or muted?</li>
+    </ol>
+  </section>
+</main>
+
+<script>
+/* ===== Data: real assets from prototypes-src/claude-improvement/public/media (manifest.json) ===== */
+const M='../../prototypes-src/claude-improvement/public/media/';
+const memes=[['Big Speaker','big-speaker-5817',5150],['Cat Microwave','cat-microwave-5811',4200],['Cat Wiwiwi','cat-wiwiwi-5816',2150],['Cat bouncing','cat-bouncing-5812',3100],['Cats arguing','cats-arguing-5810',3050],['Give it to me','give-it-to-me-5815',4200],['Grandma being silly','grandma-being-silly-5809',2150],['Robert Downey Jr dancing','robert-downey-jr-dancing-5814',5100],['Scary Movie 3 rules to follow','scary-movie-3-rules-to-follow-meme-5813',3150],['We are back','we-are-back-bitches-5820',5200],["Whoa, whoa, we're not doing that",'whoa-whoa-whoa-no-no-we-re-not-doing-5818',5100]]
+  .map(([n,f,ms])=>({n,type:'meme',src:M+'memes/'+f+'.webm',ms,sound:true}));
+const gifs=['clutch:CLUTCH','ez:EZ','gg:GG','lets-go:LET\'S GO','no-way:NO WAY','oof:OOF','pog:POG','rip:RIP'].map(x=>{const[f,n]=x.split(':');return{n,type:'gif',img:M+'gifs/'+f+'.webp'}});
+const emotes=['cool:EkCool','lul:EkLUL','love:EkLove','pog:EkPog','rage:EkRage','sadge:EkSadge','skull:EkSkull','smile:EkSmile'].map(x=>{const[f,n]=x.split(':');return{n,type:'emote',img:M+'emotes/ek-'+f+'.png',fit:1}});
+const stickers=[['Bouncing ball','●'],['Double ring','◎'],['Heart beat','♥'],['Pulse ring','◌'],['Sparkle','✦'],['Spinning square','◆'],['Spinning star','★'],['Wobble triangle','▲']].map(([n,g])=>({n,type:'sticker',glyph:g}))
+  .concat([['Big Speaker','meme-big-speaker-5817',5150],['We are back','meme-we-are-back-bitches-5820',5200]].map(([n,f,ms])=>({n:n+' (cut-out)',type:'sticker',src:M+'stickers/'+f+'.webm',ms})));
+const txtStyles=[['Lime outline','--art-a8ff00','o'],['White outline','--color-ek-white','o'],['Yellow box','--art-f4f400','box'],['Green outline','--art-47fa4b','o'],['Lilac','--art-d0b7ff',''],['Red box','--art-ff403b','box'],['Gold outline','--art-ffda00','o'],['Teal','--art-13f3d0',''],['Pink box','--art-e877e9','box']];
+const mkTxt=(label,cat)=>txtStyles.map(([n,c,s])=>({n,type:'text',cat,label,c,s}));
+const texts={Titles:mkTxt('Enter text here','Titles'),Intro:mkTxt('Wait for it','Intro').slice(0,6),Outro:mkTxt('Follow for more','Outro').slice(0,6),
+  Reactions:['Twitch · streamer: Nice shot!','Instagram · streamer reacted','TikTok · streamer liked','Twitch · streamer cheered'].map(r=>{const[a,b]=r.split(' · ');return{n:b,type:'react',plat:a}})};
+const effects=['Zoom Blur','Shake','Slide Shake','Morph','Slide','Screen Shake','Glitch','Pixelate','Film Grain Shake'].map(n=>({n,type:'effect'}));
+const uploaded={n:'my-logo.jpg',type:'upload',img:M+'demo-poster.jpg'};
+const MEME_SUBS={Memes:memes,GIFs:gifs,Stickers:stickers,Emotes:emotes,Uploads:[]};
+const TABS={Meme:MEME_SUBS,Texts:texts,Effects:{All:effects}};
+const ICON={Meme:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8.5 14.5a4.5 4.5 0 0 0 7 0M9 9.5h.01M15 9.5h.01"/></svg>',
+  Texts:'<svg viewBox="0 0 24 24"><path d="M4 6V4h12v2M10 4v16M8 20h4M14 12v-1h7v1M17.5 11v9M16 20h3"/></svg>',
+  Effects:'<svg viewBox="0 0 24 24"><path d="M10 4c-2 0-2.5 2-2.8 4L6 18c-.3 1.6-1 2-2 2M5 10h7M14 10l6 8M20 10l-6 8"/></svg>',
+  All:'<svg viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg>'};
+const SEARCH='<svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>';
+const SND='<svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9zM17 9a4 4 0 0 1 0 6"/></svg>';
+const GRID='<svg viewBox="0 0 16 16"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="1" y="9" width="6" height="6" rx="1"/><rect x="9" y="9" width="6" height="6" rx="1"/></svg>';
+const RAIL=['Templates','Channel stickers','Captions','Elements','Effects','Audio'];
+const SCENS=[['first','First time'],['return','Returning'],['ai','After AI Edit'],['none','No results']];
+
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const len=ms=>ms?'0:'+String(Math.round(ms/1000)).padStart(2,'0'):'';
+const match=(it,q)=>!q||(it.n+' '+(it.label||'')+' '+(it.plat||'')).toLowerCase().includes(q.toLowerCase());
+function thumb(it){
+  if(it.src)return `<video src="${it.src}#t=0.4" muted loop playsinline preload="metadata"></video>`;
+  if(it.img)return `<img class="${it.fit?'fit':''}" src="${it.img}" alt="">`;
+  if(it.glyph)return `<span class="glyph">${it.glyph}</span>`;
+  if(it.type==='text')return `<span class="txt ${it.s}" style="--c:var(${it.c});color:var(${it.c})">${esc(it.label)}</span>`;
+  if(it.type==='react')return `<span class="react"><b>${esc(it.plat)}</b>${esc(it.n)}</span>`;
+  if(it.type==='effect')return `<span class="fxs">${esc(it.n)}</span>`;
+  return '';
+}
+function tile(it,kind){const id=reg(it);return `<button class="t" data-add="${id}"><span class="th">${thumb(it)}${kind?`<span class="kind">${kind}</span>`:''}${it.sound?`<span class="snd">${SND}</span>`:''}${it.ms?`<span class="len">${len(it.ms)}</span>`:''}<span class="add">+ Add</span></span><span class="nm">${esc(it.type==='text'?it.n:it.n)}</span></button>`}
+const REG=[];function reg(it){let i=REG.indexOf(it);if(i<0){REG.push(it);i=REG.length-1}return i}
+const grid=(items,cols,kind)=>`<div class="grid" style="--cols:${cols}">${items.map(i=>tile(i,kind)).join('')}</div>`;
+const shelf=items=>`<div class="shelf">${items.map(i=>tile(i)).join('')}</div>`;
+const uploadBox=`<label class="upload"><strong>Upload a file</strong>Max 10 MB · .png, .jpeg, .gif</label>`;
+function subItems(tab,sub,S){if(tab==='Meme'&&sub==='Uploads')return S.scen==='return'?[uploaded]:[];return (TABS[tab][sub]||[])}
+function allIn(tab,S){return Object.keys(TABS[tab]).flatMap(s=>subItems(tab,s,S))}
+const recent=()=>[memes[0],gifs[2],texts.Titles[0],emotes[3]];
+const onClipFor=S=>S.scen==='ai'?[{...memes[1],ai:1,at:'0:04'},{...memes[0],ai:1,at:'0:12'},{...memes[10],ai:1,at:'0:21'}]:S.scen==='return'?[{...texts.Titles[0],at:'0:00'},{...memes[0],at:'0:09'}]:[];
+
+/* ===== Variant renderers ===== */
+const V={
+A(S){
+  const subs=Object.keys(TABS[S.tab]);if(!subs.includes(S.sub))S.sub=subs[0];
+  let items=subItems(S.tab,S.sub,S).filter(i=>match(i,S.q));
+  let h=`<div class="ttabs">${['Meme','Texts','Effects'].map(t=>`<button class="ttab ${S.tab===t?'on':''}" data-tab="${t}">${ICON[t]}${t}</button>`).join('')}</div>`;
+  h+=`<div class="stabs">${S.tab==='Effects'?'<button class="stab on">Effects</button>':subs.map(s=>`<button class="stab ${S.sub===s?'on':''}" data-sub="${s}">${s}</button>`).join('')}<button class="gridbtn" data-grid title="Grid size">${GRID}</button></div>`;
+  if(S.tab==='Effects')h+=`<p class="note">Stand-in: the 9 effects from the Effects rail tab. Waiting on open question 1.</p>`;
+  if(S.tab==='Texts'&&S.sub==='Titles')h+=`<button class="hook" data-add="${reg({n:'Hook intro title',type:'text'})}"><i>AI</i><span><strong>AI - Hook intro title</strong><small>Add an intro hook title to the start of your clip</small></span></button>`;
+  if(!(S.tab==='Meme'&&S.sub==='Uploads'))h+=`<form class="search" data-search><label>${SEARCH}<input value="${esc(S.q)}" placeholder="Search ${S.sub==='All'?S.tab.toLowerCase():S.sub.toLowerCase()}"></label><button>Search</button></form>`;
+  if(S.tab==='Meme'&&S.sub==='Uploads')h+=uploadBox+(items.length?'<div style="height:12px"></div>'+grid(items,S.cols):'');
+  else h+=items.length?grid(items,S.cols):`<div class="empty"><b>No results for "${esc(S.q)}"</b><br>in ${S.sub==='All'?S.tab:S.sub}.<br><button class="pill" data-clear>Clear search</button></div>`;
+  return h;
+},
+B(S){
+  const q=S.q,cnt=t=>allIn(t,S).filter(i=>match(i,q)).length;
+  const tabs=['All','Meme','Texts','Effects'];
+  let h=`<div class="sticky"><form class="search solo" data-search><label>${SEARCH}<input value="${esc(q)}" placeholder="Search memes, GIFs, texts, emotes…">${q?'<button type="button" class="clear" data-clear>✕</button>':''}</label></form>`;
+  h+=`<div class="ttabs seg">${tabs.map(t=>`<button class="ttab ${S.tab===t?'on':''}" data-tab="${t}">${t}${q&&t!=='All'?` <span class="n">${cnt(t)}</span>`:''}</button>`).join('')}</div></div>`;
+  const oc=onClipFor(S).filter(x=>!S.removed.includes(x.n));
+  if(oc.length&&!q){h+=`<div class="onclip"><div class="onclip-h">On this clip <small>${oc.length} element${oc.length>1?'s':''}</small></div><div class="chips">${oc.map(x=>`<span class="chip"><span class="mini">${x.src?`<video src="${x.src}#t=0.4" muted preload="metadata"></video>`:x.type==='text'?`<span style="color:var(${x.c})">Aa</span>`:''}</span>${esc(x.type==='text'?'Title':x.n.slice(0,16))} · ${x.at}${x.ai?'<span class="ai">AI</span>':''}<button class="x" data-rm="${esc(x.n)}" title="Remove">✕</button></span>`).join('')}</div>${S.scen==='ai'?'<p class="aihint">AI Edit added these. Click one to swap or move it.</p>':''}</div>`}
+  if(S.tab==='All'){
+    const groups=[['Memes','Meme','Memes',memes],['Texts','Texts','Titles',texts.Titles],['GIFs','Meme','GIFs',gifs],['Stickers','Meme','Stickers',stickers],['Emotes','Meme','Emotes',emotes],['Effects','Effects','All',effects]];
+    if(q){const res=groups.map(([n,t,s,it])=>[n,t,s,it.filter(i=>match(i,q))]).filter(g=>g[3].length);
+      if(!res.length)return h+`<div class="empty"><b>Nothing matches "${esc(q)}"</b><br>Try a word like <button class="pill" data-q="cat">cat</button><button class="pill" data-q="gg">gg</button><button class="pill" data-q="pog">pog</button><br>or upload your own in Meme → Uploads.</div>`;
+      return h+res.map(([n,t,s,it])=>`<div class="sec"><h5>${n}<small>${it.length}</small></h5><button data-see="${t}|${s}">See all</button></div>`+grid(it.slice(0,6),3)).join('')}
+    if(S.scen==='return')h+=`<div class="sec"><h5>Recently used</h5></div>`+shelf(recent());
+    h+=groups.map(([n,t,s,it])=>`<div class="sec"><h5>${n}</h5><button data-see="${t}|${s}">See all</button></div>`+shelf(it.slice(0,6))).join('');
+    return h;
+  }
+  const subs=Object.keys(TABS[S.tab]);if(!subs.includes(S.sub))S.sub=subs[0];
+  if(S.tab!=='Effects')h+=`<div class="pills" style="margin-top:4px">${subs.map(s=>`<button class="pill ${S.sub===s?'on':''}" data-sub="${s}">${s}</button>`).join('')}<button class="gridbtn" data-grid title="Grid size">${GRID}</button></div>`;
+  else h+=`<p class="note">Stand-in: the 9 effects from the Effects rail tab. Waiting on open question 1.</p>`;
+  if(S.tab==='Texts'&&S.sub==='Titles')h+=`<button class="hook" data-add="${reg({n:'Hook intro title',type:'text'})}"><i>AI</i><span><strong>AI - Hook intro title</strong><small>Add an intro hook title to the start of your clip</small></span></button>`;
+  const items=subItems(S.tab,S.sub,S).filter(i=>match(i,q));
+  if(S.tab==='Meme'&&S.sub==='Uploads')return h+uploadBox+(items.length?'<div style="height:12px"></div>'+grid(items,S.cols):'');
+  return h+(items.length?grid(items,S.cols):`<div class="empty"><b>No ${S.sub==='All'?'effects':S.sub.toLowerCase()} match "${esc(q)}"</b><br>${['All','Meme','Texts','Effects'].filter(t=>t!=='All'&&t!==S.tab&&cnt(t)).map(t=>`<button class="pill" data-tab="${t}">${cnt(t)} in ${t}</button>`).join('')||'<button class="pill" data-clear>Clear search</button>'}</div>`);
+},
+C(S){
+  if(S.page){
+    const t=S.page,subs=Object.keys(TABS[t]);if(!subs.includes(S.sub))S.sub=subs[0];
+    let h=`<button class="back" data-back>← Elements</button><div class="ph"><h4>${t}</h4><p>${t==='Meme'?'Memes, GIFs, stickers and emotes for your best moments.':t==='Texts'?'Titles, intros, outros and chat reactions.':'Visual effects for a moment of your clip.'}</p></div>`;
+    h+=`<form class="search solo" data-search><label>${SEARCH}<input value="${esc(S.q)}" placeholder="Search ${t.toLowerCase()}"></label></form>`;
+    if(t!=='Effects')h+=`<div class="pills">${subs.map(s=>`<button class="pill ${S.sub===s?'on':''}" data-sub="${s}">${s}</button>`).join('')}<button class="gridbtn" data-grid title="Grid size">${GRID}</button></div>`;
+    else h+=`<p class="note">Stand-in: the 9 effects from the Effects rail tab. Waiting on open question 1.</p>`;
+    if(t==='Texts'&&S.sub==='Titles')h+=`<button class="hook" data-add="${reg({n:'Hook intro title',type:'text'})}"><i>AI</i><span><strong>AI - Hook intro title</strong><small>Add an intro hook title to the start of your clip</small></span></button>`;
+    const items=subItems(t,S.sub,S).filter(i=>match(i,S.q));
+    if(t==='Meme'&&S.sub==='Uploads')return h+uploadBox+(items.length?'<div style="height:12px"></div>'+grid(items,S.cols):'');
+    return h+(items.length?grid(items,S.cols):`<div class="empty"><b>No results for "${esc(S.q)}"</b><br><button class="pill" data-clear>Clear search</button></div>`);
+  }
+  let h=`<div class="ph"><h4>Elements</h4><p>Add elements to increase engagement</p></div><form class="search solo" data-search><label>${SEARCH}<input value="${esc(S.q)}" placeholder="Search all elements"></label></form>`;
+  if(S.q){const res=[['Memes','Meme',memes],['GIFs','Meme',gifs],['Stickers','Meme',stickers],['Emotes','Meme',emotes],['Texts','Texts',Object.values(texts).flat()],['Effects','Effects',effects]].map(([n,t,it])=>[n,t,it.filter(i=>match(i,S.q))]).filter(g=>g[2].length);
+    if(!res.length)return h+`<div class="empty"><b>Nothing matches "${esc(S.q)}"</b><br><button class="pill" data-clear>Clear search</button><button class="pill" data-open="Meme|Uploads">Upload your own</button></div>`;
+    return h+res.map(([n,t,it])=>`<div class="sec"><h5>${n}<small>${it.length}</small></h5></div>`+grid(it.slice(0,6),3)).join('')}
+  if(S.scen==='return')h+=`<div class="sec"><h5>Recently used</h5></div>`+shelf(recent());
+  const card=(t,desc,peek,n)=>`<button class="cat" data-open="${t}|"><span><h6>${ICON[t]}${t}</h6><p>${desc}</p><p style="margin-top:6px;color:var(--accent-text)">${n} →</p></span><span class="peek">${peek.map(i=>`<span class="th">${thumb(i)}</span>`).join('')}</span></button>`;
+  h+=`<div class="sec"><h5>Browse</h5></div><div class="cards">`+card('Meme','Memes, GIFs, stickers, emotes',[memes[0],gifs[2],emotes[3]],`${memes.length+gifs.length+stickers.length+emotes.length} items`)+card('Texts','Titles, intro, outro, reactions',[texts.Titles[0],texts.Titles[2],texts.Titles[6]],`${Object.values(texts).flat().length} styles`)+card('Effects','Visual effects (stand-in)',effects.slice(0,3),`${effects.length} effects`)+`</div>`;
+  h+=`<button class="mini-row" data-open="Meme|Uploads"><strong>⇪ Upload your own</strong><small>png, jpeg, gif · max 10 MB</small></button>`;
+  return h;
+}};
+
+/* ===== Wiring ===== */
+const STATE={};
+function init(id){
+  const root=document.getElementById(id),S=STATE[id]={tab:id==='B'?'All':'Meme',sub:'Memes',q:'',cols:3,scen:'first',removed:[],page:null};
+  root.querySelector('[data-rail]').innerHTML=RAIL.map(r=>`<i class="${r==='Elements'?'on':''}${r==='Effects'?' ask':''}" title="${r==='Effects'?'Stays or folds into Elements: open question 1':''}">${r}</i>`).join('');
+  const sc=root.querySelector('.scen');sc.innerHTML='<span>Scenario</span>'+SCENS.map(([k,l])=>`<button data-scen="${k}">${l}</button>`).join('');
+  sc.addEventListener('click',e=>{const b=e.target.closest('[data-scen]');if(!b)return;S.scen=b.dataset.scen;S.removed=[];S.q=S.scen==='none'?'rocket league':'';if(S.scen==='none'&&id==='A'){S.tab='Meme';S.sub='Memes'}if(id==='B'&&S.scen!=='none')S.tab='All';if(id==='C')S.page=null;draw(id)});
+  const panel=root.querySelector('[data-panel]');
+  panel.addEventListener('click',e=>{
+    const d=e.target.closest('button,[data-open]');if(!d)return;const ds=d.dataset;
+    if(ds.tab){S.tab=ds.tab;S.sub='';}
+    else if(ds.sub)S.sub=ds.sub;
+    else if(ds.grid!==undefined)S.cols=S.cols===3?2:3;
+    else if(ds.clear!==undefined)S.q='';
+    else if(ds.q)S.q=ds.q;
+    else if(ds.see){const[t,s]=ds.see.split('|');S.tab=t;S.sub=s;S.q='';}
+    else if(ds.open){const[t,s]=ds.open.split('|');S.page=t;S.sub=s||'';S.q='';}
+    else if(ds.back!==undefined){S.page=null;S.q='';}
+    else if(ds.rm){S.removed.push(ds.rm);toast(id,'Removed "'+ds.rm+'" from the clip');}
+    else if(ds.add){const it=REG[+ds.add];toast(id,'Added "'+it.n+'" at 0:12 → edit page opens (Animations · Sound), as today');return}
+    else return;
+    e.preventDefault();draw(id);
+  });
+  panel.addEventListener('submit',e=>{e.preventDefault();S.q=e.target.querySelector('input').value.trim();draw(id)});
+  panel.addEventListener('input',e=>{if(id==='A')return;const v=e.target.value;clearTimeout(S.t);S.t=setTimeout(()=>{S.q=v.trim();draw(id,true)},250)});
+  panel.addEventListener('mouseover',e=>{const v=e.target.closest('.t')?.querySelector('video');if(v)v.play().catch(()=>{})});
+  panel.addEventListener('mouseout',e=>{const v=e.target.closest('.t')?.querySelector('video');if(v&&!e.target.closest('.t').contains(e.relatedTarget))v.pause()});
+  draw(id);
+}
+function draw(id,keepFocus){
+  const root=document.getElementById(id),S=STATE[id],p=root.querySelector('[data-panel]');
+  p.innerHTML=V[id](S);
+  root.querySelectorAll('[data-scen]').forEach(b=>b.classList.toggle('on',b.dataset.scen===S.scen));
+  if(keepFocus){const i=p.querySelector('[data-search] input');if(i){i.focus();i.setSelectionRange(i.value.length,i.value.length)}}
+}
+function toast(id,msg){const t=document.querySelector('#'+id+' .toast');t.textContent=msg;t.classList.add('show');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('show'),2200)}
+['A','B','C'].forEach(init);
+</script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+{
+  "id": "elements-add-second-platform",
+  "feature": "Elements",
+  "personaRefs": [
+    "multi-platform-brand-builder"
+  ],
+  "target": "claude-improvement",
+  "start": {
+    "screen": "default"
+  },
+  "goal": "My name sticker on the clip only shows Twitch. I stream on YouTube too, so I want a sticker that shows both Twitch and YouTube.",
+  "success": {
+    "check": "state.elements.some(e => e.category === 'Social Stickers' && ['sl-san10', 'sl-san12', 'sl-san14'].includes(String(e.style && e.style.design)))",
+    "describe": "A social sticker with both the Twitch and the YouTube logo is on the clip"
+  },
+  "budget": {
+    "steps": 8,
+    "scrolls": 4,
+    "minutes": 4
+  },
+  "bestPath": [
+    {
+      "do": "click",
+      "selector": ".rail nav button:has-text('Elements')"
+    },
+    {
+      "do": "click",
+      "selector": "button:has-text('View all') >> nth=0"
+    },
+    {
+      "do": "click",
+      "selector": ".sl-tile[title='Layered purple rounded plate']"
+    }
+  ],
+  "firstClickAlso": [
+    "^Brand"
+  ],
+  "why": {
+    "data": "Projects with 2+ platforms on the sticker: 9.7%, 79.4% export; YouTube sticker 82.0% export (5-22 Oct 2026)",
+    "source": "plans/261027-usability-probe-skill/personas.md"
+  },
+  "holdout": true,
+  "notes": "Animated multi-platform designs sit in the sticker gallery behind View all."
+}

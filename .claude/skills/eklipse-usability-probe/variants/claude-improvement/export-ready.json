@@ -1,0 +1,23 @@
+{
+  "id": "export-ready",
+  "problem": "O1: first-time users stop before export",
+  "stack": [
+    "el-jump",
+    "style-lastclip",
+    "brand-platforms"
+  ],
+  "targets": [
+    "o1-first-ai-clip"
+  ],
+  "untouched": [
+    "h2-meme-stack",
+    "h3-fix-ai-edit",
+    "h4-brand-setup",
+    "q2-pick-layout",
+    "q3-captions",
+    "q4-trim-start",
+    "q5-no-facecam",
+    "q6-save-and-reuse-look"
+  ],
+  "source": "targets from reports/flow-night.html; untouched = flows night-0011 did not run for this variant"
+}

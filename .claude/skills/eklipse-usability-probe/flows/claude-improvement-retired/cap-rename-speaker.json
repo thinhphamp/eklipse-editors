@@ -1,0 +1,82 @@
+{
+  "id": "cap-rename-speaker",
+  "flow": "C4",
+  "menu": "Captions",
+  "persona": "heavy-editor",
+  "target": "claude-improvement",
+  "weight": 0.2,
+  "mission": "Several people talk in this clip and the subtitles label them Speaker 2, Speaker 3 and so on. Rename Speaker 2 to Jordan so the labels read right, then export.",
+  "start": {
+    "screen": "default"
+  },
+  "checkpoints": [
+    {
+      "id": "renamed",
+      "check": "state.captions.text.includes('Jordan') && (()=>{try{return JSON.parse(state.captions.text)}catch(e){return {words:[],style:{},speakers:[]}}})().speakers.some(s => s.name === 'Jordan')",
+      "describe": "A speaker is named Jordan"
+    },
+    {
+      "id": "export",
+      "check": "state.exported === true",
+      "describe": "The clip export has finished"
+    }
+  ],
+  "bestPath": [
+    {
+      "do": "click",
+      "selector": ".rail nav button:has-text('Captions')"
+    },
+    {
+      "do": "click",
+      "selector": ".captions-speaker-button >> nth=1"
+    },
+    {
+      "do": "click",
+      "text": "Edit speakers"
+    },
+    {
+      "do": "click",
+      "selector": ".captions-speaker-entry button:has-text('Speaker 2')"
+    },
+    {
+      "do": "click",
+      "selector": "input[aria-label='Speaker 2 name']"
+    },
+    {
+      "do": "key",
+      "key": "ControlOrMeta+a"
+    },
+    {
+      "do": "type",
+      "selector": "input[aria-label='Speaker 2 name']",
+      "text": "Jordan"
+    },
+    {
+      "do": "click",
+      "selector": ".captions-modal footer .captions-primary"
+    },
+    {
+      "do": "click",
+      "selector": ".tb-primary"
+    },
+    {
+      "do": "click",
+      "selector": ".export-primary"
+    }
+  ],
+  "bestTimeSeconds": null,
+  "budget": {
+    "minutes": 12
+  },
+  "why": {
+    "data": "Heavy editors dig into caption detail; multi-speaker clips need names that match the people. This flow tests that speaker names can be found and edited.",
+    "source": "plans/261027-usability-probe-skill/personas.md"
+  },
+  "input": {
+    "clip": null
+  },
+  "playerIds": [
+    "heavy-explorer",
+    "heavy-meticulous"
+  ]
+}

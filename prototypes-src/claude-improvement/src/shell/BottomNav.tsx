@@ -1,0 +1,4 @@
+import { useEditor, nextTab } from '../state';
+import { tabs, tabLabel } from '../data';
+import { Icon } from '../ui/Icon';
+import type { Tab } from '../data';export function BottomNav() {const {state,actions}=useEditor();const index=(tabs as readonly Tab[]).indexOf(state.activeTab);return <footer className="bottom-nav">{index>0?<button className="nav-back" onClick={()=>actions.chooseTab(nextTab(state.activeTab,-1))}><Icon name="arrow-left" size={14}/> &nbsp;{tabLabel(tabs[index-1])}</button>:<span/>}{index<tabs.length-1?<button className="nav-next" onClick={()=>actions.chooseTab(nextTab(state.activeTab,1))}>{tabLabel(tabs[index+1])} &nbsp; <Icon name="arrow-right" size={14}/></button>:<button className="nav-next" onClick={()=>window.dispatchEvent(new Event('start-export'))}>Export clip &nbsp;<Icon name="upload" size={14}/></button>}</footer>;}

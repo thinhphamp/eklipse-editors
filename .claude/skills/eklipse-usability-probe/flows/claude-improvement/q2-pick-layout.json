@@ -1,0 +1,53 @@
+{
+  "id": "q2-pick-layout",
+  "flow": "Q2",
+  "menu": "Layouts",
+  "persona": "quick-user",
+  "target": "claude-improvement",
+  "weight": 0.15,
+  "mission": "Put your facecam on top and the game below, then export.",
+  "start": {
+    "screen": "L00"
+  },
+  "checkpoints": [
+    {
+      "id": "layout",
+      "check": "state.layoutId === 'Split'",
+      "describe": "The split layout is applied"
+    },
+    {
+      "id": "export",
+      "check": "state.exported === true",
+      "describe": "The clip export has finished"
+    }
+  ],
+  "bestPath": [
+    {
+      "do": "click",
+      "selector": ".tpl-card:has(strong:text-is('Split'))"
+    },
+    {
+      "do": "click",
+      "selector": ".tb-primary"
+    },
+    {
+      "do": "click",
+      "selector": ".export-primary"
+    }
+  ],
+  "bestTimeSeconds": null,
+  "budget": {
+    "minutes": 12
+  },
+  "why": {
+    "data": "Split cam top is used in 19.8% of projects.",
+    "source": "plans/261027-usability-probe-skill/personas.md"
+  },
+  "input": {
+    "clip": null
+  },
+  "playerIds": [
+    "quick-match",
+    "quick-differs"
+  ]
+}

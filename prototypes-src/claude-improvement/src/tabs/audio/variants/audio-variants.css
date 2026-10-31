@@ -1,0 +1,9 @@
+.aud-volume-quick{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:-8px 0 20px;font-size:var(--fs-body)}
+.aud-volume-quick button{border:1px solid var(--border);border-radius:5px;background:none;color:var(--accent-text);min-height:28px;padding:0 10px;font-size:var(--fs-label)}
+.aud-volume-quick button:disabled{opacity:.4}
+.game-sound{border:1px solid var(--border);border-radius:8px;padding:10px 12px;margin:0 0 16px;display:grid;gap:8px;font-size:var(--fs-body)}
+.game-sound-row{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.game-sound-btns{display:flex;gap:6px}
+.game-sound button{border:1px solid var(--border);border-radius:5px;background:none;color:var(--accent-text);min-height:28px;padding:0 10px;font-size:var(--fs-label)}
+.game-sound button:disabled{opacity:.4}
+.game-sound button[aria-pressed=true]{background:var(--accent-text);color:var(--bg-app)}

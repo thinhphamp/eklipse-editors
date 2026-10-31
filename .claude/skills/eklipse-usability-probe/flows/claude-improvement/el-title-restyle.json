@@ -1,0 +1,83 @@
+{
+  "id": "el-title-restyle",
+  "flow": "E1",
+  "menu": "Elements",
+  "persona": "heavy-editor",
+  "target": "claude-improvement",
+  "weight": 0.2,
+  "mission": "Put your own title text on the clip, say what you want it to say, and make it look different from the plain default. Export it.",
+  "start": {
+    "screen": "L00"
+  },
+  "checkpoints": [
+    {
+      "id": "title",
+      "check": "state.elements.some(x => x.category === 'Text Elements' && x.label !== 'Enter text here' && x.label.trim() !== '')",
+      "describe": "A title with the user's own words is on the clip"
+    },
+    {
+      "id": "restyled",
+      "check": "state.elements.some(x => x.category === 'Text Elements' && x.style && Object.keys(x.style).some(k => ['italic','font','weight','fill','stroke','shadow','size','background'].includes(k) && x.style[k] !== undefined && x.style[k] !== null && x.style[k] !== '' && !(k === 'font' && x.style[k] === 'Fredoka One')))",
+      "describe": "The title's look differs from the default (font, weight, italic, colour, outline, shadow, size or background)"
+    },
+    {
+      "id": "export",
+      "check": "state.exported === true",
+      "describe": "The clip export has finished"
+    }
+  ],
+  "bestPath": [
+    {
+      "do": "click",
+      "selector": ".rail nav button:has-text(\"Elements\")"
+    },
+    {
+      "do": "click",
+      "selector": "button.elt-tile:has-text('Title 1')"
+    },
+    {
+      "do": "click",
+      "selector": ".elements-text-edit textarea"
+    },
+    {
+      "do": "key",
+      "key": "ControlOrMeta+a"
+    },
+    {
+      "do": "type",
+      "selector": ".elements-text-edit textarea",
+      "text": "Clutch or kick"
+    },
+    {
+      "do": "click",
+      "selector": ".elements-edit-tabs button:has-text('Style')"
+    },
+    {
+      "do": "click",
+      "selector": ".elements-style-line button:has-text('Italic')"
+    },
+    {
+      "do": "click",
+      "selector": ".tb-primary"
+    },
+    {
+      "do": "click",
+      "selector": ".export-primary"
+    }
+  ],
+  "bestTimeSeconds": null,
+  "budget": {
+    "minutes": 12
+  },
+  "why": {
+    "data": "Text adds +45.9 export points for heavy editors; restyling is a heavy-editor trait.",
+    "source": "plans/261027-usability-probe-skill/personas.md"
+  },
+  "input": {
+    "clip": null
+  },
+  "playerIds": [
+    "heavy-explorer",
+    "heavy-meticulous"
+  ]
+}

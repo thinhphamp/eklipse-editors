@@ -1,0 +1,70 @@
+{
+  "id": "cap-fix-misheard-word",
+  "flow": "C1",
+  "menu": "Captions",
+  "persona": "quick-user",
+  "target": "claude-improvement",
+  "weight": 0.2,
+  "mission": "The subtitles show the streamer saying \"Ah,\" near the start, but they really said \"Uh,\". Fix that one word so it reads \"Uh,\", then export.",
+  "start": {
+    "screen": "default"
+  },
+  "checkpoints": [
+    {
+      "id": "fixed",
+      "check": "(()=>{try{return JSON.parse(state.captions.text)}catch(e){return {words:[],style:{},speakers:[]}}})().words.some(w => w.text === 'Uh,') && !(()=>{try{return JSON.parse(state.captions.text)}catch(e){return {words:[],style:{},speakers:[]}}})().words.some(w => w.text === 'Ah,')",
+      "describe": "The misheard word now reads Uh, and Ah, is gone"
+    },
+    {
+      "id": "export",
+      "check": "state.exported === true",
+      "describe": "The clip export has finished"
+    }
+  ],
+  "bestPath": [
+    {
+      "do": "click",
+      "selector": ".rail nav button:has-text(\"Captions\")"
+    },
+    {
+      "do": "click",
+      "selector": ".cap-d1-line:has(.cap-d1-word:has-text(\"Ah,\")) .cap-d1-edit"
+    },
+    {
+      "do": "key",
+      "key": "ControlOrMeta+a"
+    },
+    {
+      "do": "type",
+      "selector": "input[aria-label=\"Caption line text\"]",
+      "text": "Uh, 2A, Reyna and a Jett."
+    },
+    {
+      "do": "key",
+      "key": "Enter"
+    },
+    {
+      "do": "click",
+      "selector": ".tb-primary"
+    },
+    {
+      "do": "click",
+      "selector": ".export-primary"
+    }
+  ],
+  "bestTimeSeconds": null,
+  "budget": {
+    "minutes": 12
+  },
+  "why": {
+    "data": "Quick users who add captions reach export; a wrong word in the transcript is the commonest reason to open the text list. This flow tests that one word can be found and edited in place.",
+    "source": "plans/261027-usability-probe-skill/personas.md"
+  },
+  "input": {
+    "clip": null
+  },
+  "playerIds": [
+    "quick-match",
+    "quick-differs"
+  ]
+}

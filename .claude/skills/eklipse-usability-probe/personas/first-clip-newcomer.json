@@ -1,0 +1,40 @@
+{
+  "id": "first-clip-newcomer",
+  "rank": 2,
+  "name": "First-clip newcomer",
+  "experience": "new",
+  "behavior": "Opens the editor for the first time with a clip from a stream. Has no saved style and does not know what the tools are called.",
+  "knows": [
+    "captions",
+    "title",
+    "export"
+  ],
+  "does_not_know": [
+    "layout names",
+    "where tools live",
+    "that a brand sticker exists",
+    "keyboard shortcuts"
+  ],
+  "patience": "low",
+  "words": [
+    "make it vertical",
+    "put text on it",
+    "subtitles",
+    "where do I download it"
+  ],
+  "tier": "free",
+  "fixtures": {
+    "storage": {
+      "ek-claude-brand": {
+        "handle": "",
+        "design": "sl-stw01",
+        "platform": "Twitch",
+        "auto": false
+      }
+    }
+  },
+  "provenance": [
+    "3,150 users in the 7-day cohort; 43.7% export their first project",
+    "Exported first project: 66.5% return vs 45.0% (plans/261027-usability-probe-skill/personas.md)"
+  ]
+}

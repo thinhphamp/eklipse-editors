@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Captions tab · waiting while captions generate · round 3</title>
+<style>
+/* ===== Tokens: copied from prototypes-src/claude-improvement/src/theme/tokens.css (Eklipse dark) ===== */
+:root{
+  --color-ek-purple:#735EF4;--color-ek-purple-light:#A496F8;--color-ek-yellow:#FFA036;
+  --color-ek-grey-light:#A3A3BF;--color-ek-grey:#434359;--color-ek-grey-dark:#2B2B38;--color-ek-grey-darker:#1B1B26;
+  --color-ek-grey-black:#11111A;--color-ek-success:#46F88D;--color-ek-danger:#EF3149;--color-ek-white:#FFFFFF;
+  --color-ek-text-secondary:#D0D0D0;--color-ek-border-secondary:#FFFFFF14;--color-ek-hover:#383849;--color-ek-black:#000000;
+  --font-ui:'Hanken Grotesk',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --bg-app:var(--color-ek-grey-black);--bg-panel:var(--color-ek-grey-darker);--bg-card:var(--color-ek-grey-dark);
+  --bg-hover:var(--color-ek-hover);--bg-inset:var(--color-ek-grey-black);
+  --border:var(--color-ek-grey);--border-subtle:var(--color-ek-border-secondary);
+  --text-1:var(--color-ek-white);--text-2:var(--color-ek-text-secondary);--text-3:var(--color-ek-grey-light);
+  --accent:var(--color-ek-purple);--accent-text:var(--color-ek-purple-light);
+  --accent-soft:color-mix(in srgb,var(--color-ek-purple) 22%,var(--color-ek-grey-dark));
+  --premium:var(--color-ek-yellow);--success:var(--color-ek-success);--danger:var(--color-ek-danger);
+}
+@font-face{font-family:CaptionAnton;src:url(../../../prototypes-src/claude-improvement/public/fonts/captions/anton-400.woff2)}
+@font-face{font-family:'Hanken Grotesk';font-weight:400;src:url(../../../prototypes-src/claude-improvement/public/fonts/hanken-grotesk-latin-400-normal.woff2)}
+@font-face{font-family:'Hanken Grotesk';font-weight:600;src:url(../../../prototypes-src/claude-improvement/public/fonts/hanken-grotesk-latin-600-normal.woff2)}
+@font-face{font-family:'Hanken Grotesk';font-weight:700;src:url(../../../prototypes-src/claude-improvement/public/fonts/hanken-grotesk-latin-700-normal.woff2)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg-app);color:var(--text-1);font:15px/1.5 var(--font-ui)}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer}
+button:focus-visible{outline:2px solid var(--accent-text);outline-offset:2px}
+
+/* ===== Board ===== */
+.board{max-width:1240px;margin:0 auto;padding:40px 24px 96px}
+.kicker{color:var(--text-3);font-size:13px;letter-spacing:.04em;text-transform:uppercase}
+h1{font-size:30px;line-height:1.2;margin:8px 0 10px}
+.lead{color:var(--text-2);max-width:860px;margin:0 0 6px}
+.common{color:var(--text-2);max-width:860px;padding-left:20px}
+.common li{margin:4px 0}.common b{color:var(--text-1)}
+.idea{display:grid;grid-template-columns:860px 1fr;gap:32px;padding:44px 0;border-top:1px solid var(--border-subtle)}
+.notes h2{font-size:24px;line-height:1.2;margin:0 0 6px}
+.tag{display:inline-block;font-size:12px;padding:2px 10px;border-radius:99px;background:var(--bg-card);color:var(--text-2);margin-bottom:10px}
+.tag.rec{background:var(--accent);color:var(--color-ek-white)}
+.notes .one{font-size:16px;color:var(--text-2);margin:0 0 14px}
+.notes h3{font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--text-3);margin:18px 0 6px}
+.notes ul{margin:0;padding-left:18px;color:var(--text-2)}
+.notes li{margin:3px 0}.notes li b{color:var(--text-1)}
+.scen{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:0 0 10px}
+.scen span{font-size:12px;color:var(--text-3);margin-right:2px}
+.scen button{font-size:12px;padding:4px 10px;border-radius:99px;border:1px solid var(--border);background:none;color:var(--text-2)}
+.scen button[aria-pressed=true]{background:var(--bg-card);color:var(--text-1);border-color:var(--accent)}
+.scen i{width:1px;height:18px;background:var(--border);margin:0 6px}
+
+/* ===== Editor mock: rail + 520 panel + preview ===== */
+.editor{position:relative;display:flex;height:700px;border:1px solid var(--border);border-radius:12px;overflow:hidden;background:var(--bg-panel)}
+.rail{width:56px;flex:0 0 56px;border-right:1px solid var(--border);display:flex;flex-direction:column;align-items:center;gap:4px;padding:12px 0;background:var(--bg-app)}
+.rail button{position:relative;display:flex;flex-direction:column;align-items:center;font-size:9px;line-height:1.1;text-align:center;color:var(--text-3);gap:3px;padding:6px 2px;width:50px;border-radius:8px;border:0;background:none}
+.rail button .ic{position:relative;width:22px;height:22px;display:grid;place-items:center}
+.rail button .ic::before{content:"";width:18px;height:18px;border-radius:5px;border:1.5px solid currentColor}
+.rail button[aria-current=true]{color:var(--text-1);background:var(--bg-card)}
+.rail button[aria-current=true] .ic::before{border-color:var(--accent-text);background:var(--accent-soft)}
+.rail .ring{position:absolute;inset:-4px;width:30px;height:30px;transform:rotate(-90deg)}
+.rail .ring circle{fill:none;stroke-width:2.5}
+.rail .ring .bg{stroke:var(--border)}.rail .ring .fg{stroke:var(--accent-text);stroke-linecap:round;transition:stroke-dashoffset .3s}
+.rail .dot{position:absolute;top:-2px;right:-3px;width:9px;height:9px;border-radius:50%;background:var(--success);border:2px solid var(--bg-app)}
+.panel{position:relative;width:520px;flex:0 0 520px;overflow:auto;padding:16px 16px 30px;font-size:13px;scrollbar-width:thin;border-right:1px solid var(--border)}
+.stage{flex:1;display:grid;place-items:center;background:var(--bg-app);position:relative}
+.clip{position:relative;width:190px;aspect-ratio:9/16;border-radius:10px;overflow:hidden;border:1px solid var(--border);background:color-mix(in srgb,var(--color-ek-success) 10%,var(--color-ek-grey))}
+.clip::before{content:"Facecam";position:absolute;inset:0 0 58% 0;background:color-mix(in srgb,var(--color-ek-purple) 45%,var(--color-ek-grey-dark));display:grid;place-items:center;font-size:10px;color:var(--text-3)}
+.cap{position:absolute;left:6%;right:6%;top:70%;transform:translateY(-50%);text-align:center;font:400 19px/1.05 CaptionAnton,var(--font-ui);text-transform:uppercase;color:var(--color-ek-white);-webkit-text-stroke:1px var(--color-ek-black);paint-order:stroke fill}
+.cap.sample{opacity:.55}
+.cap .on{color:#ffff81}
+.cap-wait{position:absolute;left:10%;right:10%;top:70%;transform:translateY(-50%);height:16px;border-radius:5px;background:linear-gradient(90deg,var(--bg-card),var(--bg-hover),var(--bg-card));background-size:200% 100%;animation:sh 1.2s linear infinite;opacity:.8}
+.flag{position:absolute;left:8px;top:8px;font-size:10px;font-weight:700;padding:1px 7px;border-radius:4px;background:var(--bg-app);color:var(--text-2)}
+
+/* ===== Panel pieces ===== */
+.ph{display:flex;align-items:center;gap:8px;height:34px;margin-bottom:8px}
+.ph h4{font-size:18px;margin:0;flex:1}
+.ph small{color:var(--text-3);font-size:12px}
+.primary{width:100%;height:42px;border:0;border-radius:8px;background:var(--accent);color:var(--color-ek-white);font-weight:700}
+.ghost{height:32px;padding:0 12px;border-radius:8px;border:1px solid var(--border);background:var(--bg-card);font-size:12px;font-weight:600}
+.ghost.acc{background:var(--accent);border-color:var(--accent);color:var(--color-ek-white)}
+.lbl{font-size:13px;font-weight:600;margin:16px 0 8px}
+.note{font-size:12px;color:var(--text-3)}
+.setup .sel{width:100%;height:38px;border-radius:8px;border:1px solid var(--border);background:var(--bg-inset);padding:0 10px}
+.fmt{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:5px;border:1px solid var(--border-subtle);border-radius:10px}
+.fmt button{border:0;border-radius:8px;background:none;padding:10px 6px;color:var(--text-3);font-weight:600;font-size:13px}
+.fmt button small{display:block;font-weight:400;font-size:11px}
+.fmt button[aria-pressed=true]{background:var(--accent);color:var(--color-ek-white)}
+.opt{display:flex;align-items:center;gap:12px;width:100%;padding:11px 12px;border:1px solid var(--border-subtle);border-radius:10px;background:var(--bg-card);text-align:left}
+.opt span{flex:1}.opt b{display:block;font-size:13px}.opt small{color:var(--text-3);font-size:11px}
+.sw{width:36px;height:20px;border-radius:99px;background:var(--color-ek-grey);position:relative;flex:0 0 36px}
+.sw i{position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:var(--color-ek-white);transition:left .15s}
+.sw.on{background:var(--accent)}.sw.on i{left:18px}
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.tile{height:58px;border-radius:7px;border:1px solid var(--border);background:var(--bg-card);display:grid;place-items:center;font:13px/1 CaptionAnton,var(--font-ui);text-transform:uppercase}
+.tile[aria-pressed=true]{border-color:var(--accent);background:var(--accent-soft)}
+/* progress */
+.prog{padding:16px;border:1px solid var(--border-subtle);border-radius:12px;background:var(--bg-card)}
+.prog-top{display:flex;align-items:baseline;gap:8px;margin-bottom:10px}
+.prog-top b{font-size:15px;flex:1}
+.prog-top small{color:var(--text-3);font-size:12px;font-variant-numeric:tabular-nums}
+.bar{height:6px;border-radius:99px;background:var(--bg-inset);overflow:hidden}
+.bar i{display:block;height:100%;border-radius:99px;background:var(--accent);transition:width .25s linear}
+.steps{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:8px}
+.steps li{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text-3)}
+.steps li .st{width:18px;height:18px;border-radius:50%;border:1.5px solid var(--border);display:grid;place-items:center;font-size:10px;flex:0 0 18px}
+.steps li.done{color:var(--text-2)}.steps li.done .st{background:var(--success);border-color:var(--success);color:var(--bg-app)}
+.steps li.now{color:var(--text-1);font-weight:600}.steps li.now .st{border-color:var(--accent-text);border-top-color:transparent;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes sh{to{background-position:-200% 0}}
+.while{margin-top:16px;padding:12px 14px;border:1px dashed var(--border);border-radius:12px}
+.while h5{margin:0 0 2px;font-size:13px}
+.while p{margin:0 0 10px;font-size:12px;color:var(--text-3)}
+.cancel{margin-top:12px;display:flex;justify-content:center}
+.cancel button{border:0;background:none;color:var(--text-3);font-size:12px;text-decoration:underline}
+/* lines */
+.line{display:grid;grid-template-columns:104px 1fr;align-items:center;gap:8px;min-height:38px;padding:3px 6px;border-radius:7px}
+.line time{font-size:12px;color:var(--text-3);font-variant-numeric:tabular-nums}
+.line span{font-size:14px}
+.line.new{animation:in .5s ease-out}
+.line.ghostline span{height:12px;border-radius:4px;background:linear-gradient(90deg,var(--bg-card),var(--bg-hover),var(--bg-card));background-size:200% 100%;animation:sh 1.2s linear infinite}
+.line.ghostline time{height:10px;width:70px;border-radius:4px;background:var(--bg-card)}
+@keyframes in{from{opacity:0;transform:translateY(6px);background:var(--accent-soft)}to{opacity:1;transform:none}}
+.mtabs{display:flex;gap:3px;height:38px;padding:2px;border-radius:6px;background:var(--bg-card);margin-bottom:10px}
+.mtabs span{flex:1;display:grid;place-items:center;border-radius:5px;color:var(--text-2);font-size:13px}
+.mtabs span.on{background:var(--bg-hover);color:var(--text-1);font-weight:600}
+.mtabs.locked span:not(.on){opacity:.4}
+.sticky{position:sticky;top:-16px;z-index:2;margin:-16px -16px 10px;padding:12px 16px;background:var(--bg-panel);border-bottom:1px solid var(--border-subtle)}
+.sticky .prog-top{margin-bottom:6px}
+/* states */
+.state{text-align:center;padding:26px 16px;border:1px dashed var(--border);border-radius:12px;color:var(--text-3);font-size:12px}
+.state b{display:block;color:var(--text-1);font-size:14px;margin-bottom:4px}
+.state.err{border-color:color-mix(in srgb,var(--danger) 50%,var(--border))}
+.state .row{display:flex;justify-content:center;gap:8px;margin-top:12px}
+.other{display:grid;place-items:center;height:100%;color:var(--text-3);font-size:13px;text-align:center;padding:30px}
+.other b{display:block;color:var(--text-1);font-size:16px;margin-bottom:4px}
+.mini{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;background:var(--bg-card);border:1px solid var(--border-subtle);margin-bottom:14px}
+.mini .bar{flex:1}
+.mini small{font-size:12px;color:var(--text-2);white-space:nowrap;font-variant-numeric:tabular-nums}
+.toast{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);display:flex;align-items:center;gap:12px;padding:10px 12px 10px 14px;border-radius:10px;background:var(--bg-hover);border:1px solid var(--border);box-shadow:0 10px 30px var(--color-ek-black);font-size:13px;white-space:nowrap;z-index:5;animation:in .3s ease-out}
+.toast.err{border-color:var(--danger)}
+/* W3 polished: production "Making magic" screen on the dark editor */
+.magic{display:flex;flex-direction:column;align-items:center;text-align:center;padding:28px 8px 8px}
+.magic img{width:200px;height:auto;animation:float 3.2s ease-in-out infinite;filter:drop-shadow(0 10px 18px color-mix(in srgb,var(--accent) 35%,transparent))}
+@keyframes float{50%{transform:translateY(-6px)}}
+.magic h5{margin:26px 0 6px;font-size:17px}
+.magic p{margin:0;max-width:340px;color:var(--text-2);font-size:14px;line-height:1.45}
+.magic .bar{width:240px;height:4px;margin:18px 0 6px}
+.magic .left{font-size:12px;color:var(--text-3);font-variant-numeric:tabular-nums}
+.info{display:flex;gap:12px;align-items:center;margin:26px 4px 0;padding:14px 16px;border:1px solid color-mix(in srgb,var(--accent-text) 55%,transparent);border-radius:10px;background:color-mix(in srgb,var(--accent) 12%,var(--bg-panel));text-align:left;font-size:13px;line-height:1.45;color:var(--text-1)}
+.info .i{flex:0 0 22px;width:22px;height:22px;border-radius:50%;border:1.5px solid var(--accent-text);color:var(--accent-text);display:grid;place-items:center;font:700 12px/1 var(--font-ui)}
+.info a{color:var(--accent-text);font-weight:600;cursor:pointer}
+.rail .dot.err{background:var(--danger)}
+.rail button[data-tip]:hover::after{content:attr(data-tip);position:absolute;left:54px;top:8px;z-index:6;white-space:nowrap;padding:4px 8px;border-radius:6px;background:var(--bg-hover);border:1px solid var(--border);color:var(--text-1);font-size:11px}
+.fake{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+.fake i{height:78px;border-radius:8px;background:var(--bg-card)}
+.exp{position:absolute;top:12px;right:12px;height:32px;padding:0 14px;border:0;border-radius:8px;background:var(--accent);color:var(--color-ek-white);font-size:12px;font-weight:700;z-index:3}
+.dlg-shade{position:absolute;inset:0;z-index:8;display:grid;place-items:center;background:color-mix(in srgb,var(--color-ek-black) 60%,transparent)}
+.dlg{width:380px;padding:20px;border-radius:12px;border:1px solid var(--border);background:var(--bg-panel);box-shadow:0 12px 40px var(--color-ek-black)}
+.dlg b{display:block;font-size:16px;margin-bottom:6px}.dlg p{margin:0 0 16px;color:var(--text-2);font-size:13px}
+.dlg .row{display:flex;gap:8px;justify-content:flex-end}
+.cap-on{position:absolute;left:8px;bottom:8px;font-size:10px;font-weight:700;padding:1px 7px;border-radius:4px;background:var(--success);color:var(--bg-app)}
+</style>
+</head>
+<body>
+<main class="board">
+  <span class="kicker">Design draft · captions-tab · round 3 · 30 Oct 2026</span>
+  <h1>Waiting while captions generate (~30 s)</h1>
+  <p class="lead">Captions take about 30 seconds after "Generate captions". Today the prototype jumps straight to the lines, so there's no waiting screen at all. Here are three ways to fill that time. Each mock runs a real 30-second job. Use <b>Fast (6 s)</b> to skip ahead, and the scenario chips to see it fail or find no speech.</p>
+  <ul class="common">
+    <li><b>Same in every idea</b>: real steps (Preparing audio → Transcribing speech → Timing words → Adding emoji), a time-left estimate, <b>Cancel</b> (back to setup, choices kept), an error state with <b>Try again</b>, and the existing "No speech found" state at the end.</li>
+    <li>The video keeps playing, and a placeholder shows where captions will appear.</li>
+  </ul>
+
+  <section class="idea" id="W1">
+    <div><div class="scen" data-scen="W1"></div><div class="editor" data-ed="W1"></div></div>
+    <div class="notes">
+      <span class="tag rec">Idea W1 · recommended</span>
+      <h2>Progress card, keep choosing</h2>
+      <p class="one">The panel shows a progress card with the steps. Below it, the choices that don't need a new transcript stay editable.</p>
+      <h3>How it works</h3>
+      <ul><li>Card: current step, bar, about <b>N s left</b>, 4-step checklist.</li><li>"While you wait": <b>Show captions as</b>, <b>Auto emoji</b> and <b>Preset of style</b> stay live, and the sample on the video updates.</li><li>When done, the panel turns into the line rows, and "Captions ready" shows for a moment.</li></ul>
+      <h3>Pros</h3><ul><li>The wait turns into useful time spent picking the look.</li><li>Closest to the D1 setup you already have, so it's the smallest change.</li></ul>
+      <h3>Cons</h3><ul><li>Language is locked during the wait. Changing it means Cancel, then start again.</li><li>The user still stays on the Captions tab.</li></ul>
+    </div>
+  </section>
+
+  <section class="idea" id="W2">
+    <div><div class="scen" data-scen="W2"></div><div class="editor" data-ed="W2"></div></div>
+    <div class="notes">
+      <span class="tag">Idea W2</span>
+      <h2>Lines arrive as they're ready</h2>
+      <p class="one">Switches to the Text tab right away. Lines fill in one by one as they're transcribed, so you see results in seconds instead of waiting the full 30.</p>
+      <h3>How it works</h3>
+      <ul><li>A sticky progress bar sits on top ("Transcribing · 6 of ~14 lines"). Grey placeholder rows fill in from the top down.</li><li>The video shows the newest line.</li><li>Editing unlocks when all lines are in. Effects and Presets stay usable.</li></ul>
+      <h3>Pros</h3><ul><li>Feels the fastest. People can start reading and spotting mistakes early.</li><li>Shows the AI is working on <i>their</i> words, which builds trust.</li></ul>
+      <h3>Cons</h3><ul><li><b>Needs the backend to stream partial results.</b> Without that, it's only a fake animation at the end.</li><li>Lines can't be edited until the end, which can be frustrating.</li></ul>
+    </div>
+  </section>
+
+  <section class="idea" id="W3">
+    <div><div class="scen" data-scen="W3"></div><div class="editor" data-ed="W3"></div></div>
+    <div class="notes">
+      <span class="tag rec">Idea W3 · polished</span>
+      <h2>Runs in the background</h2>
+      <p class="one">Production's "Making magic…" screen (mascot + "you can continue working" note) on the dark editor, with the job tracked on the rail so people really can leave.</p>
+      <h3>How it works</h3>
+      <ul><li><b>Captions panel</b>: mascot, "Making magic…", "up to 30 seconds depending on the length of your clip", thin bar with time left, info note "You can keep working on your project…", Cancel.</li>
+      <li><b>Rail</b>: a ring fills around the Captions icon (hover: "Generating captions · 40%"). Done → green dot; failed → red dot.</li>
+      <li><b>Off the tab</b>: "Captions are ready · 14 lines added to your video · Review". Captions are already on the video ("Captions on"). Failure toast has <b>Try again</b> right there.</li>
+      <li><b>Export while generating</b>: a dialog asks "Wait, then export" (export starts by itself when ready) or "Export without captions".</li></ul>
+      <h3>Pros</h3><ul><li>No dead time at all. Fits users who add captions plus stickers and music in one session.</li><li>The same pattern can be reused for other AI jobs.</li></ul>
+      <h3>Cons</h3><ul><li>More moving parts: the rail ring, toasts, and what happens if they export before captions are ready.</li><li>Easy to miss when it's done (the toast and green dot cover that).</li></ul>
+    </div>
+  </section>
+
+  <section class="idea" style="display:block">
+    <div class="notes"><h2>Questions</h2>
+    <ul><li>Can the backend send <b>partial transcript</b> results, or only the full result at the end? W2 needs partial results.</li>
+    <li>W3 now asks the user on Export (wait / export without captions). OK, or should it always wait?</li>
+    <li>The mascot is cut out of the production screenshot for this draft. For the prototype, can we get the original artwork file (SVG or transparent PNG)?</li>
+    <li>Is ~30 s an average? A real number for 60 s vs 3 min clips would make the time-left estimate honest.</li></ul></div>
+  </section>
+</main>
+
+<script>
+const SENT=[[7100,7500,"Reloading."],[8860,9980,"He's not gonna hit."],[15400,18300,"Ah, 2A, Reyna and a Jett."],[22320,24320,"3, 2, 1, A site, go go peek, go peek, go peek, I said."],[27440,28700,"Spike down A."],[30060,31540,"One more Reyna."],[31540,32480,"I got spike."],[32960,34700,"Reyna low, Reyna low Reyna."],[37020,37520,"2A."],[38380,39080,"Let's go B?"],[39500,40360,"There's 2, 2A."],[41780,43660,"Last player standing."],[43660,45140,"Oh, unfortunate."],[58700,59720,"I'm out."]];
+const STEPS=[['Preparing audio',.1],['Transcribing speech',.7],['Timing words',.9],['Adding emoji',1]];
+const PRESETS=['THE HOOK.','WORD','HITS','THE'];
+const fmt=ms=>{const s=ms/1000;return `${Math.floor(s/60)}:${(s%60).toFixed(1).padStart(4,'0')}`};
+const S={};
+function init(id){const keep=S[id]||{};S[id]={phase:'setup',p:0,scen:keep.scen||'ok',fast:keep.fast||false,words:false,emoji:true,preset:0,tab:'Captions',toast:'',t0:0,frame:0,ready:false}}
+const dur=s=>s.fast?6000:30000;
+function start(id){const s=S[id];s.phase='run';s.p=0;s.t0=performance.now();s.toast='';s.ready=false;if(id!=='W3')s.tab='Captions';render(id)}
+function tick(){for(const id of Object.keys(S)){const s=S[id];s.frame++;if(s.phase==='run'){
+  s.p=Math.min(1,(performance.now()-s.t0)/dur(s));
+  if(s.scen==='fail'&&s.p>=.55){s.phase='fail';s.queued=false;s.dialog=false;if(id==='W3'&&s.tab!=='Captions')s.toast='fail'}
+  else if(s.p>=1){s.phase=s.scen==='empty'?'empty':'done';s.ready=true;s.toast=id==='W3'?(s.queued?'export':s.tab==='Captions'?'':'ready'):'ready';if(s.queued){s.queued=false;s.withCaps=true}if(id!=='W3')setTimeout(()=>{s.toast='';render(id)},2500)}
+  if(s.phase==='run')soft(id);else render(id)} else if(s.phase==='done'||s.phase==='setup')clip(id)}}
+const stepIdx=p=>STEPS.findIndex(([,end])=>p<end);
+const left=s=>Math.max(1,Math.ceil((1-s.p)*dur(s)/1000));
+function steps(s){const i=s.p>=1?4:stepIdx(s.p);return `<ul class="steps">${STEPS.map(([n],k)=>`<li class="${k<i?'done':k===i?'now':''}"><span class="st">${k<i?'✓':''}</span>${n}${n==='Adding emoji'&&!s.emoji?' <small class="note">(off)</small>':''}</li>`).join('')}</ul>`}
+const curStep=s=>STEPS[Math.max(0,stepIdx(s.p))]?.[0]||'Finishing';
+const bar=s=>`<div class="bar"><i style="width:${Math.round(s.p*100)}%"></i></div>`;
+const choices=(id,s)=>`<div class="lbl" style="margin-top:0">Show captions as</div><div class="fmt">${[[true,'Word by word','One word pops at a time'],[false,'Full phrases','Grouped, easy to read']].map(([v,l,d])=>`<button aria-pressed="${s.words===v}" data-a="${id}|words|${v}">${l}<small>${d}</small></button>`).join('')}</div>
+  <div class="lbl">Emoji</div><button class="opt" data-a="${id}|emoji"><span><b>Auto emoji</b><small>Match the moment with 🔥 💀 🎯</small></span><i class="sw ${s.emoji?'on':''}"><i></i></i></button>
+  <div class="lbl">Preset of style</div><div class="tiles">${PRESETS.map((n,i)=>`<button class="tile" aria-pressed="${s.preset===i}" data-a="${id}|preset|${i}">${n}</button>`).join('')}</div>`;
+function setup(id,s){return `<div class="setup"><div class="ph"><h4>Captions</h4></div><div class="lbl">Caption language</div><select class="sel"><option>English</option><option>Spanish</option><option>Auto-detect</option></select><div style="height:14px"></div>${choices(id,s)}<div style="height:18px"></div><button class="primary" data-a="${id}|start">Generate captions</button></div>`}
+const lines=(n,anim)=>SENT.slice(0,n).map(([a,b,t],i)=>`<div class="line ${anim&&i===n-1?'new':''}"><time>${fmt(a)} – ${fmt(b)}</time><span>${t}</span></div>`).join('');
+const ghosts=n=>Array.from({length:n},()=>'<div class="line ghostline"><time></time><span></span></div>').join('');
+function endStates(id,s){
+  if(s.phase==='fail')return `<div class="state err"><b>Couldn't generate captions</b>Something went wrong on our side. Your choices are kept.<div class="row"><button class="ghost" data-a="${id}|cancel">Back to setup</button><button class="ghost acc" data-a="${id}|start">Try again</button></div></div>`;
+  if(s.phase==='empty')return `<div class="state"><b>No speech found in this clip</b>Try another language, or add a line yourself.<div class="row"><button class="ghost" data-a="${id}|cancel">Change language</button><button class="ghost">+ Add line</button></div></div>`;
+  return '';
+}
+const doneView=s=>`<div class="mtabs"><span class="on">T Text</span><span>✧ Effects</span><span>▦ Presets</span></div><div class="ph" style="height:auto;margin-bottom:6px"><small style="flex:1">14 lines</small><button class="ghost acc">+ Add line</button></div>${lines(14)}`;
+
+/* ---- W1: progress card + keep choosing ---- */
+function W1(id,s){
+  if(s.phase==='setup')return setup(id,s);
+  if(s.phase==='done')return `<div class="ph"><h4>Captions</h4><small>English</small></div>${doneView(s)}`;
+  if(s.phase!=='run')return `<div class="ph"><h4>Captions</h4></div>${endStates(id,s)}`;
+  return `<div class="ph"><h4>Captions</h4></div>
+   <div class="prog"><div class="prog-top"><b>${curStep(s)}…</b><small>about ${left(s)} s left</small></div>${bar(s)}${steps(s)}</div>
+   <div class="while"><h5>While you wait</h5><p>These apply as soon as your captions are ready.</p>${choices(id,s)}</div>
+   <div class="cancel"><button data-a="${id}|cancel">Cancel</button></div>`;
+}
+/* ---- W2: lines arrive ---- */
+function W2(id,s){
+  if(s.phase==='setup')return setup(id,s);
+  if(s.phase==='done')return `<div class="ph"><h4>Captions</h4><small>English</small></div>${doneView(s)}`;
+  if(s.phase!=='run')return `<div class="ph"><h4>Captions</h4></div>${endStates(id,s)}`;
+  const tp=Math.max(0,Math.min(1,(s.p-.1)/.6)),n=Math.floor(tp*14);
+  return `<div class="sticky"><div class="prog-top"><b>${s.p<.1?'Preparing audio…':s.p<.7?`Transcribing · ${n} of ~14 lines`:curStep(s)+'…'}</b><small>about ${left(s)} s left</small></div>${bar(s)}</div>
+   <div class="mtabs"><span class="on">T Text</span><span>✧ Effects</span><span>▦ Presets</span></div>
+   <p class="note" style="margin:0 0 6px">You can fix lines once they're all in. Effects and Presets work now.</p>
+   ${lines(n,true)}${ghosts(Math.min(5,14-n))}
+   <div class="cancel"><button data-a="${id}|cancel">Cancel</button></div>`;
+}
+/* ---- W3: background (polished on the production "Making magic" screen) ---- */
+const OTHER={'Templates':'Your templates and Eklipse templates','Channel stickers':'Stickers on this clip and the look library','Elements':'Memes, texts and effects','Effects':'Video effects and transitions','Audio':'Music and sound effects'};
+function W3(id,s){
+  if(s.tab!=='Captions')return `<div class="ph"><h4>${s.tab}</h4></div><p class="note" style="margin:0">${OTHER[s.tab]} (panel as today).</p><div class="fake">${'<i></i>'.repeat(9)}</div>`;
+  if(s.phase==='setup')return setup(id,s);
+  if(s.phase==='done')return `<div class="ph"><h4>Captions</h4><small>English</small></div>${doneView(s)}`;
+  if(s.phase!=='run')return `<div class="ph"><h4>Captions</h4></div>${endStates(id,s)}`;
+  return `<div class="ph"><h4>Captions</h4></div>
+   <div class="magic"><img src="../assets/making-magic.png" alt="">
+     <h5>Making magic…</h5>
+     <p>This might take up to 30 seconds, depending on the length of your clip.</p>
+     ${bar(s)}<span class="left">about ${left(s)} s left</span>
+     <div class="info"><span class="i">i</span><span>You can keep working on your project while we generate the captions. We'll let you know when they're ready.</span></div>
+     <div class="cancel" style="margin-top:18px"><button data-a="${id}|cancel">Cancel</button></div>
+   </div>`;
+}
+const R={W1,W2,W3};
+function rail(id,s){
+  const tabs=['Templates','Channel stickers','Captions','Elements','Effects','Audio'];
+  const c=2*Math.PI*13;
+  return `<nav class="rail">${tabs.map(t=>{const isCap=t==='Captions';const ring=id==='W3'&&isCap&&s.phase==='run'?`<svg class="ring" viewBox="0 0 30 30"><circle class="bg" cx="15" cy="15" r="13"/><circle class="fg" cx="15" cy="15" r="13" stroke-dasharray="${c}" stroke-dashoffset="${c*(1-s.p)}"/></svg>`:'';
+    const dot=id==='W3'&&isCap&&s.tab!=='Captions'?(s.ready?'<span class="dot"></span>':s.phase==='fail'?'<span class="dot err"></span>':''):'';
+    const tip=id==='W3'&&isCap&&s.tab!=='Captions'?(s.phase==='run'?`Generating captions · ${Math.round(s.p*100)}%`:s.ready?'Captions ready':s.phase==='fail'?"Captions couldn't be generated":''):'';
+    return `<button aria-current="${s.tab===t}" ${tip?`data-tip="${tip}"`:''} ${id==='W3'?`data-a="${id}|tab|${t}"`:''}><span class="ic">${ring}${dot}</span>${t}</button>`}).join('')}</nav>`;
+}
+function toast(id,s){
+  if(!s.toast)return '';
+  if(s.toast==='fail')return `<div class="toast err">Couldn't generate captions <button class="ghost acc" data-a="${id}|retry">Try again</button><button class="ghost" data-a="${id}|dismiss">×</button></div>`;
+  if(s.toast==='export')return `<div class="toast">↥ Export started${s.withCaps===false?' without captions':' with captions'}</div>`;
+  if(s.toast==='queued')return `<div class="toast">Export will start when captions are ready</div>`;
+  if(id==='W3')return `<div class="toast">✓ ${s.phase==='empty'?'No speech found in this clip':'Captions are ready · 14 lines added to your video'} <button class="ghost acc" data-a="${id}|tab|Captions">Review</button><button class="ghost" data-a="${id}|dismiss">×</button></div>`;
+  return `<div class="toast">✓ Captions ready · ${s.phase==='empty'?'no speech found':'14 lines'}</div>`;
+}
+function clip(id){
+  const s=S[id],el=document.querySelector(`[data-clip="${id}"]`);if(!el)return;
+  if(s.phase==='run'){const n=id==='W2'?Math.floor(Math.max(0,Math.min(1,(s.p-.1)/.6))*14):0;
+    el.innerHTML=n?`<span class="flag">Live</span><div class="cap">${SENT[n-1][2]}</div>`:'<span class="flag">Generating…</span><div class="cap-wait"></div>';return}
+  if(s.phase==='fail'||s.phase==='empty'){el.innerHTML='';return}
+  const line=SENT[s.phase==='done'?Math.floor(s.frame/6)%SENT.length:3][2].split(' ');
+  const w=s.frame%line.length;const shown=s.words?`<span>${line[w]}</span>`:line.slice(0,5).map((x,k)=>`<span class="${k===w%5?'on':''}">${x}</span>`).join(' ');
+  el.innerHTML=`${s.phase==='setup'?'<span class="flag">Sample</span>':''}<div class="cap ${s.phase==='setup'?'sample':''}">${s.emoji?'<div>🔥</div>':''}${shown}</div>${id==='W3'&&s.phase==='done'&&s.tab!=='Captions'?'<span class="cap-on">Captions on</span>':''}`;
+}
+/* Progress ticks update in place, so clicks on the live choices are never lost to a re-render. */
+function soft(id){
+  const s=S[id],ed=document.querySelector(`[data-ed="${id}"]`);
+  const key=id==='W2'?Math.floor(Math.max(0,Math.min(1,(s.p-.1)/.6))*14)+'|'+stepIdx(s.p):stepIdx(s.p)+'|'+s.tab;
+  if(ed.dataset.key!==key){ed.dataset.key=key;render(id);return}
+  ed.querySelectorAll('.bar i').forEach(el=>el.style.width=Math.round(s.p*100)+'%');
+  ed.querySelectorAll('.prog-top small').forEach(el=>el.textContent=`about ${left(s)} s left`);
+  ed.querySelectorAll('.mini small').forEach(el=>el.textContent=`${Math.round(s.p*100)}% · ${left(s)} s`);
+  ed.querySelectorAll('.magic .left').forEach(el=>el.textContent=`about ${left(s)} s left`);
+  ed.querySelectorAll('.dlg p').forEach(el=>el.textContent=`About ${left(s)} s left. Wait and export with captions, or export now without them.`);
+  ed.querySelectorAll('.rail [data-tip]').forEach(el=>el.dataset.tip=`Generating captions · ${Math.round(s.p*100)}%`);
+  const c=2*Math.PI*13;ed.querySelectorAll('.ring .fg').forEach(el=>el.setAttribute('stroke-dashoffset',c*(1-s.p)));
+}
+function render(id){
+  const s=S[id],ed=document.querySelector(`[data-ed="${id}"]`);
+  const panel=ed.querySelector('.panel');const top=panel?panel.scrollTop:0;
+  const exp=id==='W3'?`<button class="exp" data-a="${id}|export">${s.queued?'Export after captions…':'↥ Export'}</button>`:'';
+  const dlg=id==='W3'&&s.dialog?`<div class="dlg-shade"><div class="dlg" role="dialog" aria-label="Captions still generating"><b>Captions are still generating</b><p>About ${left(s)} s left. Wait and export with captions, or export now without them.</p><div class="row"><button class="ghost" data-a="${id}|expnow">Export without captions</button><button class="ghost acc" data-a="${id}|expwait">Wait, then export</button></div></div></div>`:'';
+  ed.innerHTML=`${rail(id,s)}<div class="panel">${R[id](id,s)}</div><div class="stage">${exp}<div class="clip" data-clip="${id}"></div></div>${toast(id,s)}${dlg}`;
+  ed.querySelector('.panel').scrollTop=id==='W2'&&s.phase==='run'?top:top;clip(id);
+  document.querySelector(`[data-scen="${id}"]`).innerHTML='<span>Scenario</span>'+[['ok','Works'],['fail','Fails at ~55%'],['empty','No speech']].map(([k,l])=>`<button aria-pressed="${s.scen===k}" data-a="${id}|scen|${k}">${l}</button>`).join('')
+    +`<i></i><button aria-pressed="${s.fast}" data-a="${id}|fast">Fast (6 s)</button><button data-a="${id}|reset">Restart</button>`;
+}
+document.addEventListener('click',e=>{const a=e.target.closest('[data-a]');if(!a)return;const[id,act,arg]=a.dataset.a.split('|');const s=S[id];
+  if(act==='start')return start(id);
+  if(act==='cancel'){s.phase='setup';s.p=0;s.toast='';s.queued=false}
+  if(act==='words')s.words=arg==='true';
+  if(act==='emoji')s.emoji=!s.emoji;
+  if(act==='preset')s.preset=+arg;
+  if(act==='scen'){s.scen=arg;init(id)}
+  if(act==='fast'){s.fast=!s.fast;if(s.phase==='run'){/* keep progress, rescale start */s.t0=performance.now()-s.p*dur(s)}}
+  if(act==='reset')init(id);
+  if(act==='dismiss')s.toast='';
+  if(act==='retry'){s.toast='';return start(id)}
+  if(act==='export'){if(s.phase==='run'&&!s.queued)s.dialog=true;else if(!s.queued){s.withCaps=s.phase==='done';s.toast='export'}}
+  if(act==='expnow'){s.dialog=false;s.withCaps=false;s.toast='export'}
+  if(act==='expwait'){s.dialog=false;s.queued=true;s.toast='queued';setTimeout(()=>{if(s.toast==='queued'){s.toast='';render(id)}},2500)}
+  if(act==='tab'){s.tab=arg;if(arg==='Captions'){s.toast='';}}
+  render(id)});
+['W1','W2','W3'].forEach(id=>{init(id);render(id)});
+setInterval(tick,250);
+</script>
+</body>
+</html>

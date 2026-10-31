@@ -1,0 +1,39 @@
+{
+  "id": "multi-platform-brand-builder",
+  "rank": 7,
+  "name": "Multi-platform brand builder",
+  "experience": "power",
+  "behavior": "Streams on more than one platform and puts every handle on every clip; sets the brand once and expects it everywhere.",
+  "knows": [
+    "brand sticker",
+    "Twitch",
+    "YouTube",
+    "Kick",
+    "export"
+  ],
+  "does_not_know": [
+    "where the brand setting lives in this editor"
+  ],
+  "patience": "high",
+  "words": [
+    "my handles",
+    "YouTube and Twitch",
+    "on every clip",
+    "not over my face"
+  ],
+  "tier": "pro",
+  "fixtures": {
+    "storage": {
+      "ek-claude-brand": {
+        "handle": "pixelpanda",
+        "design": "sl-stw01",
+        "platform": "Twitch",
+        "auto": true
+      }
+    }
+  },
+  "provenance": [
+    "2+ platforms on the sticker 9.7% of projects: 79.4% export",
+    "YouTube 7.5%, Kick 4.4%, Facebook 1.5% (plans/261027-usability-probe-skill/personas.md)"
+  ]
+}

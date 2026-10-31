@@ -1,0 +1,66 @@
+{
+  "id": "q1-same-as-last",
+  "flow": "Q1",
+  "menu": "Layouts",
+  "persona": "quick-user",
+  "target": "claude-improvement",
+  "weight": 0.35,
+  "mission": "Make this clip look like the one you posted last time, fix the framing so your face is not cut off, and export it.",
+  "start": {
+    "screen": "L00"
+  },
+  "checkpoints": [
+    {
+      "id": "layout",
+      "check": "state.layoutId === 'Game UI' || state.layoutId === 'Split'",
+      "describe": "The saved familiar layout is applied"
+    },
+    {
+      "id": "framing",
+      "check": "Object.keys(state.cropOverrides || {}).length > 0",
+      "describe": "The framing has changed from the layout default"
+    },
+    {
+      "id": "export",
+      "check": "state.exported === true",
+      "describe": "The clip export has finished"
+    }
+  ],
+  "bestPath": [
+    {
+      "do": "click",
+      "selector": ".tpl-card[aria-label^='Apply'] >> nth=0"
+    },
+    {
+      "do": "click",
+      "selector": ".source-crop"
+    },
+    {
+      "do": "key",
+      "key": "ArrowRight"
+    },
+    {
+      "do": "click",
+      "selector": ".tb-primary"
+    },
+    {
+      "do": "click",
+      "selector": ".export-primary"
+    }
+  ],
+  "bestTimeSeconds": null,
+  "budget": {
+    "minutes": 12
+  },
+  "why": {
+    "data": "Layout reused in 72.6% of projects; 76.5% export when reused.",
+    "source": "plans/261027-usability-probe-skill/personas.md"
+  },
+  "input": {
+    "clip": null
+  },
+  "playerIds": [
+    "quick-match",
+    "quick-differs"
+  ]
+}

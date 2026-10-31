@@ -1,0 +1,61 @@
+{
+  "id": "aud-add-background-music",
+  "flow": "A1",
+  "menu": "Audio",
+  "persona": "one-and-done",
+  "target": "claude-improvement",
+  "weight": 0.2,
+  "mission": "Add some background music to your clip so it is not silent behind the game, then export.",
+  "start": {
+    "screen": "L00"
+  },
+  "checkpoints": [
+    {
+      "id": "music",
+      "check": "state.audio.some(x => x.category === 'Music')",
+      "describe": "A song is on the clip"
+    },
+    {
+      "id": "export",
+      "check": "state.exported === true",
+      "describe": "The clip export has finished"
+    }
+  ],
+  "bestPath": [
+    {
+      "do": "click",
+      "selector": ".rail nav button:has-text('Audio')"
+    },
+    {
+      "do": "click",
+      "selector": ".audio-tabs button:nth-child(2)"
+    },
+    {
+      "do": "click",
+      "selector": ".audio-row-title"
+    },
+    {
+      "do": "click",
+      "selector": ".tb-primary"
+    },
+    {
+      "do": "click",
+      "selector": ".export-primary"
+    }
+  ],
+  "bestTimeSeconds": null,
+  "budget": {
+    "minutes": 12
+  },
+  "why": {
+    "data": "63.4% of first projects are not exported; first-time users take the first music they find and move on.",
+    "source": "plans/261027-usability-probe-skill/personas.md"
+  },
+  "input": {
+    "clip": null
+  },
+  "playerIds": [
+    "once-novice",
+    "once-rusher"
+  ]
+}

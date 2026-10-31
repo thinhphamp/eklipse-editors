@@ -1,0 +1,12 @@
+.sq-lastclip{display:flex;align-items:center;gap:10px;margin:-12px 0 18px;padding:0 4px;font-size:var(--fs-label);color:var(--text-3)}
+.sq-lastclip span{flex:1;min-width:0}.sq-lastclip strong{color:var(--text-1);font-weight:600}
+.sq-lastclip button{flex:none;padding:4px 10px;border:1px solid var(--accent);border-radius:8px;background:transparent;color:var(--accent-text);font-size:var(--fs-label)}
+.style-quickstart.sq-differs{margin-bottom:12px}
+.layout-tile .last-badge{position:absolute;top:6px;right:6px;padding:1px 6px;border-radius:6px;background:var(--accent);color:var(--text-1);font-size:var(--fs-micro);text-transform:uppercase;letter-spacing:.04em}
+.layout-tile{position:relative}
+.reuse-block{margin:4px 0 18px;padding:12px;border:1px solid var(--border);border-radius:12px}
+.reuse-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
+.reuse-head h2{margin:0;font-size:var(--fs-heading)}
+.reuse-block .style-quickstart,.reuse-block .style-quickstart.sq-differs{margin:0}
+.reuse-block .sq-lastclip{margin:10px 0 0;padding:0}
+.look-save-action.compact{margin:0;padding:4px 10px;font-weight:600}

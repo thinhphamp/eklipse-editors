@@ -1,0 +1,100 @@
+/* Channel stickers panel (ch-stickers). Tokens only. */
+.channel-panel{display:flex;flex-direction:column}
+.cs-sec{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin:18px 0 10px}
+.cs-sec:first-of-type{margin-top:0}
+.cs-sec h3{font-size:var(--fs-heading);margin:0}
+.cs-sec span{font-size:var(--fs-label);color:var(--text-3)}
+.cs-hint{font-size:var(--fs-label);color:var(--text-3);margin:6px 0 0}
+.cs-hint.warn{color:var(--premium)}
+
+/* stickers on this clip */
+.cs-onclip{display:flex;flex-direction:column;gap:6px}
+.cs-item{display:grid;grid-template-columns:150px 1fr auto;align-items:center;gap:12px;padding:8px 10px;border-radius:var(--radius-md);border:1.5px solid var(--border-subtle);background:var(--bg-card);cursor:pointer}
+.cs-item:hover{background:var(--bg-hover)}
+.cs-item.selected{border-color:var(--accent);background:var(--accent-soft)}
+.cs-item:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.cs-mini{height:40px;border-radius:6px;background:var(--bg-inset);display:grid;place-items:center;overflow:hidden}
+.cs-item-text b{display:block;font-size:var(--fs-body);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cs-item-text small{display:block;font-size:var(--fs-caption);color:var(--text-3)}
+.cs-x{width:28px;height:28px;border:0;border-radius:7px;background:none;color:var(--text-3);display:grid;place-items:center}
+.cs-x:hover,.cs-x:focus-visible{background:var(--bg-hover);color:var(--text-1)}
+.cs-empty{border:1px dashed var(--border);border-radius:var(--radius-md);padding:14px;color:var(--text-3);font-size:var(--fs-body)}
+.cs-check{display:flex;align-items:center;gap:8px;font-size:var(--fs-body);color:var(--text-2);margin-top:10px}
+.cs-check input{accent-color:var(--accent);width:16px;height:16px}
+
+/* looks */
+.cs-look-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}
+.cs-pills{display:flex;gap:6px}
+.cs-pills button{height:30px;padding:0 12px;border-radius:99px;border:1px solid var(--border);background:none;font-size:var(--fs-label);color:var(--text-2)}
+.cs-pills button.on{background:var(--text-1);color:var(--bg-app);border-color:var(--text-1)}
+.cs-toggle{display:inline-flex;align-items:center;gap:8px;font-size:var(--fs-body);color:var(--text-2);cursor:pointer;user-select:none}
+.cs-toggle input{position:absolute;opacity:0;pointer-events:none}
+.cs-toggle .trk{position:relative;width:34px;height:20px;border-radius:99px;background:var(--bg-muted);transition:background .15s}
+.cs-toggle .trk::after{content:"";position:absolute;top:3px;left:3px;width:14px;height:14px;border-radius:50%;background:var(--text-1);transition:left .15s}
+.cs-toggle input:checked+.trk{background:var(--toggle-on)}
+.cs-toggle input:checked+.trk::after{left:17px}
+.cs-toggle input:focus-visible+.trk{outline:2px solid var(--focus);outline-offset:2px}
+.cs-tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.cs-tile{position:relative;height:80px;border-radius:var(--radius-md);border:1.5px solid var(--border-subtle);background:var(--bg-card);display:grid;place-items:center;overflow:hidden;padding:4px;cursor:default}
+.cs-tile:hover{background:var(--bg-hover)}
+.cs-tile.selected{border-color:var(--accent);background:var(--accent-soft)}
+.cs-tile:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.cs-pro{position:absolute;top:5px;right:6px;z-index:1;font-size:var(--fs-micro);font-weight:800;padding:1px 6px;border-radius:4px;background:var(--premium);color:var(--premium-text)}
+.cs-hov{position:absolute;inset:0;z-index:2;display:grid;place-items:center;background:color-mix(in srgb,var(--bg-app) 70%,transparent);opacity:0;transition:opacity .12s}
+.cs-tile:hover .cs-hov,.cs-tile:focus-within .cs-hov,.cs-tile:focus .cs-hov{opacity:1}
+.cs-hov button{height:24px;padding:0 10px;border:0;border-radius:6px;background:var(--accent);color:var(--text-on-accent);font-size:var(--fs-caption);font-weight:600}
+.cs-hov button:disabled{opacity:.45;cursor:not-allowed}
+
+/* edit sheet: compact rows, pinned to the bottom of the panel, at most ~1/3 of the panel height */
+.cs-group.open{border:1.5px solid var(--accent);border-radius:var(--radius-md);background:var(--accent-soft);overflow:hidden}
+.cs-group.open .cs-item{border:0;border-radius:0;background:none}
+.cs-sheet{padding:4px 12px 12px;border-top:1px solid var(--border-subtle)}
+.cs-line{display:grid;grid-template-columns:62px 1fr;align-items:center;gap:8px;min-height:32px;margin-top:4px}
+.cs-line>label,.cs-line>span{font-size:var(--fs-label);font-weight:600;color:var(--text-2)}
+.cs-field{width:100%;height:30px;border-radius:7px;border:1px solid var(--border);background:var(--bg-inset);color:var(--text-1);padding:0 10px;font-size:var(--fs-body)}
+.cs-field:focus{border-color:var(--accent);outline:none}
+.cs-field.need{border-color:var(--premium)}
+.cs-plats{display:flex;gap:5px}
+.cs-plats button{width:26px;height:26px;border-radius:6px;border:0;padding:0;display:grid;place-items:center;font-size:var(--fs-label);font-weight:800;opacity:.45;transition:opacity .12s}
+.cs-plats button:hover{opacity:.8}
+.cs-plats button[aria-pressed=true]{opacity:1;box-shadow:0 0 0 2px var(--bg-card),0 0 0 3.5px var(--text-1)}
+.cs-swatches{display:flex;gap:5px;align-items:center;flex-wrap:nowrap}
+.cs-swatches button,.cs-swatches .custom{width:24px;height:24px;border-radius:5px;border:2px solid transparent;padding:0;flex:0 0 auto}
+.cs-swatches .orig{width:auto;height:24px;padding:0 7px;font-size:var(--fs-caption);background:var(--bg-hover);color:var(--text-2)}
+.cs-swatches [aria-pressed=true]{border-color:var(--text-1)}
+.cs-swatches .custom{position:relative;overflow:hidden;cursor:pointer;background:conic-gradient(var(--ch-sw-red),var(--ch-sw-yellow),var(--ch-sw-green),var(--ch-sw-blue),var(--ch-sw-purple),var(--ch-sw-red))}
+.cs-swatches .custom input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.cs-seg{display:inline-flex;justify-self:start;background:var(--bg-inset);border-radius:7px;padding:2px;gap:2px}
+.cs-seg button{min-height:24px;border:0;background:none;padding:3px 10px;border-radius:5px;font-size:var(--fs-label);color:var(--text-3)}
+.cs-seg button.on{background:var(--bg-hover);color:var(--text-1)}
+.cs-custom{display:grid;grid-template-columns:62px auto auto auto 1fr;gap:6px 8px;align-items:center;margin-top:6px}
+.cs-custom label{grid-column:auto;display:flex;align-items:center;gap:5px;font-size:var(--fs-label);color:var(--text-3)}
+.cs-custom label:first-child{grid-column:2}
+.cs-custom label span{position:relative;display:block;width:54px}
+.cs-custom label .cs-field{height:28px;padding:0 18px 0 8px;font-variant-numeric:tabular-nums}
+.cs-custom em{position:absolute;right:7px;top:50%;transform:translateY(-50%);font-style:normal;font-size:var(--fs-caption);color:var(--text-3)}
+.cs-btn{height:28px;padding:0 9px;border-radius:7px;border:1px solid var(--border);background:none;font-size:var(--fs-label);color:var(--text-1);white-space:nowrap}
+.cs-bar{position:relative;height:6px;border-radius:3px;background:var(--bg-inset);min-width:40px}
+.cs-bar span{position:absolute;top:0;bottom:0;border-radius:3px;background:var(--accent)}
+.cs-bar i{position:absolute;top:-3px;bottom:-3px;width:2px;border-radius:1px;background:var(--text-1)}
+
+/* hovered look, previewed on the video */
+.cs-ghost{position:absolute;z-index:5;display:grid;place-items:center;pointer-events:none;opacity:.75;outline:1.5px dashed var(--text-1);outline-offset:3px;border-radius:4px}
+.cs-ghost::after{content:"Click to add here";position:absolute;left:50%;bottom:100%;transform:translate(-50%,-6px);font:600 11px/1.4 var(--font-ui);white-space:nowrap;background:var(--bg-app);color:var(--text-1);padding:2px 7px;border-radius:5px}
+
+/* Multi-platform: a per-sticker option next to the platform icons */
+.cs-plat-row{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.cs-toggle.small{gap:6px;font-size:var(--fs-label)}
+.cs-toggle.small .trk{width:28px;height:16px}
+.cs-toggle.small .trk::after{top:2px;left:2px;width:12px;height:12px}
+.cs-toggle.small input:checked+.trk::after{left:14px}
+/* Look cards open on the finished sticker: animated looks start mid-loop instead of on their blank frame. */
+.cs-tile .cs-slide .ic{animation-name:cs-slide-ic-card;animation-delay:-1.4s}
+.cs-tile .cs-slide .nm{animation-name:cs-slide-nm-card;animation-delay:-1.4s}
+/* Card-only timing: the blank part of the loop is ~0.2 s instead of ~0.7 s; the sticker on the clip keeps the full slide. */
+@keyframes cs-slide-ic-card{0%{transform:translateX(-1.2em);opacity:0}10%,100%{transform:none;opacity:1}}
+@keyframes cs-slide-nm-card{0%,6%{clip-path:inset(0 100% 0 0)}24%,100%{clip-path:inset(0 0 0 0)}}
+.cs-tile .cs-drop .ic{animation-delay:-1s}
+.cs-tile .cs-drop .ic:nth-child(2){animation-delay:-.85s}
+.cs-tile .cs-drop .ic:nth-child(3){animation-delay:-.7s}
+.cs-tile .cs-drop .ic:nth-child(4){animation-delay:-.55s}

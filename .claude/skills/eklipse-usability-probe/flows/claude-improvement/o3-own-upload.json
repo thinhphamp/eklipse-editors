@@ -1,0 +1,62 @@
+{
+  "id": "o3-own-upload",
+  "flow": "O3",
+  "menu": "Layouts",
+  "persona": "one-and-done",
+  "target": "claude-improvement",
+  "weight": 0.2,
+  "mission": "Upload your own phone clip, make it look right, and export it.",
+  "start": {
+    "screen": "L00"
+  },
+  "checkpoints": [
+    {
+      "id": "uploaded",
+      "check": "state.sourceUploaded === true && state.sourceRatio === '9:16'",
+      "describe": "Your vertical phone clip is loaded"
+    },
+    {
+      "id": "layout",
+      "check": "state.outputRatio === '9:16'",
+      "describe": "The clip fits a vertical frame"
+    },
+    {
+      "id": "export",
+      "check": "state.exported === true",
+      "describe": "The clip export has finished"
+    }
+  ],
+  "bestPath": [
+    {
+      "do": "click",
+      "text": "Upload"
+    },
+    {
+      "do": "click",
+      "text": "Use bundled vertical sample"
+    },
+    {
+      "do": "click",
+      "selector": ".tb-primary"
+    },
+    {
+      "do": "click",
+      "selector": ".export-primary"
+    }
+  ],
+  "bestTimeSeconds": null,
+  "budget": {
+    "minutes": 12
+  },
+  "why": {
+    "data": "Vertical source clips are 6.3% of projects; vertical exports take a median 5.3 minutes.",
+    "source": "plans/261027-usability-probe-skill/personas.md"
+  },
+  "input": {
+    "clip": "vertical-upload"
+  },
+  "playerIds": [
+    "once-novice",
+    "once-rusher"
+  ]
+}

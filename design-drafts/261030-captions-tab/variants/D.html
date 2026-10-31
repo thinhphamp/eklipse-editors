@@ -1,0 +1,424 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Captions tab · variant D · round 2</title>
+<style>
+/* ===== Tokens: copied from prototypes-src/claude-improvement/src/theme/tokens.css (Eklipse dark) ===== */
+:root{
+  --color-ek-purple:#735EF4;--color-ek-purple-light:#A496F8;--color-ek-yellow:#FFA036;
+  --color-ek-grey-light:#A3A3BF;--color-ek-grey:#434359;--color-ek-grey-dark:#2B2B38;--color-ek-grey-darker:#1B1B26;
+  --color-ek-grey-black:#11111A;--color-ek-success:#46F88D;--color-ek-white:#FFFFFF;
+  --color-ek-text-secondary:#D0D0D0;--color-ek-border-secondary:#FFFFFF14;--color-ek-hover:#383849;--color-ek-black:#000000;
+  --font-ui:'Hanken Grotesk',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --bg-app:var(--color-ek-grey-black);--bg-panel:var(--color-ek-grey-darker);--bg-card:var(--color-ek-grey-dark);
+  --bg-hover:var(--color-ek-hover);--bg-inset:var(--color-ek-grey-black);
+  --border:var(--color-ek-grey);--border-subtle:var(--color-ek-border-secondary);
+  --text-1:var(--color-ek-white);--text-2:var(--color-ek-text-secondary);--text-3:var(--color-ek-grey-light);
+  --accent:var(--color-ek-purple);--accent-text:var(--color-ek-purple-light);
+  --accent-soft:color-mix(in srgb,var(--color-ek-purple) 22%,var(--color-ek-grey-dark));
+  --premium:var(--color-ek-yellow);
+}
+@font-face{font-family:CaptionAnton;src:url(../../../prototypes-src/claude-improvement/public/fonts/captions/anton-400.woff2)}
+@font-face{font-family:CaptionBangers;src:url(../../../prototypes-src/claude-improvement/public/fonts/captions/bangers-400.woff2)}
+@font-face{font-family:CaptionBebas;src:url(../../../prototypes-src/claude-improvement/public/fonts/captions/bebas-neue-400.woff2)}
+@font-face{font-family:CaptionLuckiest;src:url(../../../prototypes-src/claude-improvement/public/fonts/captions/luckiest-guy-400.woff2)}
+@font-face{font-family:CaptionMontserrat;src:url(../../../prototypes-src/claude-improvement/public/fonts/captions/montserrat-800.woff2)}
+@font-face{font-family:CaptionPoppins;src:url(../../../prototypes-src/claude-improvement/public/fonts/captions/poppins-800.woff2)}
+@font-face{font-family:'Hanken Grotesk';font-weight:400;src:url(../../../prototypes-src/claude-improvement/public/fonts/hanken-grotesk-latin-400-normal.woff2)}
+@font-face{font-family:'Hanken Grotesk';font-weight:600;src:url(../../../prototypes-src/claude-improvement/public/fonts/hanken-grotesk-latin-600-normal.woff2)}
+@font-face{font-family:'Hanken Grotesk';font-weight:700;src:url(../../../prototypes-src/claude-improvement/public/fonts/hanken-grotesk-latin-700-normal.woff2)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg-app);color:var(--text-1);font:15px/1.5 var(--font-ui)}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--accent-text);outline-offset:2px}
+
+/* ===== Board ===== */
+.board{max-width:1180px;margin:0 auto;padding:40px 24px 96px}
+.kicker{color:var(--text-3);font-size:13px;letter-spacing:.04em;text-transform:uppercase}
+h1{font-size:30px;line-height:1.2;margin:8px 0 10px}
+.lead{color:var(--text-2);max-width:820px;margin:0 0 6px}
+.bar{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:22px 0 12px}
+.bar span{font-size:12px;color:var(--text-3);margin-right:4px}
+.bar button{font-size:12px;padding:4px 10px;border-radius:99px;border:1px solid var(--border);background:none;color:var(--text-2)}
+.bar button[aria-pressed=true]{background:var(--bg-card);color:var(--text-1);border-color:var(--accent)}
+.bar .sep{width:1px;height:20px;background:var(--border);margin:0 8px}
+.stage{display:grid;grid-template-columns:572px 1fr;gap:36px;align-items:start}
+.notes h3{font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--text-3);margin:22px 0 6px}
+.notes ul{margin:0;padding-left:18px;color:var(--text-2)}
+.notes li{margin:3px 0}
+.notes b{color:var(--text-1)}
+
+/* ===== Clip preview (9:16 / 16:9) ===== */
+.clip{position:relative;width:230px;aspect-ratio:9/16;border-radius:12px;overflow:hidden;border:1px solid var(--border);background:color-mix(in srgb,var(--color-ek-success) 10%,var(--color-ek-grey))}
+.clip::before{content:"Facecam";position:absolute;inset:0 0 58% 0;background:color-mix(in srgb,var(--color-ek-purple) 45%,var(--color-ek-grey-dark));display:grid;place-items:center;font-size:11px;color:var(--text-3)}
+.clip.wide{aspect-ratio:16/9;width:380px}
+.clip.wide::before{inset:0 72% 64% 0}
+.cap{position:absolute;left:5%;right:5%;top:70%;transform:translateY(-50%);text-align:center;line-height:1.08;paint-order:stroke fill}
+.clip.wide .cap{top:80%}
+.cap.sample{opacity:.65}
+.cap .w{display:inline-block;padding:0 .08em;border-radius:.15em}
+.cap .emo{display:block;font-size:1.05em;margin-bottom:2px;-webkit-text-stroke:0}
+.flag{position:absolute;left:8px;top:8px;font-size:10px;font-weight:700;padding:1px 7px;border-radius:4px;background:var(--bg-app);color:var(--text-2)}
+.busy{position:absolute;left:0;right:0;top:70%;text-align:center;font-size:12px;color:var(--text-2)}
+
+/* ===== Editor mock ===== */
+.editor{display:flex;height:840px;border:1px solid var(--border);border-radius:12px;overflow:hidden;background:var(--bg-panel)}
+.rail{width:52px;flex:0 0 52px;border-right:1px solid var(--border);display:flex;flex-direction:column;align-items:center;gap:4px;padding:12px 0;background:var(--bg-app)}
+.rail i{display:flex;flex-direction:column;align-items:center;font-style:normal;font-size:9px;line-height:1.1;text-align:center;color:var(--text-3);gap:3px;padding:6px 2px;width:48px;border-radius:8px}
+.rail i::before{content:"";width:18px;height:18px;border-radius:5px;border:1.5px solid currentColor}
+.rail i.on{color:var(--text-1);background:var(--bg-card)}
+.rail i.on::before{border-color:var(--accent-text);background:var(--accent-soft)}
+.panel{position:relative;width:520px;overflow:auto;padding:16px 16px 40px;scrollbar-width:thin;font-size:13px}
+.ph{display:flex;align-items:center;gap:8px;height:36px;margin-bottom:6px}
+.ph h4{font-size:18px;margin:0;flex:1}
+.ph .back{border:0;background:none;color:var(--text-2);font-size:18px;padding:0 6px 0 0}
+.ph small{color:var(--text-3);font-size:12px}
+/* prototype tabs: Text / Effects / Presets + globe */
+.mtabs{display:flex;align-items:center;gap:3px;height:40px;margin:0 0 12px;padding:2px;border-radius:6px;background:var(--bg-card)}
+.mtabs>button{flex:1;height:34px;border:0;border-radius:5px;background:transparent;color:var(--text-2)}
+.mtabs>button[aria-pressed=true]{background:var(--bg-hover);color:var(--text-1);font-weight:600}
+.mtabs .globe{flex:0 0 34px;width:34px;border:1px solid var(--border)}
+.lbl{display:flex;justify-content:space-between;align-items:baseline;font-size:13px;font-weight:600;margin:16px 0 8px}
+.lbl small{font-weight:400;color:var(--text-3);font-size:12px}
+.lbl .link,.link{border:0;background:none;color:var(--accent-text);font-size:12px;font-weight:600;padding:0}
+select.field{width:100%;height:38px;border-radius:8px;border:1px solid var(--border);background:var(--bg-inset);padding:0 10px}
+.note{font-size:12px;color:var(--text-3);margin:6px 0 0}
+.primary{width:100%;height:42px;border:0;border-radius:8px;background:var(--accent);color:var(--color-ek-white);font-weight:700;margin-top:18px}
+.primary[disabled]{opacity:.6;cursor:progress}
+.ghost{height:32px;padding:0 12px;border-radius:7px;border:1px solid var(--border);background:var(--bg-card);font-size:12px;font-weight:600}
+.ghost.acc{background:var(--accent);border-color:var(--accent);color:var(--color-ek-white)}
+.ghost.wide{width:100%;margin-top:8px}
+/* format cards (production wording) */
+.fmt{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:5px;border:1px solid var(--border-subtle);border-radius:10px}
+.fmt button{border:0;border-radius:8px;background:none;padding:10px 8px;color:var(--text-3);font-weight:600;display:grid;gap:4px;justify-items:center}
+.fmt button small{font-weight:400;font-size:12px}
+.fmt button .demo{font:700 12px/1 var(--font-ui);height:18px;display:flex;gap:3px;align-items:center}
+.fmt button .demo i{font-style:normal;padding:2px 4px;border-radius:3px;background:var(--bg-inset)}
+.fmt button .demo i.on{background:var(--color-ek-white);color:var(--bg-app)}
+.fmt button[aria-pressed=true]{background:var(--accent);color:var(--color-ek-white)}
+.fmt button[aria-pressed=true] small{color:var(--color-ek-white)}
+/* switch + option card */
+.switch{width:40px;height:22px;border-radius:99px;border:0;background:var(--color-ek-grey);position:relative;padding:0;flex:0 0 40px}
+.switch i{position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:var(--color-ek-white);transition:left .15s}
+.switch.on{background:var(--accent)}
+.switch.on i{left:21px}
+.optcard{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border-subtle);border-radius:10px;background:var(--bg-card)}
+.optcard>div{flex:1}
+.optcard b{display:block;font-size:14px}
+.optcard small{color:var(--text-3);font-size:12px}
+.optcard+.optcard{margin-top:6px}
+.fx-icon{display:grid;place-items:center;width:36px;height:36px;border-radius:6px;background:var(--accent-soft);font-size:17px}
+/* preset of style tiles (prototype .captions-preset-tile) */
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+.grid.four{grid-template-columns:repeat(4,minmax(0,1fr))}
+.tile{position:relative;display:grid;place-items:center;min-width:0;height:92px;padding:6px;border:1px solid var(--border);border-radius:7px;background:var(--bg-card);overflow:hidden;line-height:1.03;text-align:center;font-size:17px;paint-order:stroke fill}
+.grid.four .tile{height:74px;font-size:14px}
+.tile[aria-pressed=true]{border-color:var(--accent);background:var(--accent-soft)}
+.tile .chk{position:absolute;top:5px;left:5px;width:19px;height:19px;border-radius:50%;background:var(--accent);color:var(--color-ek-white);font:700 11px/19px var(--font-ui);-webkit-text-stroke:0}
+.tile .edit{position:absolute;top:5px;right:5px;padding:3px 7px;border-radius:4px;background:var(--accent);color:var(--color-ek-white);font:700 11px/1.3 var(--font-ui);-webkit-text-stroke:0;font-style:normal;text-transform:none;letter-spacing:0}
+.tile .mine{position:absolute;bottom:4px;left:0;right:0;font:600 10px/1 var(--font-ui);color:var(--text-3);-webkit-text-stroke:0;text-transform:none;font-style:normal;letter-spacing:0}
+.sechead{display:flex;justify-content:space-between;align-items:center;margin:18px 0 9px}
+.sechead h5{font-size:13px;margin:0}
+/* text tab */
+.texttools{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.texttools small{color:var(--text-3);font-size:12px}
+.part{font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--text-3);padding:12px 8px 4px}
+/* D1 lines */
+.line{display:grid;grid-template-columns:108px 1fr auto;align-items:center;gap:10px;min-height:40px;padding:4px 8px;border-radius:7px}
+.line:hover{background:var(--bg-hover)}
+.line.now{background:var(--accent-soft)}
+.line time{font-size:12px;color:var(--text-3);font-variant-numeric:tabular-nums}
+.line .txt{border:0;background:none;text-align:left;padding:4px 0;font-size:14px}
+.line input,.card input{width:100%;height:30px;border-radius:6px;border:1px solid var(--accent);background:var(--bg-inset);padding:0 8px;font-size:14px}
+.acts{display:flex;gap:2px;opacity:0}
+.line:hover .acts,.line.now .acts,.card:hover .acts,.card.now .acts{opacity:1}
+.acts button{width:26px;height:26px;border:0;border-radius:6px;background:none;color:var(--text-3)}
+.acts button:hover{background:var(--bg-card);color:var(--text-1)}
+/* D2 caption cards: one card = one caption on screen */
+.cards{display:flex;flex-direction:column;gap:6px}
+.card{display:grid;grid-template-columns:52px 1fr auto;align-items:center;gap:10px;padding:8px 10px;border:1px solid var(--border-subtle);border-radius:8px;background:var(--bg-card)}
+.card.now{border-color:var(--accent);background:var(--accent-soft)}
+.card time{font-size:11px;color:var(--text-3);font-variant-numeric:tabular-nums}
+.card .words{display:flex;flex-wrap:wrap;gap:4px;align-items:center}
+.card .wd{border:1px solid transparent;background:var(--bg-inset);border-radius:5px;padding:2px 7px;font-size:14px}
+.card .wd:hover{border-color:var(--border)}
+.card .wd.cur{background:var(--color-ek-white);color:var(--bg-app)}
+.card .wd input{height:26px;width:110px}
+.card .em{font-size:15px}
+.wordrow{display:flex;flex-wrap:wrap;gap:4px}
+.wordrow .wd{display:grid;justify-items:center;gap:0;padding:3px 8px 2px}
+.wordrow .wd small{font-size:10px;color:var(--text-3)}
+.wordrow .wd.cur small{color:var(--bg-app)}
+.skel{height:34px;border-radius:7px;margin:6px 0;background:linear-gradient(90deg,var(--bg-card),var(--bg-hover),var(--bg-card));background-size:200% 100%;animation:sh 1.2s linear infinite}
+@keyframes sh{to{background-position:-200% 0}}
+.empty{text-align:center;padding:28px 16px;border:1px dashed var(--border);border-radius:10px;color:var(--text-3)}
+.empty b{display:block;color:var(--text-1);font-size:14px;margin-bottom:4px}
+.remember{font-size:12px;color:var(--accent-text);background:var(--accent-soft);border-radius:7px;padding:6px 10px;margin-bottom:6px}
+.confirm{display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:8px;background:color-mix(in srgb,var(--color-ek-yellow) 12%,var(--bg-card));font-size:12px;margin-top:10px}
+.confirm span{flex:1}
+/* edit preset of style */
+.ed-sample{display:grid;place-items:center;height:110px;border-radius:10px;border:1px solid var(--border);background:color-mix(in srgb,var(--color-ek-success) 10%,var(--color-ek-grey));margin-bottom:6px;overflow:hidden;padding:0 10px;text-align:center;line-height:1.08;paint-order:stroke fill}
+.rows{border:1px solid var(--border-subtle);border-radius:10px;background:var(--bg-card)}
+.rows+.rows{margin-top:10px}
+.rows h6{margin:0;padding:10px 12px 2px;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--text-3)}
+.row{display:grid;grid-template-columns:96px 1fr;align-items:center;gap:10px;min-height:44px;padding:5px 12px;border-top:1px solid var(--border-subtle)}
+.rows h6+.row{border-top:0}
+.row>span{color:var(--text-3);font-size:12px;font-weight:600}
+.row>div{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.row input[type=range]{flex:1;accent-color:var(--accent)}
+.row output{font-size:12px;color:var(--text-2);width:30px;text-align:right}
+.row select.field{height:32px}
+.seg{display:inline-flex;padding:3px;border-radius:8px;background:var(--bg-inset);border:1px solid var(--border-subtle)}
+.seg button{border:0;background:none;height:26px;padding:0 10px;border-radius:6px;color:var(--text-3);font-size:12px;font-weight:600}
+.seg button[aria-pressed=true]{background:var(--bg-hover);color:var(--text-1)}
+.tog{height:30px;min-width:34px;padding:0 9px;border-radius:6px;border:1px solid var(--border);background:var(--bg-inset);font-size:12px;font-weight:700;color:var(--text-3)}
+.tog[aria-pressed=true]{border-color:var(--accent);background:var(--accent-soft);color:var(--text-1)}
+.sws{display:flex;gap:5px;align-items:center}
+.sws button{width:24px;height:24px;border-radius:6px;border:2px solid transparent;background:var(--c);padding:0}
+.sws button.none{background:none;border:1px dashed var(--border);color:var(--text-3);font-size:11px;line-height:1}
+.sws button[aria-pressed=true]{border-color:var(--color-ek-white);border-style:solid}
+.ed-backdrop{position:fixed;inset:0;z-index:30;display:grid;place-items:center;background:color-mix(in srgb,var(--color-ek-black) 65%,transparent)}
+.ed-modal{display:flex;flex-direction:column;width:min(1040px,calc(100vw - 80px));height:min(720px,calc(100vh - 80px));border-radius:13px;border:1px solid var(--border);background:var(--bg-panel);box-shadow:0 12px 40px var(--color-ek-black);overflow:hidden;font-size:13px}
+.ed-modal header{display:flex;align-items:center;gap:10px;height:52px;flex:0 0 52px;padding:0 18px;border-bottom:1px solid var(--border);font-size:14px}
+.ed-modal header span{color:var(--text-2)}
+.ed-modal header button{margin-left:auto;border:0;background:none;font-size:22px;color:var(--text-2)}
+.ed-body{display:flex;flex:1;min-height:0}
+.ed-left{width:46%;overflow:auto;padding:16px 18px;border-right:1px solid var(--border);scrollbar-width:thin}
+.ed-right{flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;gap:10px;padding:20px}
+.ed-right small{color:var(--text-3);font-size:12px}
+.ed-stage{position:relative;flex:1;min-height:0;aspect-ratio:9/16;max-width:100%;border-radius:12px;overflow:hidden;border:1px solid var(--border);background:color-mix(in srgb,var(--color-ek-success) 10%,var(--color-ek-grey))}
+.ed-stage::before{content:"Facecam";position:absolute;inset:0 0 58% 0;background:color-mix(in srgb,var(--color-ek-purple) 45%,var(--color-ek-grey-dark));display:grid;place-items:center;font-size:11px;color:var(--text-3)}
+.ed-modal footer{display:flex;gap:8px;align-items:center;padding:12px 18px;border-top:1px solid var(--border)}
+.ed-modal footer .ghost{height:38px;padding:0 16px}
+.toast{position:absolute;left:50%;bottom:18px;transform:translateX(-50%);background:var(--bg-hover);border:1px solid var(--border);padding:6px 12px;border-radius:8px;font-size:12px;white-space:nowrap}
+</style>
+</head>
+<body>
+<main class="board">
+  <span class="kicker">Design draft · captions-tab · round 2 · variant D · 30 Oct 2026</span>
+  <h1>Prototype tabs, new setup, presets of style you can edit</h1>
+  <p class="lead">The Text · Effects · Presets tabs stay as in the prototype. What changes: <b>(1) the screen before captions are generated</b> (language, how captions show, auto emoji, preset of style, like production), <b>(2) how the text shows</b>: Word by word or Full phrases on the video, and two ways to list the text in the Text tab (D1 / D2, switch above the mock), and <b>(3) editing a preset of style is back</b>: font, weight, colours, stroke, highlight, saved as your own preset of style.</p>
+
+  <div class="bar" id="bar"></div>
+
+  <div class="stage">
+    <div class="editor"><nav class="rail" aria-hidden="true"><i>Templates</i><i>Channel stickers</i><i class="on">Captions</i><i>Elements</i><i>Effects</i><i>Audio</i></nav><div class="panel" id="panel"></div></div>
+    <div class="notes">
+      <div class="clip" id="clip"></div>
+      <h3>What changed from the prototype</h3>
+      <ul>
+        <li><b>Before generating</b>: no globe-only entry. The Captions tab opens on setup: Caption language, <b>Show captions as</b> Word by word / Full phrases, <b>Auto emoji</b>, <b>Preset of style</b> (4 + "See all"), Generate. The clip shows a live sample.</li>
+        <li><b>Effects</b>: "Show captions as" sits on top so it can change after generating; Emojis gets its right description. AI Shake, AI Supersize and Random rotation are removed; Hide Punctuation stays.</li>
+        <li><b>Presets</b>: "My presets of style" first, then the prototype groups. The selected tile has <b>Edit</b>; Edit opens a <b>popup</b> (controls left, big live preview right) with font, weight, italic, AA, size, fill, stroke, highlight. <b>Apply to this clip</b> or <b>Save as my preset of style</b>.</li>
+        <li><b>Text tab D1 · Lines</b>: one row per line with time range, like production; click to fix, + Add line.</li>
+        <li><b>Text tab D2 · As on video</b>: one card per caption exactly as it shows on the video. In Word by word, each word is its own chip with its time; click a word to fix it.</li>
+      </ul>
+      <h3>Remembered</h3>
+      <ul><li>Format, emoji and preset of style carry to the next clips (local storage + saved templates). Try "Returning user".</li></ul>
+      <h3>Edge cases in the mock</h3>
+      <ul><li><b>No speech</b>, <b>split clip</b> (Part 1 / Part 2), <b>16:9</b>, <b>regenerate after edits</b> (asks first), <b>language changed</b> after generating, <b>editing a built-in preset</b> (saves as a copy; the built-in one stays).</li></ul>
+    </div>
+  </div>
+</main>
+<div id="modal"></div>
+
+<script>
+/* Transcript: src/fixtures/transcript.json; emoji: ai-mocks.json emojiTags */
+const SENT=[[7100,7500,"Reloading.","🔄"],[8860,9980,"He's not gonna hit.","😤"],[15400,18300,"Ah, 2A, Reyna and a Jett.","👀"],[22320,24320,"3, 2, 1, A site, go go peek, go peek, go peek, I said.","🔥"],[27440,28700,"Spike down A.","💣"],[30060,31540,"One more Reyna.","🎯"],[31540,32480,"I got spike.","💪"],[32960,34700,"Reyna low, Reyna low Reyna.","🩸"],[37020,37520,"2A.","🅰️"],[38380,39080,"Let's go B?","🏃"],[39500,40360,"There's 2, 2A.","😬"],[41780,43660,"Last player standing.","🏆"],[43660,45140,"Oh, unfortunate.","😩"],[58700,59720,"I'm out.","👋"]];
+/* Presets of style: names/flavours from catalog.ts, look from model.ts presetStyle */
+const C={white:'#ffffff',black:'#151515',yellow:'#ffff81',pink:'#fa90df',green:'#b3ff42',cyan:'#b5f7ff',purple:'#ab60fa',red:'#ff9a9a',lilac:'#A496F8'};
+const P=(id,name,font,fill,o={})=>({id,name,font,fill,stroke:'black',strokeW:2,weight:800,italic:false,upper:true,size:48,hl:'Color',hlColor:'yellow',...o});
+const BUILTIN=[
+  P('hook','THE HOOK.','CaptionAnton','white',{size:58}),P('thin','Words you sing back.','CaptionMontserrat','white',{upper:false,size:35,strokeW:1}),
+  P('blue','WORDS YOU SING RIGHT','CaptionBangers','lilac',{italic:true}),P('comic','WORD','CaptionBangers','white'),
+  P('aqua','Let it bloom.','CaptionPoppins','cyan',{upper:false}),P('red','THE GOOD PART.','CaptionBangers','red'),
+  P('green','HITS','CaptionBangers','green'),P('yellow','THE','CaptionLuckiest','yellow',{hlColor:'pink'}),P('bebas','SHOW EM UP.','CaptionBebas','white',{hl:'Pill',hlColor:'purple'})];
+const GROUPS=[['Popular',['hook','thin','blue','comic','aqua','red']],['Gameplay',['hook','green','comic','bebas','yellow','blue']],['Simple',['comic','aqua','bebas','yellow','thin','hook']]];
+const FONTS=[['CaptionBangers','Bangers'],['CaptionAnton','Anton'],['CaptionBebas','Bebas Neue'],['CaptionLuckiest','Luckiest Guy'],['CaptionMontserrat','Montserrat'],['CaptionPoppins','Poppins']];
+const LANGS=['English','Spanish','French','German','Portuguese','Auto-detect'];
+const SCEN=[['before','Before generating'],['done','Generated'],['empty','No speech'],['split','Split clip'],['wide','16:9 clip'],['return','Returning user']];
+let S;
+const fresh=()=>SENT.map(([s,e,t,em])=>({s,e,t,em}));
+function init(scen='before',textView){
+  const ret=scen==='return';const mine=ret?[{...BUILTIN[2],id:'my1',name:'MY QUAN STYLE',hlColor:'pink',mine:true}]:[];
+  S={scen,textView:textView||(S&&S.textView)||'lines',scene:scen==='empty'?'empty':['done','split','wide'].includes(scen)?'done':'before',
+    split:scen==='split',wide:scen==='wide',returning:ret,lang:'English',genLang:'English',format:ret?'words':'phrases',emoji:true,
+    mine,preset:ret?'my1':'hook',tab:'Text',editing:null,draft:null,from:'Presets',seeAll:false,lines:scen==='empty'?[]:fresh(),edit:null,edits:0,confirm:false,toast:'',frame:0,
+    fx:{'Hide Punctuation':false}};
+}
+const all=()=>S.mine.concat(BUILTIN);
+const byId=id=>all().find(p=>p.id===id)||BUILTIN[0];
+const cur=()=>S.draft||byId(S.preset);
+const fmt=ms=>{const s=ms/1000;return `${Math.floor(s/60)}:${(s%60).toFixed(1).padStart(4,'0')}`};
+const look=(p,px)=>`font-family:${p.font};color:${C[p.fill]};font-weight:${p.weight};${p.italic?'font-style:italic;':''}${p.upper?'text-transform:uppercase;':''}-webkit-text-stroke:${p.strokeW*(px/48)}px ${p.stroke==='none'?'transparent':C[p.stroke]};font-size:${px}px;`;
+
+/* ---- caption groups: what shows on screen at once ---- */
+function groups(){ // Full phrases: split a line into chunks of max 35 chars; Word by word: one word each
+  const out=[];S.lines.forEach((l,i)=>{const ws=l.t.split(/\s+/);const dur=(l.e-l.s)/ws.length;
+    if(S.format==='words'){ws.forEach((w,k)=>out.push({i,k0:k,words:[w],s:l.s+k*dur,e:l.s+(k+1)*dur,em:k===0?l.em:''}));return}
+    let chunk=[],k0=0;ws.forEach((w,k)=>{if(chunk.length&&(chunk.join(' ')+' '+w).length>35){out.push({i,k0,words:chunk,s:l.s+k0*dur,e:l.s+k*dur,em:k0===0?l.em:''});chunk=[];k0=k}chunk.push(w)});
+    out.push({i,k0,words:chunk,s:l.s+k0*dur,e:l.e,em:k0===0?l.em:''});});
+  return out;
+}
+/* playback frames: (group, word) every 450 ms */
+function frame(){const g=groups();const f=[];g.forEach((x,gi)=>x.words.forEach((_,w)=>f.push({gi,w})));return f.length?{...f[S.frame%f.length],g}:null}
+
+/* ---- pieces ---- */
+const sw=(k,on,label)=>`<button class="switch ${on?'on':''}" role="switch" aria-checked="${on}" aria-label="${label}" data-set="${k}|${!on}"><i></i></button>`;
+const tile=(p,opts={})=>{const sel=S.preset===p.id;return `<button class="tile" aria-pressed="${sel}" data-pick="${p.id}" style="${look(p,opts.px||17)}">${sel?'<span class="chk">✓</span>':''}${p.name}${sel?`<span class="edit" data-editp="${p.id}" role="button">Edit</span>`:''}${p.mine?'<span class="mine">My preset of style</span>':''}</button>`};
+const formatCards=()=>`<div class="fmt">${[['words','Word by word','One word pops at a time','<i class="on">GO</i>'],['phrases','Full phrases','Grouped, easy to read','<i class="on">GO</i><i>GO</i><i>PEEK</i>']].map(([v,l,d,demo])=>`<button data-set="format|${v}" aria-pressed="${S.format===v}"><span class="demo">${demo}</span>${l}<small>${d}</small></button>`).join('')}</div>`;
+const emojiCard=()=>`<div class="optcard"><span class="fx-icon">🙂</span><div><b>Auto emoji</b><small>Match the moment with 🔥 💀 🎯</small></div>${sw('emoji',S.emoji,'Auto emoji')}</div>`;
+const langSel=()=>`<select class="field" data-field="lang" aria-label="Caption language">${LANGS.map(l=>`<option ${l===S.lang?'selected':''}>${l}</option>`).join('')}</select>`;
+const confirmBox=()=>S.confirm?`<div class="confirm"><span>Regenerate replaces your ${S.edits} edit${S.edits>1?'s':''}.</span><button class="ghost" data-act="cancel">Keep edits</button><button class="ghost acc" data-act="regenok">Regenerate</button></div>`:'';
+
+/* ---- screens ---- */
+function setup(){
+  const list=S.mine.concat(BUILTIN.slice(0,4-S.mine.length));
+  return `<div class="ph"><h4>Captions</h4></div>
+   ${S.returning?`<div class="remember">Using your last clip's settings: ${S.format==='words'?'Word by word':'Full phrases'} · Emoji ${S.emoji?'on':'off'} · ${byId(S.preset).name}</div>`:''}
+   <div class="lbl">Caption language</div>${langSel()}
+   <div class="lbl">Show captions as</div>${formatCards()}
+   <div class="lbl">Emoji</div>${emojiCard()}
+   <div class="lbl">Preset of style <button class="link" data-act="seeall">${S.seeAll?'Show less':'See all'}</button></div>
+   <div class="grid ${S.seeAll?'':'four'}">${(S.seeAll?all():list.includes(byId(S.preset))?list:[byId(S.preset)].concat(list.slice(0,3))).map(p=>tile(p,{px:S.seeAll?17:14})).join('')}</div>
+   <button class="primary" data-act="gen" ${S.scene==='busy'?'disabled':''}>${S.scene==='busy'?'Generating captions…':'Generate captions'}</button>
+   ${S.scene==='busy'?'<div style="margin-top:14px"><div class="skel"></div><div class="skel"></div><div class="skel"></div></div>':'<p class="note" style="text-align:center">The clip shows a sample with your choices. You can change all of them after.</p>'}`;
+}
+function textTab(){
+  if(S.scene==='empty'||!S.lines.length)return `<div class="empty"><b>No speech found in this clip</b>Captions were made in ${S.genLang}. Try another language, or add a line yourself.<div style="margin-top:12px;display:flex;gap:8px;justify-content:center"><button class="ghost" data-act="regen">Regenerate</button><button class="ghost" data-act="add">+ Add line</button></div></div>`;
+  const f=frame();let body='',part=0;
+  const partHead=s=>{if(!S.split)return '';const p=s<30000?1:2;if(p===part)return '';part=p;return `<div class="part">Part ${p} · ${p===1?'0:00–0:30':'0:30–1:00'}</div>`};
+  if(S.textView==='lines'){
+    const nowLine=f?f.g[f.gi].i:-1;
+    S.lines.forEach((l,i)=>{body+=partHead(l.s)+`<div class="line ${nowLine===i?'now':''}" data-li="${i}"><time>${fmt(l.s)} – ${fmt(l.e)}</time>${S.edit===`l${i}`?`<input data-edit="l|${i}" value="${l.t.replace(/"/g,'&quot;')}" aria-label="Line text">`:`<button class="txt" data-act="edit|l${i}">${l.t}</button>`}<span class="acts"><button aria-label="Delete line" title="Delete line" data-act="del|${i}">×</button></span></div>`});
+  }else{
+    const g=groups();
+    if(S.format==='words'){ // one row per line, each word a chip with its own time
+      const byLine={};g.forEach((x,gi)=>(byLine[x.i]=byLine[x.i]||[]).push({...x,gi}));
+      Object.entries(byLine).forEach(([i,items])=>{const l=S.lines[i];const now=f&&f.g[f.gi].i==i;
+        body+=partHead(l.s)+`<div class="card ${now?'now':''}" data-li="${i}"><time>${fmt(l.s)}</time><div class="wordrow">${items.map(x=>{const key=`w${i}.${x.k0}`;return S.edit===key?`<span class="wd"><input data-edit="w|${i}|${x.k0}" value="${x.words[0].replace(/"/g,'&quot;')}" aria-label="Word"></span>`:`<button class="wd ${f&&f.gi===x.gi?'cur':''}" data-gw="${x.gi}.0" data-act="edit|${key}">${x.words[0]}<small>${fmt(x.s)}</small></button>`}).join('')}${S.emoji&&l.em?`<span class="em">${l.em}</span>`:''}</div><span class="acts"><button aria-label="Delete line" data-act="del|${i}">×</button></span></div>`});
+    }else{
+      g.forEach((x,gi)=>{const now=f&&f.gi===gi;body+=partHead(x.s)+`<div class="card ${now?'now':''}" data-gi="${gi}"><time>${fmt(x.s)}</time><div class="words">${x.words.map((w,k)=>{const key=`w${x.i}.${x.k0+k}`;return S.edit===key?`<span class="wd"><input data-edit="w|${x.i}|${x.k0+k}" value="${w.replace(/"/g,'&quot;')}" aria-label="Word"></span>`:`<button class="wd ${now&&f.w===k?'cur':''}" data-gw="${gi}.${k}" data-act="edit|${key}">${w}</button>`}).join('')}${S.emoji&&x.em?`<span class="em">${x.em}</span>`:''}</div><span class="acts"><button aria-label="Delete caption line" data-act="del|${x.i}">×</button></span></div>`});
+    }
+    body=`<div class="cards">${body}</div>`;
+  }
+  const count=S.textView==='lines'?`${S.lines.length} lines`:`${groups().length} captions on screen · ${S.format==='words'?'Word by word':'Full phrases'}`;
+  return `<div class="texttools"><small>${count}</small><button class="ghost acc" data-act="add">+ Add line</button></div>${body}
+   <button class="ghost wide" data-act="regen">Regenerate captions</button>${confirmBox()}`;
+}
+function effectsTab(){
+  const fx=[['Hide Punctuation',"Remove ‘,.?!’ from captions",'”']];
+  return `<div class="lbl" style="margin-top:0">Show captions as</div>${formatCards()}
+   <div class="lbl">Effects</div>${emojiCard().replace('Match the moment','Show an emoji that matches the moment:')}
+   ${fx.map(([n,d,i])=>`<div class="optcard"><span class="fx-icon">${i}</span><div><b>${n}</b><small>${d}</small></div>${sw('fx.'+n,S.fx[n],n)}</div>`).join('')}
+   <div class="lbl">Caption language</div>${langSel()}
+   ${S.lang!==S.genLang?`<p class="note" style="color:var(--premium)">Captions are in ${S.genLang}. <button class="ghost" data-act="regen">Regenerate in ${S.lang}</button></p>`:''}${confirmBox()}`;
+}
+function presetsTab(){
+  return `${S.mine.length?`<div class="sechead" style="margin-top:0"><h5>My presets of style</h5></div><div class="grid">${S.mine.map(p=>tile(p)).join('')}</div>`:''}
+   ${GROUPS.map(([g,ids])=>`<div class="sechead" ${S.mine.length?'':'style="margin-top:0"'}><h5>${g}</h5><button class="link">View all</button></div><div class="grid">${ids.map(id=>tile(byId(id))).join('')}</div>`).join('')}`;
+}
+function editor(){
+  const d=S.draft,base=byId(S.editing);
+  const sws=(k,keys,none)=>`<div class="sws">${none?`<button class="none" aria-label="None" aria-pressed="${d[k]==='none'}" data-d="${k}|none">∅</button>`:''}${keys.map(c=>`<button aria-label="${c}" style="--c:${C[c]}" aria-pressed="${d[k]===c}" data-d="${k}|${c}"></button>`).join('')}</div>`;
+  return `<div class="ed-backdrop"><section class="ed-modal" role="dialog" aria-modal="true" aria-label="Edit preset of style">
+   <header><b>Edit preset of style</b><span>/</span><span>${base.mine?base.name:base.name+' · built-in'}</span><button data-act="edcancel" aria-label="Close">×</button></header>
+   <div class="ed-body"><div class="ed-left">
+   <p class="note" style="margin:0 0 12px">${base.mine?'Changes save to your preset of style.':'Built-in presets of style stay as they are; saving makes your own copy.'}</p>
+   <div class="rows"><h6>Typography</h6>
+    <div class="row"><span>Font</span><div><select class="field" data-dfield="font" aria-label="Font" style="font-family:${d.font};font-size:15px">${FONTS.map(([v,l])=>`<option value="${v}" ${d.font===v?'selected':''}>${l}</option>`).join('')}</select></div></div>
+    <div class="row"><span>Style</span><div><button class="tog" aria-pressed="${d.weight===800}" data-d="weight|${d.weight===800?400:800}">Bold</button><button class="tog" aria-pressed="${d.italic}" data-d="italic|${!d.italic}" style="font-style:italic">Italic</button><button class="tog" aria-pressed="${d.upper}" data-d="upper|${!d.upper}">AA</button></div></div>
+    <div class="row"><span>Size</span><div><input type="range" min="24" max="80" value="${d.size}" data-dfield="size" aria-label="Size"><output>${d.size}</output></div></div></div>
+   <div class="rows"><h6>Colours</h6>
+    <div class="row"><span>Fill</span><div>${sws('fill',['white','yellow','pink','green','cyan','purple','red','black'])}</div></div>
+    <div class="row"><span>Stroke</span><div>${sws('stroke',['black','white','purple'],true)}<input type="range" min="0" max="6" value="${d.strokeW}" data-dfield="strokeW" aria-label="Stroke width" style="max-width:90px"></div></div></div>
+   <div class="rows"><h6>Highlight spoken word</h6>
+    <div class="row"><span>Type</span><div><div class="seg">${['None','Color','Underline','Pill'].map(h=>`<button aria-pressed="${d.hl===h}" data-d="hl|${h}">${h}</button>`).join('')}</div></div></div>
+    ${d.hl!=='None'?`<div class="row"><span>Colour</span><div>${sws('hlColor',['yellow','pink','green','cyan','purple','white'])}</div></div>`:''}</div>
+   </div><div class="ed-right"><div class="ed-stage" id="edprev"></div><small>Live preview · plays your captions with this preset of style</small></div></div>
+   <footer><button class="ghost" data-act="edcancel">Cancel</button><span style="flex:1"></span><button class="ghost" data-act="edapply">Apply to this clip</button><button class="ghost acc" data-act="edsave">${base.mine?'Save my preset of style':'Save as my preset of style'}</button></footer>
+   </section></div>`;
+}
+function hlCss(p){const c=C[p.hlColor];if(p.hl==='Color')return `color:${c}`;if(p.hl==='Underline')return `text-decoration:underline;text-decoration-color:${c};text-decoration-thickness:.12em;text-underline-offset:.12em`;if(p.hl==='Pill')return `background:${c};color:#151515;-webkit-text-stroke:0`;return ''}
+function edPreview(){ // big live sample inside the popup: one caption of the transcript, spoken word highlighted
+  const el=document.getElementById('edprev');if(!el||!S.draft)return;const d=S.draft;
+  const ws=SENT[3][2].split(' ');const gs=S.format==='words'?ws.map(x=>[x]):[ws.slice(0,4),ws.slice(4,8),ws.slice(8)];
+  const fl=gs.flatMap((g,gi)=>g.map((_,k)=>[gi,k]));const [gi,k]=fl[S.frame%fl.length];
+  const words=gs[gi].map(x=>S.fx['Hide Punctuation']?x.replace(/[,.?!]/g,''):x);
+  el.innerHTML=`<div class="cap" style="${look(d,Math.round(d.size*0.8))}">${S.emoji&&gi===0?`<span class="emo">${SENT[3][3]}</span>`:''}${words.map((x,j)=>`<span class="w" style="${j===k&&S.format==='phrases'?hlCss(d):''}">${x}</span>`).join(' ')}</div>`;
+}
+function render(){
+  const panel=document.getElementById('panel'),top=panel.scrollTop;let html;
+  if(S.scene==='before'||S.scene==='busy')html=setup();
+  else html=`<div class="ph"><h4>Captions</h4><small>${S.genLang}</small></div><div class="mtabs" role="tablist">${['Text','Effects','Presets'].map((t,i)=>`<button role="tab" data-set="tab|${t}" aria-pressed="${S.tab===t}">${['T ','✧ ','▦ '][i]}${t}</button>`).join('')}<button class="globe" title="Caption language" data-set="tab|Effects">🌐</button></div>${S.tab==='Text'?textTab():S.tab==='Effects'?effectsTab():presetsTab()}`;
+  panel.innerHTML=html+(S.toast?`<div class="toast">${S.toast}</div>`:'');panel.scrollTop=top;
+  const modal=document.getElementById('modal'),mtop=modal.querySelector('.ed-left')?.scrollTop||0;modal.innerHTML=S.editing?editor():'';
+  if(S.editing){modal.querySelector('.ed-left').scrollTop=mtop;edPreview()}
+  bar();clip();const inp=panel.querySelector('[data-edit]');if(inp){inp.focus();inp.select()}
+}
+function bar(){
+  document.getElementById('bar').innerHTML='<span>Scenario</span>'+SCEN.map(([k,l])=>`<button aria-pressed="${S.scen===k}" data-scen="${k}">${l}</button>`).join('')
+   +'<i class="sep"></i><span>Text tab</span>'+[['lines','D1 · Lines'],['cards','D2 · As on video']].map(([k,l])=>`<button aria-pressed="${S.textView===k}" data-view="${k}">${l}</button>`).join('');
+}
+function clip(){
+  const el=document.getElementById('clip');el.classList.toggle('wide',S.wide);const p=cur();
+  const px=Math.round(p.size/48*(S.wide?17:21));
+  if(S.scene==='busy'){el.innerHTML='<span class="busy">Generating captions…</span>';return}
+  let words,w,em,sample=false;
+  if(S.scene==='before'||S.editing&&!S.lines.length){sample=true;const ws=SENT[3][2].split(' ');const gs=S.format==='words'?ws.map(x=>[x]):[ws.slice(0,4),ws.slice(4,8),ws.slice(8)];const fl=gs.flatMap((g,gi)=>g.map((_,k)=>[gi,k]));const [gi,k]=fl[S.frame%fl.length];words=gs[gi];w=k;em=gi===0?SENT[3][3]:''}
+  else{const f=frame();if(!f){el.innerHTML='<span class="flag">No captions</span>';return}const g=f.g[f.gi];words=g.words;w=f.w;em=g.em}
+  if(S.fx['Hide Punctuation'])words=words.map(x=>x.replace(/[,.?!]/g,''));
+  const html=words.map((x,k)=>`<span class="w" style="${k===w&&S.format==='phrases'?hlCss(p):''}">${x}</span>`).join(' ');
+  el.innerHTML=`${sample?'<span class="flag">Sample</span>':''}<div class="cap ${sample?'sample':''}" style="${look(p,px)}">${S.emoji&&em?`<span class="emo">${em}</span>`:''}${html}</div>`;
+}
+
+/* ---- events ---- */
+const val=v=>v==='true'?true:v==='false'?false:/^\d+$/.test(v)?+v:v;
+function toast(t){S.toast=t;render();setTimeout(()=>{S.toast='';render()},1800)}
+document.addEventListener('click',e=>{
+  const t=e.target;
+  const sc=t.closest('[data-scen]');if(sc){init(sc.dataset.scen);render();return}
+  const vw=t.closest('[data-view]');if(vw){S.textView=vw.dataset.view;S.tab='Text';S.edit=null;render();return}
+  if(t.classList.contains('ed-backdrop')){S.editing=null;S.draft=null;render();return}
+  if(!t.closest('#panel,#modal'))return;
+  const ep=t.closest('[data-editp]');if(ep){S.editing=ep.dataset.editp;S.draft={...byId(S.editing)};render();return}
+  const pk=t.closest('[data-pick]');if(pk){S.preset=pk.dataset.pick;render();return}
+  const st=t.closest('[data-set]');if(st){const[k,v]=st.dataset.set.split('|');if(k.startsWith('fx.'))S.fx[k.slice(3)]=val(v);else S[k]=val(v);render();return}
+  const dd=t.closest('[data-d]');if(dd){const[k,v]=dd.dataset.d.split('|');S.draft[k]=val(v);render();return}
+  const a=t.closest('[data-act]');if(!a)return;const[act,arg]=a.dataset.act.split('|');
+  if(act==='seeall')S.seeAll=!S.seeAll;
+  if(act==='gen'||act==='regenok'||act==='regen'&&!(S.edits>0&&!S.confirm)){S.confirm=false;S.scene='busy';S.genLang=S.lang;render();setTimeout(()=>{S.scene=S.scen==='empty'&&S.lang==='English'?'empty':'done';S.lines=S.scene==='empty'?[]:fresh();S.edits=0;S.tab='Text';S.returning=false;render()},1200);return}
+  if(act==='regen'){S.confirm=true}
+  if(act==='cancel')S.confirm=false;
+  if(act==='edit')S.edit=arg;
+  if(act==='del'){S.lines.splice(+arg,1);S.edits++;S.edit=null}
+  if(act==='add'){const f=frame();const at=f?f.g[f.gi].e+100:1000;const n={s:at,e:at+1200,t:'New line',em:''};S.lines.push(n);S.lines.sort((x,y)=>x.s-y.s);S.scene='done';S.edits++;const i=S.lines.indexOf(n);S.edit=S.textView==='lines'?`l${i}`:`w${i}.0`}
+  if(act==='edcancel'){S.editing=null;S.draft=null}
+  if(act==='edapply'){const base=byId(S.editing);if(base.mine)Object.assign(base,S.draft,{id:base.id,mine:true,name:base.name});else{const id='clip-'+Date.now();S.mine.unshift({...S.draft,id,name:base.name,mine:true});S.preset=id}S.editing=null;S.draft=null;toast('Applied to this clip');return}
+  if(act==='edsave'){const base=byId(S.editing);if(base.mine){Object.assign(base,S.draft,{id:base.id,mine:true,name:base.name});S.preset=base.id}else{const id='my'+Date.now();S.mine.unshift({...S.draft,id,name:`MY STYLE ${S.mine.length+1}`,mine:true});S.preset=id}S.editing=null;S.draft=null;if(S.scene==='done')S.tab='Presets';toast('Saved to My presets of style · used for your next clips');return}
+  render();
+});
+document.addEventListener('change',e=>{const t=e.target;if(t.dataset.field){S[t.dataset.field]=t.value;render()}if(t.dataset.dfield){S.draft[t.dataset.dfield]=t.dataset.dfield==='font'?t.value:+t.value;render()}});
+document.addEventListener('input',e=>{const t=e.target;if(t.dataset.dfield&&t.type==='range'){S.draft[t.dataset.dfield]=+t.value;const o=t.nextElementSibling;if(o&&o.tagName==='OUTPUT')o.textContent=t.value;edPreview();clip()}});
+function saveEdit(inp,keep){
+  const[kind,i,k]=inp.dataset.edit.split('|');const l=S.lines[+i];if(!l){S.edit=null;render();return}const v=inp.value.trim();
+  if(keep&&v){if(kind==='l'&&v!==l.t){l.t=v;S.edits++}if(kind==='w'){const ws=l.t.split(/\s+/);if(ws[+k]!==v){ws[+k]=v;l.t=ws.join(' ');S.edits++}}}
+  S.edit=null;render();
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&S.editing){S.editing=null;S.draft=null;render();return}const inp=e.target.closest&&e.target.closest('[data-edit]');if(!inp)return;if(e.key==='Enter'){e.preventDefault();saveEdit(inp,true)}if(e.key==='Escape')saveEdit(inp,false)});
+document.addEventListener('focusout',e=>{const inp=e.target.closest&&e.target.closest('[data-edit]');if(inp)setTimeout(()=>{if(document.contains(inp))saveEdit(inp,true)},0)});
+
+init();render();
+setInterval(()=>{S.frame++;clip();edPreview();
+  if(S.scene!=='done'||S.editing||S.tab!=='Text')return; // move the "now" marks without re-rendering (keeps hover, focus and clicks)
+  const f=frame();if(!f)return;const g=f.g[f.gi],panel=document.getElementById('panel');
+  panel.querySelectorAll('[data-li]').forEach(el=>el.classList.toggle('now',+el.dataset.li===g.i));
+  panel.querySelectorAll('[data-gi]').forEach(el=>el.classList.toggle('now',+el.dataset.gi===f.gi));
+  panel.querySelectorAll('[data-gw]').forEach(el=>el.classList.toggle('cur',el.dataset.gw===`${f.gi}.${S.format==='words'?0:f.w}`));
+},450);
+</script>
+</body>
+</html>

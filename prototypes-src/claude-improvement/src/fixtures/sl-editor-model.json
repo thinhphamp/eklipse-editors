@@ -1,0 +1,1510 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "bundle": "plans/261019-streamladder-web-audit/rea/sl-editor-bundle",
+    "analysis": "static only; bundle not executed",
+    "focusedReaOutput": "plans/261019-streamladder-web-audit/rea/out/application-analysis-focused.json",
+    "focusedAssets": 21,
+    "unselectedAssets": 238,
+    "fullReaOutput": "plans/261019-streamladder-web-audit/rea/out/application-analysis.json",
+    "fullReaStatus": "timed out after 300 seconds on webpxmux-C6yh4r0s.js",
+    "exportShapeComparison": "plans/261019-streamladder-web-audit/rea/out/compare-export-shapes.json",
+    "exportShapeComparisonCaveat": "No unique exact pairing; two exports unknown"
+  },
+  "architecture": {
+    "framework": "Vue 3",
+    "bundlerRuntime": [
+      "Vite",
+      "rolldown"
+    ],
+    "storePlugin": "Pinia-like plugin installed on the Vue app; timeline state is a reactive composable, not a defineStore declaration",
+    "routes": [
+      {
+        "path": "/video-editor",
+        "alias": "/"
+      }
+    ],
+    "wizardSteps": [
+      "layouts",
+      "elements",
+      "captions",
+      "effects",
+      "sounds",
+      "export"
+    ],
+    "preview": {
+      "surfaces": [
+        "Canvas 2D",
+        "WebGL",
+        "WebGL2",
+        "Rive"
+      ],
+      "lottie": "Present in UI assets; composition rendering not established",
+      "pixi": "No PIXI symbol found in scanned bundle"
+    },
+    "timelineStoreFields": [
+      "containerEl",
+      "timelineEl",
+      "zoomLevel",
+      "zoomedInFraction",
+      "timelineWidth",
+      "paddedTimelineWidth",
+      "timelinePadding",
+      "containerWidth",
+      "dragging",
+      "durationMs",
+      "msToPx",
+      "pxToMs",
+      "useMsToPx",
+      "usePxToMs",
+      "fitToTimeline",
+      "zoomLevelForRange",
+      "animateFitToTimeline",
+      "isZoomAnimating",
+      "zoomAnimationProgress",
+      "scrollToMs",
+      "scrollToPx",
+      "scrollToMiddleMs",
+      "scrollToMiddlePx",
+      "autoScroll",
+      "zoomToLevel",
+      "beginPinchZoom",
+      "updatePinchZoom",
+      "endPinchZoom",
+      "triggerSeek",
+      "ready",
+      "open",
+      "_autoScroll",
+      "enableSnap",
+      "isInView",
+      "isInViewMs"
+    ],
+    "timelineEvidence": "assets/useTimelineStore-DjLPehB7.js@3089"
+  },
+  "projectModel": {
+    "observedCoreKeys": [
+      "segments",
+      "crops",
+      "cropSources",
+      "elements",
+      "effects",
+      "width",
+      "height",
+      "captions"
+    ],
+    "segment": {
+      "fields": [
+        "id",
+        "type",
+        "url",
+        "volume",
+        "sourceStartMs",
+        "sourceEndMs",
+        "startMs",
+        "endMs",
+        "playbackRate",
+        "loop",
+        "sourceArea"
+      ],
+      "timeUnit": "milliseconds",
+      "zoomSegmentType": "zoom",
+      "speedSegmentType": "playrate",
+      "evidence": "assets/convert-B0tF777j.js@227253; assets/captions-Ca8i8qgt.js@191650,192143"
+    },
+    "crop": {
+      "fields": [
+        "id",
+        "segmentId",
+        "x",
+        "y",
+        "width",
+        "height",
+        "z",
+        "feedData",
+        "input"
+      ],
+      "inputFieldsObserved": [
+        "name",
+        "color",
+        "shape",
+        "radius"
+      ],
+      "cropSourceFieldsObserved": [
+        "cropId",
+        "x",
+        "y",
+        "width",
+        "height",
+        "startMs",
+        "endMs"
+      ],
+      "coordinateSpace": "normalized target and source rectangles",
+      "evidence": "assets/captions-Ca8i8qgt.js@16124-24899; assets/convert-B0tF777j.js@226519-226751"
+    },
+    "elementTypes": [
+      {
+        "type": "image",
+        "subtypes": [
+          "custom",
+          "gif",
+          "emote"
+        ],
+        "fields": [
+          "id",
+          "type",
+          "subtype",
+          "url",
+          "contentType",
+          "startMs",
+          "endMs",
+          "z",
+          "area",
+          "effects"
+        ]
+      },
+      {
+        "type": "text",
+        "fields": [
+          "id",
+          "type",
+          "text",
+          "startMs",
+          "endMs",
+          "z",
+          "area",
+          "preset",
+          "textStyle",
+          "effects",
+          "animationOrigin",
+          "letterAnimationDelayMs"
+        ]
+      },
+      {
+        "type": "rive",
+        "fields": [
+          "type",
+          "area",
+          "volume",
+          "icon",
+          "icons",
+          "artboard",
+          "startMs",
+          "endMs",
+          "text",
+          "preset",
+          "z",
+          "effects",
+          "isAnimated"
+        ]
+      },
+      {
+        "type": "reaction",
+        "fields": [
+          "type",
+          "service",
+          "message",
+          "theme",
+          "username",
+          "usernameColor",
+          "badges",
+          "cheers",
+          "emotes",
+          "area",
+          "effects",
+          "startMs",
+          "endMs",
+          "z",
+          "verified",
+          "profilePictureUrl"
+        ]
+      },
+      {
+        "type": "sound",
+        "fields": [
+          "type",
+          "name",
+          "url",
+          "tags",
+          "startMs",
+          "endMs",
+          "maxDurationMs",
+          "volume",
+          "textToSpeech",
+          "segmentId",
+          "fadeInDurationMs",
+          "fadeOutDurationMs"
+        ]
+      }
+    ],
+    "socialAndStickerNote": "Social and sticker labels do not appear as distinct rendered entity types in the inspected converters. Static assets can use image; animated social stickers can use Rive.",
+    "areaFields": [
+      "x",
+      "y",
+      "width",
+      "height"
+    ],
+    "areaCoordinateSpace": "normalized",
+    "captionWordFields": [
+      "id",
+      "text",
+      "speakerId",
+      "startMs",
+      "endMs",
+      "effects"
+    ],
+    "templateObservedFields": [
+      "id",
+      "presetId",
+      "name",
+      "origin",
+      "crops",
+      "elements",
+      "sounds",
+      "effects",
+      "captions",
+      "profanityFilter",
+      "removeSilences"
+    ],
+    "evidence": "assets/startup-CNDjwY7E.js@16112; assets/convert-B0tF777j.js@269655-272225; assets/ReactionElementDialog-D0Hn-JeR.js@14800; assets/RiveElementSelector-D4L4CJS7.js@1719; assets/TextElementsEditPage-Dw4o62kI.js@3723"
+  },
+  "layouts": {
+    "evidence": "assets/captions-Ca8i8qgt.js@16124-24899",
+    "formulaDefinitions": {
+      "W": "output width in pixels",
+      "H": "output height in pixels",
+      "fit(aspect, scale)": "bundle helper _t fits aspect rectangle inside {width: W*scale, height: H*scale}; aspect is width/height",
+      "sourceFit(w,h)": "bundle helper yt fits {w,h} inside a 1080x1920 reference and returns normalized dimensions",
+      "r,i": "fitted target width,height returned by fit",
+      "a,o": "sourceFit width,height returned by sourceFit",
+      "target": "normalized output rectangle {x,y,width,height,z}",
+      "source": "normalized source feedData rectangle {x,y,width,height}",
+      "literalMargin": "20 is an output-pixel offset, divided by W or H in target expressions",
+      "note": "Formula strings are source expressions. Runtime values depend on W, H and the bundle fit helpers."
+    },
+    "presets": [
+      {
+        "id": "split",
+        "name": "Split",
+        "crops": [
+          {
+            "id": "split:facecam",
+            "role": "Facecam",
+            "aspect": "16:9",
+            "scale": 0.3333333333,
+            "target": {
+              "x": "(W-r-20)/W",
+              "y": "(H-i-20)/H",
+              "width": "r/W",
+              "height": "i/H",
+              "z": 2
+            },
+            "source": {
+              "x": "0",
+              "y": "0",
+              "width": "a",
+              "height": "o"
+            },
+            "inputShape": "freeform",
+            "fitVars": {
+              "r,i": "fit(16/9, 1/3)",
+              "a,o": "sourceFit(r,i)"
+            }
+          },
+          {
+            "id": "split:gameplay",
+            "role": "Gameplay",
+            "aspect": "16:9",
+            "scale": 0.9,
+            "target": {
+              "x": "(0.5W-0.5r)/W",
+              "y": "(0.5H-0.5i)/H",
+              "width": "r/W",
+              "height": "i/H",
+              "z": 1
+            },
+            "source": {
+              "x": "0",
+              "y": "1-c",
+              "width": "o",
+              "height": "c"
+            },
+            "inputShape": "freeform",
+            "fitVars": {
+              "r,i": "fit(16/9, 0.9)",
+              "o,c": "sourceFit(r,i)"
+            }
+          }
+        ]
+      },
+      {
+        "id": "basecam",
+        "name": "Basecam",
+        "crops": [
+          {
+            "id": "basecam:facecam",
+            "role": "Facecam",
+            "aspect": "16:9",
+            "scale": 0.3333333333,
+            "target": {
+              "x": "(W-r-20)/W",
+              "y": "(H-i-20)/H",
+              "width": "r/W",
+              "height": "i/H",
+              "z": 2
+            },
+            "source": {
+              "x": "0",
+              "y": "1-o",
+              "width": "a",
+              "height": "o"
+            },
+            "inputShape": "freeform",
+            "fitVars": {
+              "r,i": "fit(16/9, 1/3)",
+              "a,o": "sourceFit(r,i)"
+            }
+          },
+          {
+            "id": "basecam:gameplay",
+            "role": "Gameplay",
+            "aspect": "16:9",
+            "scale": 0.9,
+            "target": {
+              "x": "(0.5W-0.5r)/W",
+              "y": "(0.5H-0.5i)/H",
+              "width": "r/W",
+              "height": "i/H",
+              "z": 1
+            },
+            "source": {
+              "x": "0",
+              "y": "0",
+              "width": "a",
+              "height": "o"
+            },
+            "inputShape": "freeform",
+            "fitVars": {
+              "r,i": "fit(16/9, 0.9)",
+              "a,o": "sourceFit(r,i)"
+            }
+          }
+        ]
+      },
+      {
+        "id": "mosaic",
+        "name": "Mosaic",
+        "crops": [
+          {
+            "id": "mosaic:facecam",
+            "role": "Facecam",
+            "aspect": "9:8",
+            "scale": 0.3333333333,
+            "target": {
+              "x": "(W-r-20)/W",
+              "y": "(H-i-20)/H",
+              "width": "r/W",
+              "height": "i/H",
+              "z": 3
+            },
+            "source": {
+              "x": "0",
+              "y": "0",
+              "width": "0.5a",
+              "height": "0.5o"
+            },
+            "inputShape": "freeform",
+            "fitVars": {
+              "r,i": "fit(9/8, 1/3)",
+              "a,o": "sourceFit(r,i)"
+            }
+          },
+          {
+            "id": "mosaic:map",
+            "role": "Map",
+            "aspect": "9:8",
+            "scale": 0.3333333333,
+            "target": {
+              "x": "20/W",
+              "y": "20/H",
+              "width": "r/W",
+              "height": "i/H",
+              "z": 2
+            },
+            "source": {
+              "x": "0.5",
+              "y": "0",
+              "width": "0.5a",
+              "height": "0.5o"
+            },
+            "inputShape": "freeform",
+            "fitVars": {
+              "r,i": "fit(9/8, 1/3)",
+              "a,o": "sourceFit(r,i)"
+            }
+          },
+          {
+            "id": "mosaic:gameplay",
+            "role": "Gameplay",
+            "aspect": "16:9",
+            "scale": 0.9,
+            "target": {
+              "x": "(0.5W-0.5r)/W",
+              "y": "(0.5H-0.5i)/H",
+              "width": "r/W",
+              "height": "i/H",
+              "z": 1
+            },
+            "source": {
+              "x": "0",
+              "y": "1-o",
+              "width": "a",
+              "height": "o"
+            },
+            "inputShape": "freeform",
+            "fitVars": {
+              "r,i": "fit(16/9, 0.9)",
+              "a,o": "sourceFit(r,i)"
+            }
+          }
+        ]
+      },
+      {
+        "id": "circle",
+        "name": "Circle facecam",
+        "crops": [
+          {
+            "id": "circle:facecam",
+            "role": "Facecam",
+            "aspect": "1:1",
+            "scale": 0.3333333333,
+            "target": {
+              "x": "(W-r-20)/W",
+              "y": "(H-i-20)/H",
+              "width": "r/W",
+              "height": "i/H",
+              "z": 2
+            },
+            "source": {
+              "x": "0.5-0.5c",
+              "y": "0.25-0.5u",
+              "width": "c",
+              "height": "u"
+            },
+            "inputShape": "circle",
+            "fitVars": {
+              "r,i": "fit(1, 1/3)",
+              "a,o": "sourceFit(r,i)",
+              "c": "0.5a",
+              "u": "0.5o"
+            }
+          },
+          {
+            "id": "circle:gameplay",
+            "role": "Gameplay",
+            "aspect": "1:1",
+            "scale": 0.9,
+            "target": {
+              "x": "(0.5W-0.5r)/W",
+              "y": "(0.5H-0.5i)/H",
+              "width": "r/W",
+              "height": "i/H",
+              "z": 1
+            },
+            "source": {
+              "x": "0.5-0.5a",
+              "y": "0.5-0.5o",
+              "width": "a",
+              "height": "o"
+            },
+            "inputShape": "freeform",
+            "fitVars": {
+              "r,i": "fit(1, 0.9)",
+              "a,o": "sourceFit(r,i)"
+            }
+          }
+        ]
+      },
+      {
+        "id": "small",
+        "name": "Small facecam",
+        "crops": [
+          {
+            "id": "small:facecam",
+            "role": "Facecam",
+            "aspect": "5:4",
+            "scale": 0.3333333333,
+            "target": {
+              "x": "(W-r-20)/W",
+              "y": "(H-i-20)/H",
+              "width": "r/W",
+              "height": "i/H",
+              "z": 2
+            },
+            "source": {
+              "x": "0.5-0.5c",
+              "y": "0.25-0.5u",
+              "width": "c",
+              "height": "u"
+            },
+            "inputShape": "freeform",
+            "fitVars": {
+              "r,i": "fit(5/4, 1/3)",
+              "a,o": "sourceFit(r,i)",
+              "c": "0.5a",
+              "u": "0.5o"
+            }
+          },
+          {
+            "id": "small:gameplay",
+            "role": "Gameplay",
+            "aspect": "1:1",
+            "scale": 0.9,
+            "target": {
+              "x": "(0.5W-0.5r)/W",
+              "y": "(0.5H-0.5i)/H",
+              "width": "r/W",
+              "height": "i/H",
+              "z": 1
+            },
+            "source": {
+              "x": "0.5-0.5a",
+              "y": "0.5-0.5o",
+              "width": "a",
+              "height": "o"
+            },
+            "inputShape": "freeform",
+            "fitVars": {
+              "r,i": "fit(1, 0.9)",
+              "a,o": "sourceFit(r,i)"
+            }
+          }
+        ]
+      },
+      {
+        "id": "blurred",
+        "name": "Blurred",
+        "variants": [
+          {
+            "variant": "square",
+            "crops": [
+              {
+                "id": "blurred:gameplay",
+                "role": "Gameplay",
+                "aspect": "1:1",
+                "scale": 0.9,
+                "target": {
+                  "x": "(0.5W-0.5r)/W",
+                  "y": "(0.5H-0.5i)/H",
+                  "width": "r/W",
+                  "height": "i/H",
+                  "z": 1
+                },
+                "source": {
+                  "x": "0.5-0.5a",
+                  "y": "0.5-0.5o",
+                  "width": "a",
+                  "height": "o"
+                },
+                "inputShape": "freeform",
+                "fitVars": {
+                  "r,i": "fit(1, 0.9)",
+                  "a,o": "sourceFit(r,i)"
+                }
+              }
+            ]
+          },
+          {
+            "variant": "vertical",
+            "crops": [
+              {
+                "id": "blurred:gameplay",
+                "role": "Gameplay",
+                "aspect": "9:16",
+                "scale": 1,
+                "target": {
+                  "x": "(0.5W-0.5n)/W",
+                  "y": "(0.5H-0.5r)/H",
+                  "width": "n/W",
+                  "height": "r/H",
+                  "z": 1
+                },
+                "source": {
+                  "x": "0",
+                  "y": "1-a",
+                  "width": "i",
+                  "height": "a"
+                },
+                "inputShape": "16:9",
+                "fitVars": {
+                  "n,r": "fit(9/16, 1)",
+                  "i,a": "sourceFit(n,r)"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "dual",
+        "name": "Dual facecam",
+        "crops": [
+          {
+            "id": "dual:facecam_left",
+            "role": "Facecam Left",
+            "aspect": "1:1",
+            "scale": 0.3333333333,
+            "target": {
+              "x": "20/W",
+              "y": "(H-i-20)/H",
+              "width": "r/W",
+              "height": "i/H",
+              "z": 3
+            },
+            "source": {
+              "x": "0.275-0.5c",
+              "y": "0.05",
+              "width": "c",
+              "height": "u"
+            },
+            "inputShape": "circle",
+            "fitVars": {
+              "r,i": "fit(1, 1/3)",
+              "a,o": "sourceFit(r,i)",
+              "c": "0.4a",
+              "u": "0.4o"
+            }
+          },
+          {
+            "id": "dual:facecam_right",
+            "role": "Facecam Right",
+            "aspect": "1:1",
+            "scale": 0.3333333333,
+            "target": {
+              "x": "(W-r-20)/W",
+              "y": "(H-i-20)/H",
+              "width": "r/W",
+              "height": "i/H",
+              "z": 2
+            },
+            "source": {
+              "x": "0.725-0.5c",
+              "y": "0.05",
+              "width": "c",
+              "height": "u"
+            },
+            "inputShape": "circle",
+            "fitVars": {
+              "r,i": "fit(1, 1/3)",
+              "a,o": "sourceFit(r,i)",
+              "c": "0.4a",
+              "u": "0.4o"
+            }
+          },
+          {
+            "id": "dual:gameplay",
+            "role": "Gameplay",
+            "aspect": "9:16",
+            "scale": 0.9,
+            "target": {
+              "x": "(0.5W-0.5r)/W",
+              "y": "(0.5H-0.5i)/H",
+              "width": "r/W",
+              "height": "i/H",
+              "z": 1
+            },
+            "source": {
+              "x": "0",
+              "y": "1-o",
+              "width": "a",
+              "height": "o"
+            },
+            "inputShape": "freeform",
+            "fitVars": {
+              "r,i": "fit(9/16, 0.9)",
+              "a,o": "sourceFit(r,i)"
+            }
+          }
+        ]
+      },
+      {
+        "id": "game_ui",
+        "name": "Game UI",
+        "crops": [
+          {
+            "id": "game_ui:hud",
+            "role": "Game UI",
+            "aspect": "4:1",
+            "scale": 0.5,
+            "target": {
+              "x": "(0.5W-0.5c)/W",
+              "y": "(H-u-20)/H",
+              "width": "c/W",
+              "height": "u/H",
+              "z": 3
+            },
+            "source": {
+              "x": "0.5-0.5p",
+              "y": "a-0.5m",
+              "width": "p",
+              "height": "m"
+            },
+            "inputShape": "freeform",
+            "fitVars": {
+              "a": "height from sourceFit(facecamTarget16:9)",
+              "c,u": "fit(4, 0.5)",
+              "d,f": "sourceFit(c,u)",
+              "p": "0.75d",
+              "m": "0.75f"
+            }
+          },
+          {
+            "id": "game_ui:facecam",
+            "role": "Facecam",
+            "aspect": "16:9",
+            "scale": 0.3333333333,
+            "target": {
+              "x": "(W-r-20)/W",
+              "y": "(H-i-20)/H",
+              "width": "r/W",
+              "height": "i/H",
+              "z": 2
+            },
+            "source": {
+              "x": "0",
+              "y": "0",
+              "width": "a",
+              "height": "o"
+            },
+            "inputShape": "freeform",
+            "fitVars": {
+              "r,i": "fit(16/9, 1/3)",
+              "a,o": "sourceFit(r,i)"
+            }
+          },
+          {
+            "id": "game_ui:gameplay",
+            "role": "Gameplay",
+            "aspect": "16:9",
+            "scale": 0.9,
+            "target": {
+              "x": "(0.5W-0.5r)/W",
+              "y": "(0.5H-0.5i)/H",
+              "width": "r/W",
+              "height": "i/H",
+              "z": 1
+            },
+            "source": {
+              "x": "0",
+              "y": "1-o",
+              "width": "a",
+              "height": "o"
+            },
+            "inputShape": "freeform",
+            "fitVars": {
+              "r,i": "fit(16/9, 0.9)",
+              "a,o": "sourceFit(r,i)"
+            }
+          }
+        ]
+      },
+      {
+        "id": "full",
+        "name": "Fullscreen",
+        "crops": [
+          {
+            "id": "full:gameplay",
+            "role": "Gameplay",
+            "aspect": "9:16",
+            "scale": 1,
+            "target": {
+              "x": "(0.5W-0.5n)/W",
+              "y": "(0.5H-0.5r)/H",
+              "width": "n/W",
+              "height": "r/H",
+              "z": 1
+            },
+            "source": {
+              "x": "0",
+              "y": "1-a",
+              "width": "i",
+              "height": "a"
+            },
+            "inputShape": "9:16",
+            "fitVars": {
+              "n,r": "fit(9/16, 1)",
+              "i,a": "sourceFit(n,r)"
+            }
+          }
+        ]
+      },
+      {
+        "id": "half",
+        "name": "Half",
+        "crops": [
+          {
+            "id": "half:facecam",
+            "role": "Facecam",
+            "aspect": "9:8",
+            "scale": 0.5,
+            "target": {
+              "x": "(W-r-20)/W",
+              "y": "(H-i-20)/H",
+              "width": "r/W",
+              "height": "i/H",
+              "z": 2
+            },
+            "source": {
+              "x": "0",
+              "y": "0",
+              "width": "a",
+              "height": "o"
+            },
+            "inputShape": "freeform",
+            "fitVars": {
+              "r,i": "fit(9/8, 0.5)",
+              "a,o": "sourceFit(r,i)"
+            }
+          },
+          {
+            "id": "half:gameplay",
+            "role": "Gameplay",
+            "aspect": "9:8",
+            "scale": 0.5,
+            "target": {
+              "x": "(0.5W-0.5r)/W",
+              "y": "(0.5H-0.5i)/H",
+              "width": "r/W",
+              "height": "i/H",
+              "z": 1
+            },
+            "source": {
+              "x": "0",
+              "y": "1-o",
+              "width": "a",
+              "height": "o"
+            },
+            "inputShape": "freeform",
+            "fitVars": {
+              "r,i": "fit(9/8, 0.5)",
+              "a,o": "sourceFit(r,i)"
+            }
+          }
+        ]
+      },
+      {
+        "id": "duo_split",
+        "name": "Duo Split",
+        "crops": [
+          {
+            "id": "duo_split:left",
+            "role": "Facecam Left",
+            "aspect": "1:1",
+            "scale": 0.3333333333,
+            "target": {
+              "x": "20/W",
+              "y": "20/H",
+              "width": "r/W",
+              "height": "i/H",
+              "z": 3
+            },
+            "source": {
+              "x": "0",
+              "y": "0",
+              "width": "0.5a",
+              "height": "0.5o"
+            },
+            "inputShape": "freeform",
+            "fitVars": {
+              "r,i": "fit(1, 1/3)",
+              "a,o": "sourceFit(r,i)"
+            }
+          },
+          {
+            "id": "duo_split:right",
+            "role": "Facecam Right",
+            "aspect": "1:1",
+            "scale": 0.3333333333,
+            "target": {
+              "x": "(W-r-20)/W",
+              "y": "(H-i-20)/H",
+              "width": "r/W",
+              "height": "i/H",
+              "z": 2
+            },
+            "source": {
+              "x": "0.5",
+              "y": "0",
+              "width": "0.5a",
+              "height": "0.5o"
+            },
+            "inputShape": "freeform",
+            "fitVars": {
+              "r,i": "fit(1, 1/3)",
+              "a,o": "sourceFit(r,i)"
+            }
+          },
+          {
+            "id": "duo_split:gameplay",
+            "role": "Gameplay",
+            "aspect": "2:1",
+            "scale": 0.9,
+            "target": {
+              "x": "(0.5W-0.5r)/W",
+              "y": "(0.5H-0.5i)/H",
+              "width": "r/W",
+              "height": "i/H",
+              "z": 1
+            },
+            "source": {
+              "x": "0",
+              "y": "1-o",
+              "width": "a",
+              "height": "o"
+            },
+            "inputShape": "freeform",
+            "fitVars": {
+              "r,i": "fit(2, 0.9)",
+              "a,o": "sourceFit(r,i)"
+            }
+          }
+        ]
+      }
+    ],
+    "faceDetection": "No face detection request found in inspected layout builders or crop preference bridge."
+  },
+  "captions": {
+    "transcriptionWordFields": [
+      "id",
+      "text",
+      "speakerId",
+      "startMs",
+      "endMs",
+      "effects"
+    ],
+    "stateFields": [
+      "position",
+      "transcription",
+      "captionStyle",
+      "baseTextStyle",
+      "speakers",
+      "styleOverrides",
+      "positionBySegmentId",
+      "displayOptions"
+    ],
+    "displayOptions": [
+      "grouping",
+      "animationTarget",
+      "highlight",
+      "aiShake",
+      "aiSupersize",
+      "rotate",
+      "stripPunctuation",
+      "emojis",
+      "speakerAvatars",
+      "captionSizeOverride"
+    ],
+    "groupingValuesObserved": [
+      "single",
+      "group"
+    ],
+    "animationTargetValuesObserved": [
+      "word",
+      "sentence"
+    ],
+    "maxCharactersPerGroup": {
+      "min": 10,
+      "max": 50,
+      "step": 1
+    },
+    "captionEffectModes": [
+      "single-word",
+      "word-group",
+      "karaoke",
+      "scale-underline"
+    ],
+    "visibleEffectNames": [
+      "No animation",
+      "One word at a time",
+      "Accessible short captions",
+      "Karaoke bounce",
+      "Marker reveal",
+      "Scale to fit",
+      "Underline",
+      "Highlight",
+      "Typewriter"
+    ],
+    "styleFields": {
+      "font": [
+        "fontFamily",
+        "fontSize",
+        "fontWeight",
+        "leading",
+        "kerning",
+        "textTransform",
+        "color",
+        "highlightColor"
+      ],
+      "stroke": [
+        "color",
+        "highlightColor",
+        "width"
+      ],
+      "background": [
+        "color",
+        "highlightColor",
+        "opacity",
+        "radius"
+      ],
+      "shadow": [
+        "color",
+        "highlightColor",
+        "offsetX",
+        "offsetY",
+        "blur",
+        "opacity"
+      ],
+      "glow": [
+        "color",
+        "highlightColor",
+        "radius"
+      ],
+      "speaker": [
+        "id",
+        "name",
+        "avatar",
+        "textStyleId",
+        "textStyleOverrides"
+      ],
+      "avatar": [
+        "url",
+        "rounding",
+        "border",
+        "position",
+        "size"
+      ]
+    },
+    "aiEffects": [
+      "shake",
+      "supersize",
+      "emojis",
+      "speaker avatars"
+    ],
+    "aiEffectConstraint": "Emojis and speaker avatars are mutually exclusive.",
+    "evidence": "assets/captions-Ca8i8qgt.js@3998-5710,59958,64539-65353,69885-69995,180771-181031; assets/CaptionsConfigPage-Xb6e2reZ.js@19865,28801; runs/catalog.tsv@64-74; assets/CaptionsConfigPage-Xb6e2reZ.js@4200-4800; assets/captions-Ca8i8qgt.js@4200-5370,182017",
+    "groupBreakLinesDefault": true,
+    "captionAnimationOptions": [
+      "none",
+      "reveal",
+      "fade-in",
+      "slide-right",
+      "slide-left",
+      "slide-top",
+      "slide-bottom",
+      "shrink",
+      "bounce",
+      "scale-underline",
+      "opacity"
+    ],
+    "spokenWordHighlightStyleFields": [
+      "font.color",
+      "stroke[]"
+    ],
+    "captionStylePresetFields": [
+      "id",
+      "name",
+      "userId",
+      "workspaceId",
+      "textStyleId",
+      "displayEffect",
+      "speakers",
+      "tags",
+      "label",
+      "previewUrl",
+      "displayOrder",
+      "createdAt",
+      "updatedAt",
+      "archivedAt"
+    ]
+  },
+  "animations": {
+    "entryExitPresets": [
+      {
+        "name": "Reveal",
+        "durationMs": 200
+      },
+      {
+        "name": "Fade in",
+        "durationMs": 200
+      },
+      {
+        "name": "Slide right",
+        "durationMs": 300
+      },
+      {
+        "name": "Slide left",
+        "durationMs": 300
+      },
+      {
+        "name": "Slide top",
+        "durationMs": 300
+      },
+      {
+        "name": "Slide bottom",
+        "durationMs": 300
+      },
+      {
+        "name": "Shrink",
+        "durationMs": 200
+      },
+      {
+        "name": "Bounce in",
+        "durationMs": 200
+      }
+    ],
+    "textMotionPresets": [
+      "Stick",
+      "Appear",
+      "Land",
+      "Pop",
+      "Slide",
+      "Unfold",
+      "Emerge",
+      "Burst",
+      "Rotate",
+      "Jump",
+      "Shrink",
+      "Glide",
+      "Flip",
+      "Float",
+      "Impact",
+      "Hop",
+      "Drift",
+      "Sway",
+      "Groove",
+      "Bounce",
+      "Shake",
+      "Whirl"
+    ],
+    "defaultEffectParameters": {
+      "intensity": 50,
+      "speed": 75,
+      "durationMs": 1000,
+      "hasIsOutEffect": true
+    },
+    "evidence": "assets/AnimationPresets--8mPMy21.js@461-11818; assets/initialElementAnimations-DNWwIt9l.js@438",
+    "defaultByElementType": {
+      "modern": {
+        "text": {
+          "entrance": "slide-top",
+          "exit": "slide-top"
+        },
+        "rive": {
+          "entrance": "reveal-slow-zoom",
+          "exit": "reveal-slow-zoom"
+        },
+        "reaction": {
+          "entrance": "reveal",
+          "exit": "reveal"
+        },
+        "image": {
+          "entrance": "reveal-slow-zoom",
+          "exit": "reveal-slow-zoom"
+        },
+        "emote": {
+          "entrance": "reveal",
+          "exit": "reveal"
+        }
+      },
+      "legacy": {
+        "text": {
+          "entrance": "Slide top",
+          "exit": "Slide top"
+        },
+        "rive": {
+          "entrance": "Reveal",
+          "exit": "Reveal"
+        },
+        "reaction": {
+          "entrance": "Reveal",
+          "exit": "Reveal"
+        },
+        "image": {
+          "entrance": "Reveal",
+          "exit": "Reveal"
+        },
+        "emote": {
+          "entrance": "Reveal",
+          "exit": "Reveal"
+        }
+      }
+    },
+    "defaultByElementTypeEvidence": "assets/initialElementAnimations-DNWwIt9l.js@438-1127"
+  },
+  "effects": {
+    "shaderPresets": [
+      {
+        "name": "Zoom Blur",
+        "shader": "CustomZoomBlur",
+        "durationMs": 600
+      },
+      {
+        "name": "Shake",
+        "shader": "AnotherShake",
+        "durationMs": 800
+      },
+      {
+        "name": "Slide Shake",
+        "shader": "SlideShake",
+        "durationMs": 800
+      },
+      {
+        "name": "Morph",
+        "shader": "MorphShake",
+        "durationMs": 800
+      },
+      {
+        "name": "Slide",
+        "shader": "MorphTransition",
+        "durationMs": 500
+      },
+      {
+        "name": "Screen Shake",
+        "shader": "screenShake",
+        "durationMs": 600
+      },
+      {
+        "name": "Glitch",
+        "shader": "glitch",
+        "durationMs": 800
+      },
+      {
+        "name": "Pixelate",
+        "shader": "pixelateTransition",
+        "durationMs": 800
+      },
+      {
+        "name": "Film Grain Shake",
+        "shader": "filmGrainShake",
+        "durationMs": 2000
+      }
+    ],
+    "zoom": {
+      "segmentType": "zoom",
+      "linkedEffectFields": [
+        "type",
+        "x",
+        "y",
+        "segmentId"
+      ],
+      "defaultDurationMs": 5000
+    },
+    "speed": {
+      "segmentType": "playrate",
+      "fields": [
+        "startMs",
+        "endMs",
+        "volume",
+        "sourceUrl",
+        "type",
+        "name",
+        "playbackRate"
+      ],
+      "defaultDurationMs": 3000,
+      "defaultRate": 2,
+      "minimumRate": 0.1,
+      "maximumRate": 10
+    },
+    "profanity": {
+      "endpointPath": "/api/ai/filter-profanity",
+      "effectType": "sound",
+      "soundTag": "profanity",
+      "hiddenSoundSupported": true
+    },
+    "silenceRemoval": {
+      "defaultMinSilenceMs": 500,
+      "implementation": "uses transcript word timing to rebuild segments with padding; no endpoint found"
+    },
+    "evidence": "assets/captions-Ca8i8qgt.js@67579-68100,149342,191650,192143,195653-196500; assets/PlayrateControlPage-rJGozjv5.js@430"
+  },
+  "soundEffectCategories": [
+    "Alerts & Notifications",
+    "Ambient Sounds",
+    "Gaming",
+    "Reaction Sounds",
+    "Time & Speed"
+  ],
+  "aiFeatures": {
+    "apiBase": "dynamic parent origin + /api/ through VIDEO_EDITOR_API_REQUEST",
+    "features": {
+      "captionTranscription": {
+        "method": "POST",
+        "path": "/api/speech-to-text",
+        "evidence": "assets/captions-Ca8i8qgt.js@60009; assets/convert-B0tF777j.js@14876-15492"
+      },
+      "wordCensoring": {
+        "method": "POST",
+        "path": "/api/ai/filter-profanity",
+        "evidence": "assets/captions-Ca8i8qgt.js@149342"
+      },
+      "emojiRelevance": {
+        "method": "POST",
+        "path": "/api/ai/emoji-relevance-tagger",
+        "evidence": "assets/captions-Ca8i8qgt.js@176927"
+      },
+      "hookTitle": {
+        "hostMessage": "VIDEO_EDITOR_REQUEST_INTRO_HOOK_TEXT",
+        "httpPath": null,
+        "evidence": "assets/IntroHookPage-opBeCKeN.js@2919"
+      },
+      "textToSpeech": {
+        "hostMessages": [
+          "VIDEO_EDITOR_REQUEST_TEXT_TO_SPEECH",
+          "VIDEO_EDITOR_REQUEST_TEXT_TO_SPEECH_VOICES"
+        ],
+        "httpPath": null,
+        "evidence": "assets/TextElementsEditPage-Dw4o62kI.js@3264; assets/generateSpeech-kwUXCmfs.js@1570"
+      },
+      "removeSilences": {
+        "implementation": "local transcript-timing transform",
+        "httpPath": null,
+        "evidence": "assets/captions-Ca8i8qgt.js@195653-196500"
+      },
+      "magicCut": {
+        "found": false,
+        "httpPath": null,
+        "evidence": "focused asset scan"
+      }
+    },
+    "klipyAssetHost": "https://api.klipy.com",
+    "klipyPathPattern": "/api/v1/{redacted-key}/{endpoint}",
+    "klipyEvidence": "assets/ImageElementSelector-B-9XZUvC.js@3402"
+  },
+  "premium": {
+    "gateMechanism": "feature id matched against runtime tiers[].features and current user tier; access can be delegated to host",
+    "accessMessage": "VIDEO_EDITOR_REQUEST_FEATURE_ACCESS",
+    "featureIds": [
+      "1080p",
+      "4k",
+      "60fps",
+      "animated-social-stickers",
+      "captions",
+      "captions-multiple-speakers",
+      "element-animations",
+      "filter-profanity",
+      "intro-hook",
+      "klipy-gifs",
+      "klipy-stickers",
+      "reaction-elements",
+      "remove-silences",
+      "save-template",
+      "shader-effects",
+      "social-stickers",
+      "sound-effects",
+      "speed-control",
+      "text-elements",
+      "text-to-speech",
+      "twitch-emotes",
+      "upload-custom-elements",
+      "zoom-segments"
+    ],
+    "knownProductTierMap": {
+      "Free": [
+        "720p30 with watermark"
+      ],
+      "Starter": [
+        "720p60",
+        "1080p",
+        "Save template"
+      ],
+      "Pro": [
+        "4K"
+      ],
+      "Creator": [
+        "Publish and share; not established as an editor export tier"
+      ]
+    },
+    "knownProductTierSource": "docs/knowledge/competitor-streamladder.md@8-9",
+    "fourKConditions": [
+      "capability export.4k.enabled",
+      "feature flag 4k-export"
+    ],
+    "evidence": "assets/useIsPremiumFeature-Bp8eXixG.js@744; assets/requestFeatureAccessAsync-DT6iFEPz.js@610; assets/ExportPage-BVuWviBs.js@11967-12893"
+  },
+  "export": {
+    "default": "720p30",
+    "options": [
+      {
+        "id": "720p30",
+        "horizontal": [
+          1280,
+          720
+        ],
+        "vertical": [
+          720,
+          1280
+        ],
+        "fps": 30
+      },
+      {
+        "id": "720p60",
+        "horizontal": [
+          1280,
+          720
+        ],
+        "vertical": [
+          720,
+          1280
+        ],
+        "fps": 60
+      },
+      {
+        "id": "1080p60",
+        "horizontal": [
+          1920,
+          1080
+        ],
+        "vertical": [
+          1080,
+          1920
+        ],
+        "fps": 60
+      },
+      {
+        "id": "2160p60",
+        "horizontal": [
+          3840,
+          2160
+        ],
+        "vertical": [
+          2160,
+          3840
+        ],
+        "fps": 60,
+        "gated": true
+      }
+    ],
+    "helperMapDiscrepancy": "export-CiRxPvpb.js includes 720p30, 720p60 and 1080p60 only; ExportPage also exposes gated 2160p60",
+    "renderWorker": "assets/worker-_tRJZtzE.js",
+    "renderMethod": [
+      "OffscreenCanvas",
+      "VideoEncoder",
+      "muxer"
+    ],
+    "ffmpegWasm": "FFmpeg worker wrapper is bundled, but its use by the main export flow is unconfirmed",
+    "watermark": {
+      "renderInstructionField": "watermarkUrl",
+      "hostMessage": "TOGGLE_WATERMARK",
+      "workerDrawsWhenPresent": true
+    },
+    "flow": [
+      "Host sends START_EXPORT with resolution and watermark URL",
+      "Editor maps output settings into render instructions",
+      "Editor worker receives start-export, instructions, optional preview canvas, media cache and upload callback",
+      "Worker renders and encodes; chunk upload and thumbnail callbacks are available",
+      "Host receives VIDEO_EDITOR_EXPORT_COMPLETE with buffer and project JSON, plus progress or failure events"
+    ],
+    "serverRenderEndpointFound": false,
+    "evidence": "assets/ExportPage-BVuWviBs.js@11967-12893; assets/export-CiRxPvpb.js@521,733; assets/default-resolution-6QEiT3xu.js@234176; assets/worker-_tRJZtzE.js@2282840-2286635; assets/video-editor-BeJx0v1z.js@458695,461009"
+  },
+  "soundEffectCategoriesEvidence": "runs/catalog.tsv@28,54"
+}

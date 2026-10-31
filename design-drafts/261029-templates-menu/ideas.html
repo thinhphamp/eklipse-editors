@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Templates menu · ideas board · round 1</title>
+<style>
+/* ===== Tokens: copied from prototypes-src/claude-improvement/src/theme/tokens.css (Eklipse dark) ===== */
+:root{
+  --color-ek-purple:#735EF4;--color-ek-purple-light:#A496F8;--color-ek-yellow:#FFA036;
+  --color-ek-grey-light:#A3A3BF;--color-ek-grey:#434359;--color-ek-grey-dark:#2B2B38;--color-ek-grey-darker:#1B1B26;
+  --color-ek-grey-black:#11111A;--color-ek-success:#46F88D;--color-ek-white:#FFFFFF;--color-ek-text-secondary:#D0D0D0;
+  --color-ek-border-secondary:#FFFFFF14;--color-ek-hover:#383849;
+  --font-ui:'Hanken Grotesk',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --bg-app:var(--color-ek-grey-black);--bg-panel:var(--color-ek-grey-darker);--bg-card:var(--color-ek-grey-dark);
+  --bg-hover:var(--color-ek-hover);--bg-inset:var(--color-ek-grey-black);
+  --border:var(--color-ek-grey);--border-subtle:var(--color-ek-border-secondary);
+  --text-1:var(--color-ek-white);--text-2:var(--color-ek-text-secondary);--text-3:var(--color-ek-grey-light);
+  --accent:var(--color-ek-purple);--accent-text:var(--color-ek-purple-light);
+  --accent-soft:color-mix(in srgb,var(--color-ek-purple) 22%,var(--color-ek-grey-dark));
+  --premium:var(--color-ek-yellow);--success:var(--color-ek-success);
+  /* thumbnail fills (derived, draft only) */
+  --cam:color-mix(in srgb,var(--color-ek-purple) 55%,var(--color-ek-grey-dark));
+  --game:color-mix(in srgb,var(--color-ek-success) 14%,var(--color-ek-grey));
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg-app);color:var(--text-1);font:15px/1.5 var(--font-ui)}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible{outline:2px solid var(--accent-text);outline-offset:2px}
+
+/* ===== Board chrome ===== */
+.board{max-width:1180px;margin:0 auto;padding:48px 24px 96px}
+.board-head{max-width:760px;margin-bottom:48px}
+.board-head small{color:var(--text-3);font-size:13px;letter-spacing:.04em;text-transform:uppercase}
+.board-head h1{font-size:32px;line-height:1.2;margin:8px 0 12px;letter-spacing:-.01em}
+.board-head p{color:var(--text-2);margin:0 0 8px}
+.idea{display:grid;grid-template-columns:568px 1fr;gap:40px;padding:48px 0;border-top:1px solid var(--border-subtle)}
+.idea-notes h2{font-size:24px;line-height:1.2;margin:0 0 6px}
+.idea-notes .tag{display:inline-block;font-size:12px;padding:2px 10px;border-radius:99px;background:var(--bg-card);color:var(--text-2);margin-bottom:12px}
+.idea-notes .tag.rec{background:var(--accent);color:var(--color-ek-white)}
+.idea-notes .one{font-size:17px;color:var(--text-2);margin:0 0 20px}
+.idea-notes h3{font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--text-3);margin:20px 0 6px}
+.idea-notes ul{margin:0;padding-left:18px;color:var(--text-2)}
+.idea-notes li{margin:3px 0}
+.idea-notes li b{color:var(--text-1);font-weight:600}
+
+/* ===== Editor mock: rail + side panel (520px like .side-panel) ===== */
+.editor{display:flex;height:720px;border:1px solid var(--border);border-radius:12px;overflow:hidden;background:var(--bg-panel)}
+.rail{width:48px;flex:0 0 48px;border-right:1px solid var(--border);display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 0;background:var(--bg-app)}
+.rail i{display:flex;flex-direction:column;align-items:center;font-style:normal;font-size:9px;color:var(--text-3);gap:3px;padding:6px 0;width:44px;border-radius:8px}
+.rail i::before{content:"";width:18px;height:18px;border-radius:5px;border:1.5px solid currentColor}
+.rail i.on{color:var(--text-1);background:var(--bg-card)}
+.rail i.on::before{border-color:var(--accent-text);background:var(--accent-soft)}
+.panel{width:520px;overflow:auto;padding:18px 16px 40px;scrollbar-width:thin}
+.ph{padding-bottom:16px;margin-bottom:16px;border-bottom:1px solid var(--border-subtle)}
+.ph h4{font-size:18px;line-height:1.2;margin:0 0 4px}
+.ph p{font-size:14px;margin:0;color:var(--text-3)}
+.sec{margin:20px 0 10px;display:flex;justify-content:space-between;align-items:baseline}
+.sec h5{font-size:15px;margin:0}
+.sec span{font-size:12px;color:var(--text-3)}
+.sec button{border:0;background:none;color:var(--accent-text);font-size:12px;padding:0}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.grid.three{grid-template-columns:repeat(3,1fr)}
+.row{display:grid;grid-auto-flow:column;grid-auto-columns:31%;gap:8px;overflow-x:auto;padding-bottom:6px;scrollbar-width:thin}
+.line{font-size:12px;color:var(--text-3);margin:-4px 0 8px}
+
+/* layout tile (all templates) */
+.tile{position:relative;padding:6px;border:1px solid var(--border);border-radius:9px;background:var(--bg-card);text-align:center;min-width:0}
+.tile:hover{background:var(--bg-hover)}
+.tile.sel{border-color:var(--accent);background:var(--accent-soft)}
+.tile b{display:block;font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin:5px 0 0}
+.tile small{display:block;font-size:11px;line-height:1.3;color:var(--text-3)}
+
+/* saved card (user templates): bigger, shows its captions + sticker */
+.card{position:relative;padding:6px;border:1px solid var(--border);border-radius:10px;background:var(--bg-card);text-align:left;min-width:0}
+.card:hover{background:var(--bg-hover)}
+.card.sel{border-color:var(--accent);background:var(--accent-soft)}
+.card b{display:block;font-size:13px;font-weight:600;margin:6px 2px 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card small{display:block;font-size:11px;color:var(--text-3);margin:0 2px 2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card .more{position:absolute;right:10px;top:10px;width:22px;height:22px;border-radius:6px;border:0;background:rgb(0 0 0 / .55);font-size:13px;line-height:22px;padding:0}
+.star{position:absolute;left:10px;top:10px;font-size:10px;padding:1px 6px;border-radius:99px;background:rgb(0 0 0 / .6);color:var(--premium)}
+.badge{position:absolute;left:10px;top:10px;font-size:10px;padding:1px 6px;border-radius:99px;background:var(--accent);color:var(--color-ek-white)}
+.add{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;border:1px dashed var(--border);border-radius:10px;background:none;color:var(--text-2);font-size:12px;min-height:100%;padding:12px;text-align:center}
+.add:hover{border-color:var(--accent-text);color:var(--text-1)}
+.add span{font-size:22px;line-height:1;color:var(--accent-text)}
+
+/* layout thumbnail: 9:16 canvas, facecam (purple) + gameplay (green-grey) */
+.th{position:relative;aspect-ratio:9/16;border-radius:6px;overflow:hidden;background:var(--bg-inset)}
+.th i{position:absolute;display:block}
+.th .g{background:var(--game)}
+.th .g::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(135deg,transparent 0 6px,rgb(255 255 255 / .04) 6px 7px)}
+.th .c{background:var(--cam)}
+.th .c.round{border-radius:50%}
+.th .blur{filter:blur(3px);opacity:.6}
+.th .cap{left:12%;right:12%;bottom:26%;height:7%;border-radius:3px;background:var(--color-ek-white);opacity:.9}
+.th .stk{left:22%;right:22%;top:46%;height:6%;border-radius:99px;background:var(--accent)}
+
+/* segmented tabs (mirrors main app "All 21 / My saved 10") */
+.seg{display:inline-flex;gap:4px;padding:4px;border-radius:99px;background:var(--bg-inset);margin-bottom:4px}
+.seg button{border:0;border-radius:99px;background:none;padding:6px 14px;font-size:13px;color:var(--text-2)}
+.seg button em{font-style:normal;color:var(--text-3);margin-left:4px}
+.seg button.on{background:var(--accent);color:var(--color-ek-white)}
+.seg button.on em{color:var(--color-ek-white);opacity:.75}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px}
+.chips button{border:1px solid var(--border);border-radius:99px;background:none;padding:4px 12px;font-size:12px;color:var(--text-2)}
+.chips button.on{border-color:var(--accent);background:var(--accent-soft);color:var(--text-1)}
+
+/* empty + misc */
+.empty{border:1px dashed var(--border);border-radius:10px;padding:24px;text-align:center;color:var(--text-2);font-size:13px}
+.empty b{display:block;color:var(--text-1);font-size:15px;margin-bottom:4px}
+.btn{border:0;border-radius:8px;background:var(--accent);color:var(--color-ek-white);padding:8px 14px;font-size:13px;font-weight:600;margin-top:12px}
+.ghost{border:1px solid var(--border);border-radius:8px;background:none;padding:6px 12px;font-size:12px;color:var(--text-2)}
+.demo-toggle{margin-top:10px;font-size:12px;color:var(--text-3)}
+.demo-toggle button{border:0;background:none;color:var(--accent-text);padding:0;font-size:12px}
+.reuse{border:1px solid var(--border-subtle);border-radius:10px;padding:12px;margin-bottom:8px}
+.reuse-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.reuse-h h5{margin:0;font-size:15px}
+.quick{display:flex;gap:10px;align-items:center;padding:8px;border-radius:9px;background:var(--bg-card);border:1px solid var(--border)}
+.quick .th{width:44px;flex:0 0 44px}
+.quick div{flex:1;min-width:0}
+.quick small{display:block;font-size:11px;color:var(--text-3)}
+.quick strong{display:block;font-size:14px}
+.quick em{font-style:normal;font-size:12px;color:var(--text-3)}
+.quick > span{font-size:12px;color:var(--accent-text)}
+.toast{position:sticky;bottom:0;margin-top:16px;padding:10px 12px;border-radius:9px;background:var(--bg-hover);font-size:13px;display:none;justify-content:space-between}
+.toast.show{display:flex}
+.toast button{border:0;background:none;color:var(--accent-text);padding:0;font-size:13px}
+
+.shared{padding-top:48px;border-top:1px solid var(--border-subtle)}
+.shared h2{font-size:24px;margin:0 0 16px}
+.shared table{width:100%;border-collapse:collapse;font-size:14px}
+.shared th,.shared td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--border-subtle);vertical-align:top}
+.shared th{color:var(--text-3);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.04em}
+.shared td:first-child{color:var(--text-1);font-weight:600;white-space:nowrap}
+.shared td{color:var(--text-2)}
+
+@media (max-width:1100px){.idea{grid-template-columns:1fr}.editor{max-width:568px}}
+@media (max-width:600px){.editor{height:640px}.panel{width:100%}.grid{grid-template-columns:repeat(3,1fr)}.board-head h1{font-size:24px}}
+</style>
+</head>
+<body>
+<main class="board">
+  <header class="board-head">
+    <small>Design draft · templates-menu · round 1</small>
+    <h1>“Layouts” becomes “Templates”: three ways to show saved vs all</h1>
+    <p>Saved templates are the user’s own looks (layout + crops + whatever they kept: captions, sticker, sounds). All templates are the 11 Eklipse layouts. The main Eklipse app already splits them as <b>All 21 / ★ My saved 10</b> in the Edit clip modal.</p>
+    <p>Mocks are at the real 520px panel width. Click tabs, chips and cards; they work.</p>
+  </header>
+
+  <!-- ===== Current ===== -->
+  <section class="idea" data-od-id="current">
+    <div class="editor" aria-label="Current Layouts panel">
+      <div class="rail"><i class="on">Layouts</i><i>Captions</i><i>Elements</i><i>Effects</i><i>Audio</i></div>
+      <div class="panel">
+        <div class="ph"><h4>Choose your layout</h4><p>Facecam and gameplay are placed for you; drag the boxes to adjust</p></div>
+        <div class="reuse">
+          <div class="reuse-h"><h5>Reuse a look</h5><button class="ghost">＋ Save as my look</button></div>
+          <div class="quick"><span class="th" data-l="Split" data-saved></span><div><small>Your style</small><strong>My FPS clips</strong><em>Split · Hook captions · Brand sticker</em></div><span>Apply →</span></div>
+        </div>
+        <div class="sec"><h5>Recently used</h5></div>
+        <div class="grid" data-tiles="Split,Circle facecam"></div>
+        <div class="sec"><h5>All layouts</h5></div>
+        <div class="grid" data-tiles="all"></div>
+      </div>
+    </div>
+    <div class="idea-notes">
+      <span class="tag">Today · v1</span>
+      <h2>Current: one long scroll</h2>
+      <p class="one">Saved looks hide in a “Reuse a look” box; only the first saved style is shown.</p>
+      <h3>What’s wrong for the new structure</h3>
+      <ul>
+        <li>Three words for one thing: <b>look</b>, <b>style</b>, <b>layout</b>. The main app says <b>template</b>.</li>
+        <li>Only one saved style is visible; users with 10 saved (screenshot) can’t reach the rest here.</li>
+        <li>“Recently used” repeats tiles that are also in All layouts.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===== A: Tabs ===== -->
+  <section class="idea" data-od-id="variant-a">
+    <div class="editor" aria-label="Variant A">
+      <div class="rail"><i class="on">Templates</i><i>Captions</i><i>Elements</i><i>Effects</i><i>Audio</i></div>
+      <div class="panel" id="a">
+        <div class="ph"><h4>Templates</h4><p>Start from one of yours or an Eklipse layout</p></div>
+        <div class="seg" role="tablist"><button role="tab" class="on" data-tab="saved">★ My saved <em data-count></em></button><button role="tab" data-tab="all">All <em>11</em></button></div>
+        <div data-pane="saved">
+          <div class="sec"><span>Applies layout, captions and sticker in one step</span><button>Sort: last used</button></div>
+          <div class="grid three" data-saved-grid></div>
+          <div class="empty" data-empty hidden><b>No saved templates yet</b>Edit a clip the way you like it, then save it here. Next time it’s one click.<br><button class="btn">＋ Save this edit as a template</button></div>
+        </div>
+        <div data-pane="all" hidden>
+          <div class="sec"><h5>No camera</h5></div><p class="line">Gameplay only</p><div class="grid" data-tiles="Fullscreen,Blurred,Game UI"></div>
+          <div class="sec"><h5>One camera</h5></div><p class="line">Your facecam with the game</p><div class="grid" data-tiles="Split,Circle facecam,Small facecam,Half,Mosaic,Basecam"></div>
+          <div class="sec"><h5>Two cameras</h5></div><p class="line">You and a friend</p><div class="grid" data-tiles="Dual facecam,Duo Split"></div>
+        </div>
+        <div class="toast"><span></span><button>Undo</button></div>
+      </div>
+    </div>
+    <div class="idea-notes">
+      <span class="tag rec">Recommended</span>
+      <h2>A · Two tabs, like the main app</h2>
+      <p class="one">“★ My saved” and “All” as pill tabs. Same words and pattern users already know from the Edit clip modal.</p>
+      <h3>How it works</h3>
+      <ul>
+        <li>Opens on <b>My saved</b> when the user has any, else on <b>All</b>. The last tab picked is remembered (localStorage).</li>
+        <li>Saved cards are bigger (3 per row) and preview their captions + sticker, so they read as “full looks”, not layouts.</li>
+        <li>First saved card is <b>＋ Save this edit</b>; ⋯ on a card: rename, update with this edit, delete.</li>
+        <li>All is grouped by camera count (the <code>lay-cam-groups</code> fix for the two-camera finding).</li>
+      </ul>
+      <h3>Pros</h3>
+      <ul><li>One mental model across web app and editor.</li><li>Scales to 10+ saved without pushing presets off screen.</li></ul>
+      <h3>Cons</h3>
+      <ul><li>One click to switch; a returning user who wants a preset passes their saved tab first.</li></ul>
+      <p class="demo-toggle">Try: <button data-toggle-empty>show empty saved state</button></p>
+    </div>
+  </section>
+
+  <!-- ===== B: Stacked ===== -->
+  <section class="idea" data-od-id="variant-b">
+    <div class="editor" aria-label="Variant B">
+      <div class="rail"><i class="on">Templates</i><i>Captions</i><i>Elements</i><i>Effects</i><i>Audio</i></div>
+      <div class="panel" id="b">
+        <div class="ph"><h4>Templates</h4><p>Start from one of yours or an Eklipse layout</p></div>
+        <div class="sec"><h5>★ Your templates <span data-count></span></h5><button>See all</button></div>
+        <div class="row" data-saved-row></div>
+        <div class="sec"><h5>All templates</h5><span>Layout only, keeps your edits</span></div>
+        <div class="grid" data-tiles="all" data-described></div>
+        <div class="toast"><span></span><button>Undo</button></div>
+      </div>
+    </div>
+    <div class="idea-notes">
+      <span class="tag">Option</span>
+      <h2>B · Your templates on top, all below</h2>
+      <p class="one">No tabs. A horizontal row of saved templates, then the full layout grid. Both visible on open.</p>
+      <h3>How it works</h3>
+      <ul>
+        <li>Row is sorted by last used; the row replaces “Recently used” and “Reuse a look”.</li>
+        <li><b>See all</b> opens a saved-only view for users with many (rename / delete there).</li>
+        <li>Empty row collapses to one slim “＋ Save this edit as a template” line.</li>
+      </ul>
+      <h3>Pros</h3>
+      <ul><li>Zero clicks to reach either kind; closest to today’s layout, so the smallest probe risk.</li></ul>
+      <h3>Cons</h3>
+      <ul><li>Only ~3 saved visible without scrolling sideways.</li><li>Differs from the main app’s tabs.</li></ul>
+    </div>
+  </section>
+
+  <!-- ===== C: One grid + filters ===== -->
+  <section class="idea" data-od-id="variant-c">
+    <div class="editor" aria-label="Variant C">
+      <div class="rail"><i class="on">Templates</i><i>Captions</i><i>Elements</i><i>Effects</i><i>Audio</i></div>
+      <div class="panel" id="c">
+        <div class="ph"><h4>Templates</h4><p>Start from one of yours or an Eklipse layout</p></div>
+        <div class="chips"><button class="on" data-f="all">All</button><button data-f="saved">★ Saved</button><button data-f="0">No camera</button><button data-f="1">One camera</button><button data-f="2">Two cameras</button></div>
+        <div class="grid three" data-mixed></div>
+        <div class="toast"><span></span><button>Undo</button></div>
+      </div>
+    </div>
+    <div class="idea-notes">
+      <span class="tag">Option</span>
+      <h2>C · One grid, filter chips</h2>
+      <p class="one">Saved and Eklipse templates in one grid. Saved ones come first with a ★; chips filter by kind and camera count.</p>
+      <h3>How it works</h3>
+      <ul>
+        <li>“★ Saved” is just a filter; camera chips also filter saved ones by their layout.</li>
+        <li>Selected chip is remembered for the next clip.</li>
+      </ul>
+      <h3>Pros</h3>
+      <ul><li>Single list to learn; filters answer “two cameras” directly.</li></ul>
+      <h3>Cons</h3>
+      <ul><li>Saved (full look) and Eklipse (layout only) apply differently but sit side by side; needs a clear badge and toast.</li><li>Busiest of the three.</li></ul>
+    </div>
+  </section>
+
+  <!-- ===== Shared rules ===== -->
+  <section class="shared" data-od-id="edge-cases">
+    <h2>Rules for any variant</h2>
+    <table>
+      <tr><th>Case</th><th>Behaviour</th></tr>
+      <tr><td>Apply saved</td><td>One undoable step: layout + crops + what the template kept. Toast names what changed: “My FPS clips applied: Split, Hook captions, sticker · Undo”.</td></tr>
+      <tr><td>Apply Eklipse template</td><td>Layout only; captions, stickers and effects stay. Selected tile is highlighted.</td></tr>
+      <tr><td>No saved templates</td><td>Teach saving with one action, never a blank area.</td></tr>
+      <tr><td>Many saved (10+)</td><td>Sort by last used; rename / delete from ⋯. Duplicate names (“New Template” twice in the main app) get the layout as a suffix until renamed.</td></tr>
+      <tr><td>16:9 clip</td><td>“Make it vertical” card stays above the templates; any pick also makes it 9:16.</td></tr>
+      <tr><td>Split clip</td><td>Eklipse templates apply to the selected part (part picker). Saved templates: whole clip? <b>Open question.</b></td></tr>
+      <tr><td>Edited after applying</td><td>Card shows “Edited”; ⋯ offers “Update template with this edit”.</td></tr>
+    </table>
+  </section>
+</main>
+
+<script>
+/* ===== Data (real names from src/data.ts, style-kits.ts) ===== */
+const LAYOUTS=['Small facecam','Circle facecam','Game UI','Split','Blurred','Fullscreen','Basecam','Mosaic','Dual facecam','Duo Split','Half'];
+const CAMS={'Fullscreen':0,'Blurred':0,'Game UI':1,'Split':1,'Circle facecam':1,'Small facecam':1,'Half':1,'Mosaic':1,'Basecam':1,'Dual facecam':2,'Duo Split':2};
+const DESC={'Split':'Facecam on top, game below','Circle facecam':'Round facecam on the game','Small facecam':'Small facecam on the game','Fullscreen':'Game only','Game UI':'Facecam clear of game UI','Blurred':'Blurred background','Basecam':'Facecam fills the screen','Mosaic':'Game and facecam mosaic','Dual facecam':'Two facecams with game','Duo Split':'Two facecams above game','Half':'Game and facecam halves'};
+const SAVED=[
+  {name:'My FPS clips',layout:'Split',sum:'Split · Hook captions · Sticker'},
+  {name:'Just chatting',layout:'Circle facecam',sum:'Circle · Comic captions · Sticker'},
+  {name:'Ranked nights',layout:'Game UI',sum:'Game UI · Captions · Sounds'},
+  {name:'Duo w/ Minh',layout:'Duo Split',sum:'Duo Split · Captions · Sticker'},
+];
+/* ===== Thumbnail recipes: [kind,left,top,width,height,(round)] in % ===== */
+const R={
+  'Split':[['c',0,0,100,40],['g',0,40,100,60]],
+  'Circle facecam':[['g',0,0,100,100],['c',6,6,36,20,1]],
+  'Small facecam':[['g',0,0,100,100],['c',6,6,34,14]],
+  'Fullscreen':[['g',0,0,100,100]],
+  'Game UI':[['g',0,0,100,100],['c',58,62,36,14]],
+  'Blurred':[['g blur',0,0,100,100],['g',0,30,100,40]],
+  'Basecam':[['c',0,0,100,100]],
+  'Mosaic':[['g',0,0,100,58],['c',0,58,50,42],['g',50,58,50,42]],
+  'Dual facecam':[['c',0,0,100,28],['g',0,28,100,44],['c',0,72,100,28]],
+  'Duo Split':[['c',0,0,50,36],['c',50,0,50,36],['g',0,36,100,64]],
+  'Half':[['g',0,0,100,50],['c',0,50,100,50]],
+};
+const thumb=(l,saved)=>`<span class="th">${(R[l]||[]).map(([k,x,y,w,h,r])=>`<i class="${k}${r?' round':''}" style="left:${x}%;top:${y}%;width:${w}%;height:${h}%"></i>`).join('')}${saved?'<i class="stk"></i><i class="cap"></i>':''}</span>`;
+const tile=(l,desc)=>`<button class="tile" data-apply="${l}" data-kind="all">${thumb(l)}<b>${l}</b>${desc?`<small>${DESC[l]}</small>`:''}</button>`;
+const card=(s,i,mark)=>`<button class="card" data-apply="${s.name}" data-kind="saved" data-sum="${s.layout}">${thumb(s.layout,true)}${mark?'<span class="star">★ Saved</span>':i===0?'<span class="badge">Last used</span>':''}<span class="more" aria-label="More">⋯</span><b>${s.name}</b><small>${s.sum}</small></button>`;
+const addCard='<button class="add"><span>＋</span>Save this edit as a template</button>';
+
+/* ===== Render ===== */
+document.querySelectorAll('[data-tiles]').forEach(g=>{const list=g.dataset.tiles==='all'?LAYOUTS:g.dataset.tiles.split(',');g.innerHTML=list.map(l=>tile(l,g.hasAttribute('data-described'))).join('')});
+document.querySelectorAll('.quick .th').forEach(t=>t.outerHTML=thumb(t.dataset.l,true));
+document.querySelectorAll('[data-count]').forEach(c=>c.textContent=SAVED.length);
+const aGrid=document.querySelector('[data-saved-grid]');aGrid.innerHTML=addCard+SAVED.map((s,i)=>card(s,i)).join('');
+document.querySelector('[data-saved-row]').innerHTML=SAVED.map((s,i)=>card(s,i)).join('')+addCard;
+const mixed=document.querySelector('[data-mixed]');
+const renderMixed=f=>{const s=SAVED.filter(x=>f==='all'||f==='saved'||String(CAMS[x.layout])===f);const l=f==='saved'?[]:LAYOUTS.filter(x=>f==='all'||String(CAMS[x])===f);mixed.innerHTML=s.map((x,i)=>card(x,i,true)).join('')+l.map(x=>tile(x,true)).join('')};
+renderMixed('all');
+
+/* ===== Interactions ===== */
+const KEY='ek-draft-templates-tab';
+const a=document.getElementById('a');
+const showTab=t=>{a.querySelectorAll('[data-tab]').forEach(b=>{b.classList.toggle('on',b.dataset.tab===t);b.setAttribute('aria-selected',b.dataset.tab===t)});a.querySelectorAll('[data-pane]').forEach(p=>p.hidden=p.dataset.pane!==t);try{localStorage.setItem(KEY,t)}catch{}};
+a.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>showTab(b.dataset.tab));
+let stored;try{stored=localStorage.getItem(KEY)}catch{}
+showTab(stored||(SAVED.length?'saved':'all'));
+let empty=false;
+document.querySelector('[data-toggle-empty]').onclick=e=>{empty=!empty;aGrid.hidden=empty;a.querySelector('[data-empty]').hidden=!empty;a.querySelector('[data-count]').textContent=empty?0:SAVED.length;e.target.textContent=empty?'show 4 saved templates':'show empty saved state';showTab('saved')};
+document.querySelectorAll('.chips button').forEach(b=>b.onclick=()=>{b.parentNode.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));renderMixed(b.dataset.f)});
+document.querySelectorAll('.panel').forEach(p=>p.addEventListener('click',e=>{
+  const t=e.target.closest('[data-apply]');if(!t||e.target.closest('.more'))return;
+  p.querySelectorAll('.sel').forEach(x=>x.classList.remove('sel'));t.classList.add('sel');
+  const toast=p.querySelector('.toast');if(!toast)return;
+  const s=SAVED.find(x=>x.name===t.dataset.apply);
+  toast.querySelector('span').textContent=s?`${s.name} applied: ${s.sum.replace(/ · /g,', ')}`:`${t.dataset.apply} layout applied. Your edits stay`;
+  toast.classList.add('show');
+}));
+</script>
+</body>
+</html>

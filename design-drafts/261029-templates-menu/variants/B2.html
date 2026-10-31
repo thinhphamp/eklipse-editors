@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Templates menu · B2 · round 2</title>
+<style>
+/* ===== Tokens: copied from prototypes-src/claude-improvement/src/theme/tokens.css (Eklipse dark) ===== */
+:root{
+  --color-ek-purple:#735EF4;--color-ek-purple-light:#A496F8;--color-ek-yellow:#FFA036;
+  --color-ek-grey-light:#A3A3BF;--color-ek-grey:#434359;--color-ek-grey-dark:#2B2B38;--color-ek-grey-darker:#1B1B26;
+  --color-ek-grey-black:#11111A;--color-ek-success:#46F88D;--color-ek-danger:#EF3149;--color-ek-white:#FFFFFF;
+  --color-ek-text-secondary:#D0D0D0;--color-ek-border-secondary:#FFFFFF14;--color-ek-hover:#383849;
+  --font-ui:'Hanken Grotesk',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --bg-app:var(--color-ek-grey-black);--bg-panel:var(--color-ek-grey-darker);--bg-card:var(--color-ek-grey-dark);
+  --bg-hover:var(--color-ek-hover);--bg-inset:var(--color-ek-grey-black);
+  --border:var(--color-ek-grey);--border-subtle:var(--color-ek-border-secondary);
+  --text-1:var(--color-ek-white);--text-2:var(--color-ek-text-secondary);--text-3:var(--color-ek-grey-light);
+  --accent:var(--color-ek-purple);--accent-text:var(--color-ek-purple-light);
+  --accent-soft:color-mix(in srgb,var(--color-ek-purple) 22%,var(--color-ek-grey-dark));
+  --premium:var(--color-ek-yellow);--danger:var(--color-ek-danger);
+  --scrim:rgb(0 0 0 / .6);
+  /* thumbnail fills (draft only) */
+  --cam:color-mix(in srgb,var(--color-ek-purple) 55%,var(--color-ek-grey-dark));
+  --game:color-mix(in srgb,var(--color-ek-success) 14%,var(--color-ek-grey));
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg-app);color:var(--text-1);font:15px/1.5 var(--font-ui)}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--accent-text);outline-offset:2px}
+
+/* ===== Board chrome (draft only, not product UI) ===== */
+.board{max-width:1180px;margin:0 auto;padding:40px 24px 80px;display:grid;grid-template-columns:568px 1fr;gap:40px;align-items:start}
+.notes small.k{color:var(--text-3);font-size:13px;letter-spacing:.04em;text-transform:uppercase}
+.notes h1{font-size:32px;line-height:1.2;letter-spacing:-.01em;margin:6px 0 10px}
+.notes p{color:var(--text-2);margin:0 0 12px}
+.notes h3{font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--text-3);margin:24px 0 6px}
+.notes ul{margin:0;padding-left:18px;color:var(--text-2)}
+.notes li{margin:4px 0}
+.notes li b{color:var(--text-1);font-weight:600}
+.states{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.states button{border:1px solid var(--border);border-radius:99px;background:none;padding:4px 12px;font-size:12px;color:var(--text-2)}
+.states button.on{border-color:var(--accent);background:var(--accent-soft);color:var(--text-1)}
+@media (max-width:1100px){.board{grid-template-columns:1fr}.editor{max-width:568px}}
+
+/* ===== Editor mock: rail + 520px side panel ===== */
+.editor{display:flex;height:780px;border:1px solid var(--border);border-radius:12px;overflow:hidden;background:var(--bg-panel);position:relative}
+.rail{width:48px;flex:0 0 48px;border-right:1px solid var(--border);display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 0;background:var(--bg-app)}
+.rail i{display:flex;flex-direction:column;align-items:center;font-style:normal;font-size:9px;color:var(--text-3);gap:3px;padding:6px 0;width:44px;border-radius:8px}
+.rail i::before{content:"";width:18px;height:18px;border-radius:5px;border:1.5px solid currentColor}
+.rail i.on{color:var(--text-1);background:var(--bg-card)}
+.rail i.on::before{border-color:var(--accent-text);background:var(--accent-soft)}
+.panel{width:520px;overflow:auto;padding:18px 16px 72px;scrollbar-width:thin;position:relative}
+.ph{padding-bottom:16px;margin-bottom:12px;border-bottom:1px solid var(--border-subtle)}
+.ph h2{font-size:18px;line-height:1.2;margin:0 0 4px}
+.ph p{font-size:14px;margin:0;color:var(--text-3)}
+.sec{margin:18px 0 10px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.sec h3{font-size:15px;margin:0}
+.sec h3 em{font-style:normal;color:var(--text-3);font-weight:400;margin-left:4px}
+.sec .acts{display:flex;gap:12px}
+.link{border:0;background:none;color:var(--accent-text);font-size:12px;padding:0}
+.hint{font-size:12px;color:var(--text-3);margin:-6px 0 10px}
+
+/* banners for clip states */
+.banner{display:flex;gap:10px;align-items:center;padding:10px 12px;border-radius:9px;background:var(--bg-card);border:1px solid var(--border);font-size:13px;color:var(--text-2);margin-bottom:4px}
+.banner b{color:var(--text-1)}
+.banner .grow{flex:1}
+.btn{border:0;border-radius:8px;background:var(--accent);color:var(--color-ek-white);padding:7px 12px;font-size:13px;font-weight:600}
+.ghost{border:1px solid var(--border);border-radius:8px;background:none;padding:6px 10px;font-size:12px;color:var(--text-2)}
+
+/* saved row / grid */
+.row{display:grid;grid-auto-flow:column;grid-auto-columns:31.5%;gap:8px;overflow-x:auto;padding-bottom:6px;scrollbar-width:thin}
+.row.all{grid-auto-flow:row;grid-template-columns:repeat(3,1fr);overflow:visible}
+.card{position:relative;padding:6px;border:1px solid var(--border);border-radius:10px;background:var(--bg-card);text-align:left;min-width:0;cursor:pointer}
+.card:hover{background:var(--bg-hover)}
+.card.sel{border-color:var(--accent);background:var(--accent-soft)}
+.card .nm{display:block;font-size:13px;font-weight:600;margin:6px 2px 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card .sm{display:block;font-size:11px;color:var(--text-3);margin:0 2px 2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card input{width:100%;margin:5px 0 2px;padding:3px 6px;border:1px solid var(--accent);border-radius:6px;background:var(--bg-inset);font-size:13px;font-weight:600}
+.more{position:absolute;right:10px;top:10px;width:24px;height:24px;border-radius:6px;border:0;background:var(--scrim);font-size:14px;line-height:24px;padding:0;color:var(--color-ek-white)}
+.tag{position:absolute;left:10px;top:10px;font-size:10px;padding:1px 7px;border-radius:99px;background:var(--scrim);color:var(--text-1)}
+.tag.edited{background:var(--premium);color:var(--bg-app);font-weight:600}
+.menu{position:absolute;right:8px;top:38px;z-index:5;min-width:180px;padding:4px;border-radius:9px;background:var(--bg-hover);box-shadow:0 6px 20px var(--scrim)}
+.menu button{display:block;width:100%;text-align:left;border:0;background:none;padding:7px 10px;border-radius:6px;font-size:13px}
+.menu button:hover{background:var(--bg-card)}
+.menu button.danger{color:var(--danger)}
+.save-card{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;border:1px dashed var(--border);border-radius:10px;background:none;color:var(--text-2);font-size:12px;padding:12px;text-align:center;min-height:100%}
+.save-card:hover{border-color:var(--accent-text);color:var(--text-1)}
+.save-card span{font-size:22px;line-height:1;color:var(--accent-text)}
+.empty-line{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px dashed var(--border);border-radius:10px;font-size:13px;color:var(--text-2)}
+.empty-line span{flex:1}
+
+/* all templates grid */
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.tile{position:relative;padding:6px;border:1px solid var(--border);border-radius:9px;background:var(--bg-card);text-align:center;min-width:0}
+.tile:hover{background:var(--bg-hover)}
+.tile.sel{border-color:var(--accent);background:var(--accent-soft)}
+.tile b{display:block;font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin:5px 0 0}
+.tile small{display:block;font-size:11px;line-height:1.3;color:var(--text-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* 9:16 thumbnail: facecam (purple) + gameplay (green-grey) + caption + sticker */
+.th{position:relative;display:block;aspect-ratio:9/16;border-radius:6px;overflow:hidden;background:var(--bg-inset)}
+.th i{position:absolute;display:block}
+.th .g{background:var(--game)}
+.th .g::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(135deg,transparent 0 6px,rgb(255 255 255 / .04) 6px 7px)}
+.th .c{background:var(--cam)}
+.th .c.round{border-radius:50%}
+.th .blur{filter:blur(3px);opacity:.6}
+.th .cap{left:6%;right:6%;bottom:24%;text-align:center;font-style:normal;font-weight:800;font-size:9px;line-height:1.1;color:var(--color-ek-white);text-shadow:0 1px 2px var(--bg-app);letter-spacing:.02em}
+.th .stk{left:24%;right:24%;top:47%;height:6%;border-radius:99px;background:var(--accent)}
+
+/* toast */
+.toast{position:absolute;left:64px;right:16px;bottom:14px;display:none;gap:12px;align-items:center;padding:10px 12px;border-radius:9px;background:var(--bg-hover);box-shadow:0 6px 20px var(--scrim);font-size:13px;z-index:6}
+.toast.show{display:flex}
+.toast span{flex:1}
+</style>
+</head>
+<body>
+<main class="board">
+  <!-- ===== Product mock ===== -->
+  <section class="editor" data-od-id="b2-panel" aria-label="Templates panel, variant B2">
+    <div class="rail"><i class="on">Templates</i><i>Captions</i><i>Elements</i><i>Effects</i><i>Audio</i></div>
+    <div class="panel" id="panel">
+      <header class="ph"><h2>Templates</h2><p>Layout, caption style and social sticker in one click</p></header>
+      <div id="banner"></div>
+
+      <div class="sec"><h3>★ Your templates<em id="count"></em></h3><div class="acts"><button class="link" id="saveBtn">＋ Save this edit</button><button class="link" id="seeAll"></button></div></div>
+      <div id="saved"></div>
+
+      <div class="sec"><h3>All templates</h3></div>
+      <p class="hint">Eklipse presets. Your text, effects and sounds stay.</p>
+      <div class="grid" id="presets"></div>
+    </div>
+    <div class="toast" id="toast" role="status"><span></span><button class="link" id="undo">Undo</button></div>
+  </section>
+
+  <!-- ===== Notes (draft board) ===== -->
+  <aside class="notes" data-od-id="b2-notes">
+    <small class="k">Draft · templates-menu · round 2</small>
+    <h1>B2: your templates on top, all templates below</h1>
+    <p>B with your answers: every template applies to the whole clip, Eklipse templates bring a caption style and social sticker, and saved templates are renamed and deleted right here.</p>
+
+    <h3>Try these clip states</h3>
+    <div class="states" id="states">
+      <button data-s="normal" class="on">Normal clip</button>
+      <button data-s="split">Clip split in 2 parts</button>
+      <button data-s="landscape">16:9 clip</button>
+      <button data-s="empty">No saved templates</button>
+      <button data-s="edit">Edit after applying</button>
+      <button data-s="reset">Reset demo</button>
+    </div>
+
+    <h3>What changed from B</h3>
+    <ul>
+      <li><b>Whole clip.</b> On a split clip, a banner says so before you pick; per-part layouts are replaced and the toast says “both parts”. Undo restores them.</li>
+      <li><b>Eklipse templates = layout + caption style + social sticker.</b> Thumbnails show the real caption text so the style reads at a glance.</li>
+      <li><b>Manage in place.</b> ⋯ on a card: Rename (inline, Enter saves, Esc cancels), Update with this edit, Delete (toast with Undo, no confirm dialog).</li>
+      <li><b>Save.</b> “＋ Save this edit” adds a card first in the row and opens the name field. Default name: layout + date. Same names get “(2)”.</li>
+      <li><b>See all</b> turns the row into a 3-column grid in the same panel, for users with 10+ templates.</li>
+      <li><b>Edited.</b> Change anything after applying and the card shows “Edited”; ⋯ puts “Update with this edit” first.</li>
+    </ul>
+
+    <h3>To confirm before promoting</h3>
+    <ul>
+      <li>Caption style + sticker pairing per Eklipse template (drafted from the Captions catalog; product to confirm).</li>
+      <li>Saved template applies what it was saved with (sounds, effects too); Eklipse templates keep your text, effects and sounds.</li>
+    </ul>
+  </aside>
+</main>
+
+<script>
+/* ===== Data: layouts from src/data.ts, caption styles from src/tabs/captions/catalog.ts ===== */
+const PRESETS=[
+  ['Split','THE HOOK.'],['Circle facecam','WORD'],['Small facecam','HITS'],['Game UI','THE HOOK.'],
+  ['Blurred','Let it bloom.'],['Fullscreen','HITS'],['Basecam','WORD'],['Mosaic','THE GOOD PART.'],
+  ['Dual facecam','WORDS YOU SING BACK.'],['Duo Split','THE HOOK.'],['Half','EVERY'],
+].map(([layout,cap])=>({id:'p-'+layout,name:layout,layout,cap,kind:'preset'}));
+const SEED=[
+  {id:'s1',name:'My FPS clips',layout:'Split',cap:'THE HOOK.',sum:'Hook captions · Sticker · Sounds'},
+  {id:'s2',name:'Just chatting',layout:'Circle facecam',cap:'WORD',sum:'Comic captions · Sticker'},
+  {id:'s3',name:'Ranked nights',layout:'Game UI',cap:'HITS',sum:'Captions · Sticker · Zoom'},
+  {id:'s4',name:'Duo w/ Minh',layout:'Duo Split',cap:'THE HOOK.',sum:'Hook captions · Sticker'},
+];
+const R={
+  'Split':[['c',0,0,100,40],['g',0,40,100,60]],
+  'Circle facecam':[['g',0,0,100,100],['c',6,6,36,20,1]],
+  'Small facecam':[['g',0,0,100,100],['c',6,6,34,14]],
+  'Fullscreen':[['g',0,0,100,100]],
+  'Game UI':[['g',0,0,100,100],['c',58,62,36,14]],
+  'Blurred':[['g blur',0,0,100,100],['g',0,30,100,40]],
+  'Basecam':[['c',0,0,100,100]],
+  'Mosaic':[['g',0,0,100,58],['c',0,58,50,42],['g',50,58,50,42]],
+  'Dual facecam':[['c',0,0,100,28],['g',0,28,100,44],['c',0,72,100,28]],
+  'Duo Split':[['c',0,0,50,36],['c',50,0,50,36],['g',0,36,100,64]],
+  'Half':[['g',0,0,100,50],['c',0,50,100,50]],
+};
+
+/* ===== State (persisted so the draft behaves like the real editor across reloads) ===== */
+const KEY='ek-draft-b2';
+const fresh=()=>({saved:SEED.map(s=>({...s})),applied:null,edited:false,expanded:false,clip:'normal',empty:false});
+let S;try{S=JSON.parse(localStorage.getItem(KEY))||fresh()}catch{S=fresh()}
+let undoFn=null,menuFor=null,renaming=null;
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch{}};
+const $=id=>document.getElementById(id);
+const esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const list=()=>S.empty?[]:S.saved;
+const all=()=>[...list(),...PRESETS];
+const find=id=>all().find(t=>t.id===id);
+
+/* ===== Render ===== */
+const thumb=t=>`<span class="th">${(R[t.layout]||[]).map(([k,x,y,w,h,r])=>`<i class="${k}${r?' round':''}" style="left:${x}%;top:${y}%;width:${w}%;height:${h}%"></i>`).join('')}<i class="stk"></i><i class="cap">${esc(t.cap)}</i></span>`;
+function card(t,i){
+  const sel=S.applied===t.id, editing=renaming===t.id;
+  const tag=sel&&S.edited?'<span class="tag edited">Edited</span>':i===0&&!sel?'<span class="tag">Last used</span>':'';
+  const menu=menuFor===t.id?`<div class="menu" role="menu">${sel&&S.edited?'<button data-act="update">Update with this edit</button>':''}<button data-act="rename">Rename</button>${sel&&S.edited?'':'<button data-act="update">Update with this edit</button>'}<button data-act="delete" class="danger">Delete</button></div>`:'';
+  return `<div class="card${sel?' sel':''}" data-id="${t.id}" role="button" tabindex="0" aria-label="Apply ${esc(t.name)}">${thumb(t)}${tag}<button class="more" data-more="${t.id}" aria-label="More for ${esc(t.name)}">⋯</button>${menu}${editing?`<input data-rename="${t.id}" value="${esc(t.name)}" maxlength="40" aria-label="Template name">`:`<span class="nm">${esc(t.name)}</span>`}<span class="sm">${esc(t.layout)} · ${esc(t.sum)}</span></div>`;
+}
+function render(){
+  const L=list();
+  $('count').textContent=L.length?' '+L.length:'';
+  $('seeAll').textContent=L.length>3?(S.expanded?'Show less':'See all'):'';
+  $('saved').className=L.length?'row'+(S.expanded?' all':''):'';
+  $('saved').innerHTML=L.length?L.map(card).join(''):`<div class="empty-line"><span>Save how this clip looks and reuse it on the next one in one click.</span><button class="btn" data-save>＋ Save this edit</button></div>`;
+  $('saveBtn').hidden=!L.length;
+  $('presets').innerHTML=PRESETS.map(t=>`<button class="tile${S.applied===t.id?' sel':''}" data-id="${t.id}">${thumb(t)}<b>${t.name}</b><small>${esc(t.cap)} · sticker</small></button>`).join('');
+  $('banner').innerHTML=S.clip==='split'?'<div class="banner"><span class="grow">Your clip has <b>2 parts</b>. Templates apply to the whole clip.</span></div>'
+    :S.clip==='landscape'?'<div class="banner"><span class="grow">This clip is still <b>16:9</b>. Any template makes it vertical.</span><button class="ghost" data-keep>Keep 16:9</button></div>':'';
+  document.querySelectorAll('#states button').forEach(b=>b.classList.toggle('on',b.dataset.s===S.clip||(b.dataset.s==='empty'&&S.empty)||(b.dataset.s==='edit'&&S.edited)));
+  const inp=document.querySelector('[data-rename]');if(inp){inp.focus();inp.select()}
+  save();
+}
+function toast(msg,undo){undoFn=undo;$('toast').querySelector('span').textContent=msg;$('undo').hidden=!undo;$('toast').classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>$('toast').classList.remove('show'),6000)}
+
+/* ===== Actions ===== */
+function apply(id){
+  const t=find(id);if(!t)return;
+  const prev={applied:S.applied,edited:S.edited,clip:S.clip,saved:S.saved.slice()};
+  S.applied=id;S.edited=false;
+  const where=S.clip==='split'?' to both parts':S.clip==='landscape'?', now 9:16':'';
+  if(S.clip==='landscape')S.clip='normal';
+  if(t.kind!=='preset'){S.saved=[t,...S.saved.filter(x=>x.id!==id)]}   // last used moves first
+  const what=t.kind==='preset'?`${t.layout}, ${t.cap} captions, sticker`:`${t.layout}, ${t.sum.replace(/ · /g,', ').toLowerCase()}`;
+  render();toast(`${t.name} applied${where}: ${what}`,()=>{Object.assign(S,prev);render()});
+}
+function uniqueName(name,skip){let n=name.trim(),k=2;const taken=x=>S.saved.some(s=>s.id!==skip&&s.name.toLowerCase()===x.toLowerCase());const base=n;while(taken(n))n=`${base} (${k++})`;return n}
+function commitRename(id,value,cancel){
+  const t=S.saved.find(s=>s.id===id);renaming=null;
+  if(t&&!cancel&&value.trim()){const old=t.name;t.name=uniqueName(value,id);if(t.name!==old)toast(`Renamed to ${t.name}`,()=>{t.name=old;render()})}
+  render();
+}
+function saveCurrent(){
+  const base=S.applied?find(S.applied):PRESETS[0];
+  const t={id:'s'+Date.now(),layout:base.layout,cap:base.cap,sum:'Captions · Sticker · Sounds'};
+  t.name=uniqueName(`${t.layout} · 29 Oct`);
+  S.empty=false;S.saved=[t,...S.saved];S.applied=t.id;S.edited=false;S.expanded=false;renaming=t.id;
+  render();$('saved').scrollLeft=0;
+}
+
+/* ===== Events ===== */
+$('panel').addEventListener('click',e=>{
+  const m=e.target.closest('[data-more]');
+  if(m){e.stopPropagation();menuFor=menuFor===m.dataset.more?null:m.dataset.more;render();return}
+  const a=e.target.closest('[data-act]');
+  if(a){const id=menuFor;menuFor=null;const i=S.saved.findIndex(s=>s.id===id),t=S.saved[i];
+    if(a.dataset.act==='rename'){renaming=id;render()}
+    if(a.dataset.act==='update'){S.applied=id;S.edited=false;render();toast(`${t.name} updated with this edit`,null)}
+    if(a.dataset.act==='delete'){S.saved.splice(i,1);const was=S.applied;if(was===id)S.applied=null;render();toast(`${t.name} deleted`,()=>{S.saved.splice(i,0,t);S.applied=was;render()})}
+    return}
+  if(e.target.closest('[data-rename]'))return;
+  if(e.target.closest('[data-save]')||e.target.id==='saveBtn'){saveCurrent();return}
+  if(e.target.id==='seeAll'){S.expanded=!S.expanded;render();return}
+  if(e.target.closest('[data-keep]')){toast('Keeping 16:9 for YouTube. Templates will make it vertical.',null);return}
+  const c=e.target.closest('[data-id]');
+  if(menuFor){menuFor=null;render();return}
+  if(c)apply(c.dataset.id);
+});
+$('panel').addEventListener('keydown',e=>{
+  const inp=e.target.closest('[data-rename]');
+  if(inp){if(e.key==='Enter')commitRename(inp.dataset.rename,inp.value);if(e.key==='Escape')commitRename(inp.dataset.rename,'',true);return}
+  const c=e.target.closest('.card[data-id]');if(c&&(e.key==='Enter'||e.key===' ')){e.preventDefault();apply(c.dataset.id)}
+  if(e.key==='Escape'&&menuFor){menuFor=null;render()}
+});
+$('panel').addEventListener('focusout',e=>{const inp=e.target.closest&&e.target.closest('[data-rename]');if(inp&&renaming)commitRename(inp.dataset.rename,inp.value)});
+$('undo').onclick=()=>{$('toast').classList.remove('show');undoFn&&undoFn()};
+$('states').addEventListener('click',e=>{
+  const s=e.target.dataset.s;if(!s)return;
+  if(s==='reset'){S=fresh();menuFor=renaming=null;$('toast').classList.remove('show')}
+  else if(s==='empty')S.empty=!S.empty;
+  else if(s==='edit'){if(!S.applied||!S.saved.some(x=>x.id===S.applied))S.applied=list()[0]?.id||null;S.edited=!!S.applied&&!S.edited}
+  else S.clip=s;
+  render();
+});
+render();
+</script>
+</body>
+</html>

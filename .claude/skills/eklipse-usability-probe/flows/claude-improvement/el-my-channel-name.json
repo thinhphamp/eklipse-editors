@@ -1,0 +1,66 @@
+{
+  "id": "el-my-channel-name",
+  "flow": "E5",
+  "menu": "Elements",
+  "persona": "one-and-done",
+  "target": "claude-improvement",
+  "weight": 0.2,
+  "mission": "Put your channel name, NovaPlays, on the clip so people know who made it. Export it.",
+  "start": {
+    "screen": "L00"
+  },
+  "checkpoints": [
+    {
+      "id": "name",
+      "check": "state.elements.some(x => ['Social Stickers','Text Elements'].includes(x.category) && (x.label || '').toLowerCase().includes('novaplays'))",
+      "describe": "NovaPlays is on the clip, as a channel sticker or as text"
+    },
+    {
+      "id": "export",
+      "check": "state.exported === true",
+      "describe": "The clip export has finished"
+    }
+  ],
+  "bestPath": [
+    {
+      "do": "click",
+      "selector": ".rail nav button:has-text(\"Channel stickers\")"
+    },
+    {
+      "do": "click",
+      "selector": "input.cs-field"
+    },
+    {
+      "do": "key",
+      "key": "ControlOrMeta+a"
+    },
+    {
+      "do": "type",
+      "selector": "input.cs-field",
+      "text": "NovaPlays"
+    },
+    {
+      "do": "click",
+      "selector": ".tb-primary"
+    },
+    {
+      "do": "click",
+      "selector": ".export-primary"
+    }
+  ],
+  "bestTimeSeconds": null,
+  "budget": {
+    "minutes": 12
+  },
+  "why": {
+    "data": "First-time users who export under 2 minutes return 79.0% of the time; the channel sticker is a Twitch-sticker default for quick users, and first clips need a fast name.",
+    "source": "plans/261027-usability-probe-skill/personas.md"
+  },
+  "input": {
+    "clip": null
+  },
+  "playerIds": [
+    "once-novice",
+    "once-rusher"
+  ]
+}

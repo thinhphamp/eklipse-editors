@@ -1,0 +1,607 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Channel stickers · B3 · add on hover</title>
+<style>
+/* ===== Tokens: copied from prototypes-src/claude-improvement/src/theme/tokens.css (Eklipse dark) ===== */
+:root{
+  --color-ek-purple:#735EF4;--color-ek-purple-light:#A496F8;--color-ek-yellow:#FFA036;
+  --color-ek-grey-light:#A3A3BF;--color-ek-grey:#434359;--color-ek-grey-dark:#2B2B38;--color-ek-grey-darker:#1B1B26;
+  --color-ek-grey-black:#11111A;--color-ek-success:#46F88D;--color-ek-danger:#EF3149;--color-ek-white:#FFFFFF;
+  --color-ek-text-secondary:#D0D0D0;--color-ek-border-secondary:#FFFFFF14;--color-ek-hover:#383849;--color-ek-black:#000000;
+  --font-ui:'Hanken Grotesk',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --bg-app:var(--color-ek-grey-black);--bg-panel:var(--color-ek-grey-darker);--bg-card:var(--color-ek-grey-dark);
+  --bg-hover:var(--color-ek-hover);--bg-inset:var(--color-ek-grey-black);
+  --border:var(--color-ek-grey);--border-subtle:var(--color-ek-border-secondary);
+  --text-1:var(--color-ek-white);--text-2:var(--color-ek-text-secondary);--text-3:var(--color-ek-grey-light);
+  --accent:var(--color-ek-purple);--accent-text:var(--color-ek-purple-light);
+  --accent-soft:color-mix(in srgb,var(--color-ek-purple) 22%,var(--color-ek-grey-dark));
+  --premium:var(--color-ek-yellow);--success:var(--color-ek-success);--danger:var(--color-ek-danger);
+  --plate:#151515; /* sticker art, draft only (would become an --art-* token) */
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg-app);color:var(--text-1);font:15px/1.5 var(--font-ui)}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer}
+button:focus-visible,input:focus-visible{outline:2px solid var(--accent-text);outline-offset:2px}
+button:disabled{opacity:.4;cursor:not-allowed}
+
+/* ===== Board chrome ===== */
+.board{max-width:1220px;margin:0 auto;padding:40px 24px 80px}
+.board-head{max-width:860px;margin-bottom:24px}
+.board-head small{color:var(--text-3);font-size:13px;letter-spacing:.04em;text-transform:uppercase}
+.board-head h1{font-size:30px;line-height:1.2;margin:8px 0 10px;letter-spacing:-.01em}
+.board-head p{color:var(--text-2);margin:0 0 6px}
+.board-head a{color:var(--accent-text)}
+.answers{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:18px 0 0}
+.answers div{background:var(--bg-panel);border:1px solid var(--border-subtle);border-radius:10px;padding:10px 12px;font-size:13px;color:var(--text-2)}
+.answers b{display:block;color:var(--text-1);font-size:13px}
+.scen{display:flex;flex-wrap:wrap;gap:6px;margin:24px 0 10px;align-items:center}
+.scen span{font-size:12px;color:var(--text-3);margin-right:4px}
+.scen button{font-size:12px;padding:4px 10px;border-radius:99px;border:1px solid var(--border);background:none;color:var(--text-2)}
+.scen button.on{background:var(--bg-card);color:var(--text-1);border-color:var(--accent)}
+
+/* ===== Editor mock: rail + side panel (520px) + preview stage ===== */
+.editor{display:flex;height:860px;border:1px solid var(--border);border-radius:12px;overflow:hidden;background:var(--bg-panel)}
+.rail{width:60px;flex:0 0 60px;border-right:1px solid var(--border);display:flex;flex-direction:column;align-items:center;gap:4px;padding:12px 0;background:var(--bg-app)}
+.rail i{display:flex;flex-direction:column;align-items:center;font-style:normal;font-size:9px;line-height:1.15;text-align:center;color:var(--text-3);gap:3px;padding:6px 2px;width:54px;border-radius:8px}
+.rail i::before{content:"";width:18px;height:18px;border-radius:5px;border:1.5px solid currentColor}
+.rail i.on{color:var(--text-1);background:var(--bg-card)}
+.rail i.on::before{border-color:var(--accent-text);background:var(--accent-soft)}
+.panel{position:relative;width:520px;flex:0 0 520px;display:flex;flex-direction:column;border-right:1px solid var(--border)}
+.scroll{flex:1;min-height:0;overflow:auto;padding:18px 16px 24px;scrollbar-width:thin}
+.ph{padding-bottom:14px;margin-bottom:14px;border-bottom:1px solid var(--border-subtle)}
+.ph h4{font-size:18px;line-height:1.2;margin:0 0 4px}
+.ph p{font-size:14px;margin:0;color:var(--text-3)}
+.sec{margin:18px 0 10px;display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.sec h5{font-size:15px;margin:0}
+.sec span{font-size:12px;color:var(--text-3)}
+.lbl{display:block;font-size:12px;font-weight:600;color:var(--text-2);margin:0 0 6px}
+.name-row{display:grid;grid-template-columns:auto 1fr;align-items:center;gap:12px}
+.name-row .lbl{margin:0;white-space:nowrap}
+.lbl small{font-weight:400;color:var(--text-3)}
+.hint{font-size:12px;color:var(--text-3);margin:6px 0 0}
+.hint.warn{color:var(--premium)}
+.field{width:100%;height:36px;border-radius:8px;border:1px solid var(--border);background:var(--bg-inset);padding:0 10px;font-size:14px}
+.field:focus{border-color:var(--accent);outline:none}
+.field.need{border-color:var(--premium)}
+.btn{height:34px;padding:0 14px;border-radius:8px;border:1px solid var(--border);background:none;font-size:13px;color:var(--text-1)}
+.btn.pri{background:var(--accent);border-color:var(--accent);color:var(--color-ek-white)}
+.btn.ghost{border-color:transparent;color:var(--text-3)}
+.check{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-2);margin-top:10px}
+.check input{accent-color:var(--accent);width:16px;height:16px}
+
+/* "On this clip" list */
+.onclip{display:flex;flex-direction:column;gap:6px}
+.srow{display:grid;grid-template-columns:150px 1fr auto;align-items:center;gap:12px;padding:8px 10px;border-radius:10px;border:1.5px solid var(--border-subtle);background:var(--bg-card);text-align:left;width:100%}
+.srow:hover{background:var(--bg-hover)}
+.srow.sel{border-color:var(--accent);background:var(--accent-soft)}
+.srow .mini{height:40px;border-radius:6px;background:var(--bg-inset);display:grid;place-items:center;overflow:hidden}
+.srow .mini .stk{font-size:7px}
+.srow b{display:block;font-size:13px}
+.srow small{font-size:12px;color:var(--text-3)}
+.srow{cursor:pointer}
+.srow small{display:block}
+.srow .x{width:28px;height:28px;border-radius:7px;border:0;background:none;color:var(--text-3);font-size:13px}
+.srow .x:hover,.srow .x:focus-visible{background:var(--bg-hover);color:var(--text-1)}
+.platrow{display:flex;flex-wrap:wrap;gap:6px}
+.platrow .pchip{min-width:0;width:38px;height:38px;padding:0;justify-content:center}
+.platrow .pchip .pg{width:26px;height:26px;font-size:12px}
+.addrow{height:44px;border-radius:10px;border:1.5px dashed var(--border);background:none;color:var(--text-2);font-size:13px;font-weight:600}
+.addrow.on{border-color:var(--accent);color:var(--text-1);background:var(--accent-soft)}
+.emptyclip{border:1px dashed var(--border);border-radius:10px;padding:14px;color:var(--text-3);font-size:13px}
+
+/* gallery */
+.pills{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.pill{height:30px;padding:0 12px;border-radius:99px;border:1px solid var(--border);background:none;font-size:12px;color:var(--text-2)}
+.pill.on{background:var(--color-ek-white);color:var(--color-ek-black);border-color:var(--color-ek-white)}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.tile{position:relative;height:80px;border-radius:10px;border:1.5px solid var(--border-subtle);background:var(--bg-card);display:grid;place-items:center;overflow:hidden;padding:4px}
+.tile:hover{background:var(--bg-hover)}
+.tile.sel{border-color:var(--accent);background:var(--accent-soft)}
+.tile .stk{font-size:8.5px}
+.tile .tg{position:absolute;top:5px;left:6px;font-size:10px;font-weight:600;color:var(--text-3)}
+.tile .pro{position:absolute;top:5px;right:6px;font-size:9px;font-weight:800;padding:1px 6px;border-radius:4px;background:var(--premium);color:var(--color-ek-black)}
+.tile .nm-t{position:absolute;bottom:4px;left:0;right:0;text-align:center;font-size:10px;color:var(--text-3);opacity:0;transition:opacity .12s}
+.tile:hover .nm-t,.tile:focus-visible .nm-t{opacity:1}
+
+/* edit sheet (bottom of panel) */
+#sheet{display:none}
+/* style editing expands under the selected sticker card */
+.sgroup.open{border:1.5px solid var(--accent);border-radius:10px;background:var(--accent-soft);overflow:hidden}
+.sgroup.open .srow{border:0;border-radius:0;background:none}
+.sgroup.open .sheet{padding:4px 12px 12px;background:none;border-top:1px solid var(--border-subtle)}
+.sheet{padding:14px 16px 16px;background:var(--bg-card);}
+.sheet-head{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.sheet-head .prev{flex:1;height:58px;border-radius:8px;background:var(--bg-inset);display:grid;place-items:center;overflow:hidden}
+.sheet-head .prev .stk{font-size:10px}
+.sheet-head .meta{min-width:120px}
+.sheet-head .meta b{display:block;font-size:14px}
+.sheet-head .meta small{font-size:12px;color:var(--text-3)}
+.note{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--premium);margin:-4px 0 10px}
+.note .btn{height:26px;padding:0 8px;font-size:12px}
+.chan{display:grid;grid-template-columns:auto 1fr;gap:8px;align-items:center}
+.pchip{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 10px 0 6px;border-radius:8px;border:1.5px solid var(--border);background:none;font-size:13px;color:var(--text-2);min-width:118px}
+.pchip .pg,.pg{width:22px;height:22px;border-radius:5px;display:grid;place-items:center;font-size:11px;font-weight:800;background:var(--pc);color:var(--po);flex:0 0 auto}
+.pchip[aria-pressed=true]{border-color:var(--accent);background:var(--accent-soft);color:var(--text-1)}
+.pchip .box{width:14px;height:14px;border-radius:4px;border:1.5px solid var(--text-3);margin-left:auto;display:grid;place-items:center;font-size:10px}
+.pchip[aria-pressed=true] .box{background:var(--accent);border-color:var(--accent);color:var(--color-ek-white)}
+.addch{display:flex;gap:6px;flex-wrap:wrap;margin-top:2px}
+.addch button{height:30px;border-radius:8px;border:1px dashed var(--border);background:none;font-size:12px;color:var(--text-2);padding:0 10px;display:inline-flex;align-items:center;gap:6px}
+.addch .pg{width:18px;height:18px;font-size:9px}
+.swatches{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.sw{width:30px;height:30px;border-radius:7px;border:2px solid transparent;background:var(--sc);padding:0}
+.sw.orig{width:auto;padding:0 10px;font-size:12px;background:var(--bg-hover);color:var(--text-2)}
+.sw[aria-pressed=true]{border-color:var(--color-ek-white)}
+.sw.custom{position:relative;overflow:hidden;background:conic-gradient(#F44,#FD4,#4F8,#4CF,#84F,#F4C,#F44)}
+.sw.custom input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.seg{display:inline-flex;background:var(--bg-inset);border-radius:8px;padding:3px;gap:2px}
+.seg button{border:0;background:none;padding:5px 12px;border-radius:6px;font-size:12px;color:var(--text-3)}
+.seg button.on{background:var(--bg-hover);color:var(--text-1)}
+.custom-time{display:grid;grid-template-columns:auto auto 1fr;gap:8px 12px;align-items:end;margin-top:10px}
+.custom-time label{display:flex;flex-direction:column;gap:4px;font-size:12px;font-weight:600;color:var(--text-2)}
+.custom-time .tin{position:relative;display:block;width:76px}
+.custom-time .tin .field{padding-right:22px;font-variant-numeric:tabular-nums}
+.custom-time .tin em{position:absolute;right:9px;top:50%;transform:translateY(-50%);font-style:normal;font-size:12px;color:var(--text-3)}
+.custom-time .btn{justify-self:start}
+.custom-time .tbar,.custom-time .hint{grid-column:1/-1}
+.custom-time .hint{margin:0}
+.tbar{position:relative;height:8px;border-radius:4px;background:var(--bg-inset)}
+.tbar span{position:absolute;top:0;bottom:0;border-radius:4px;background:var(--accent)}
+.tbar i{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--color-ek-white);border-radius:1px}
+.row2{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:end}
+.gap{height:12px}
+.addhint{padding:14px 16px;background:var(--bg-card);font-size:13px;color:var(--text-2)}
+
+/* preview stage */
+.stage{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:20px;background:var(--bg-app)}
+.phone{position:relative;width:300px;aspect-ratio:9/16;border-radius:14px;overflow:hidden;background:color-mix(in srgb,var(--color-ek-success) 10%,var(--color-ek-grey));border:6px solid var(--color-ek-black)}
+.phone::before{content:"Facecam";position:absolute;inset:0 0 58% 0;background:color-mix(in srgb,var(--color-ek-purple) 45%,var(--color-ek-grey-dark));display:grid;place-items:center;font-size:12px;color:var(--text-3)}
+.phone .game{position:absolute;left:0;right:0;bottom:10px;text-align:center;font-size:12px;color:var(--text-3)}
+.phone .cap{position:absolute;left:0;right:0;top:75%;text-align:center;font-weight:800;font-size:18px;text-transform:uppercase;text-shadow:0 2px 0 var(--color-ek-black)}
+.phone.wide{width:520px;aspect-ratio:16/9}
+.phone.wide::before{inset:0 72% 64% 0}
+.phone.wide .cap{top:70%;font-size:16px}
+.ps{position:absolute;left:50%;transform:translate(-50%,-50%);font-size:9px;border:0;background:none;padding:3px;border-radius:6px;transition:top .2s}
+.ps.sel{outline:1.5px dashed var(--accent-text);outline-offset:2px}
+.phone.wide .ps{left:4%;transform:translateY(-50%);font-size:8px}
+.scrub{width:300px;display:flex;align-items:center;gap:10px;font-size:12px;color:var(--text-3);font-variant-numeric:tabular-nums}
+.scrub input{flex:1;accent-color:var(--accent)}
+.stage .cap-note{font-size:12px;color:var(--text-3);max-width:320px;text-align:center}
+
+/* ===== B3: hover-to-add ===== */
+.tile{cursor:default}
+.tile .hov{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;background:color-mix(in srgb,var(--bg-app) 70%,transparent);opacity:0;transition:opacity .12s}
+.tile:hover .hov,.tile:focus-within .hov,.tile:focus .hov{opacity:1}
+.hov button{height:22px;padding:0 10px;border-radius:6px;border:0;font-size:11px;font-weight:600;letter-spacing:.01em;background:var(--accent);color:var(--color-ek-white)}
+.hov button.alt{background:var(--bg-hover);color:var(--text-1);font-weight:600}
+.ps{cursor:grab;touch-action:none}
+.ps .px{position:absolute;top:-9px;right:-9px;width:20px;height:20px;border-radius:50%;border:0;background:var(--bg-app);color:var(--color-ek-white);font-size:10px;line-height:20px;padding:0;display:none;box-shadow:0 0 0 1.5px var(--border)}
+.ps:hover .px,.ps.sel .px,.ps:focus-within .px{display:block}
+.ps .px:hover{background:var(--danger)}
+.ps.moving{cursor:grabbing;transition:none}
+.ps.ghost{opacity:.7;outline:1.5px dashed var(--color-ek-white);outline-offset:3px;pointer-events:none}
+.ps.ghost::after{content:attr(data-label);position:absolute;left:50%;bottom:100%;transform:translate(-50%,-7px);font:600 11px/1.4 var(--font-ui);white-space:nowrap;background:var(--bg-app);color:var(--text-1);padding:2px 7px;border-radius:5px}
+.phone.wide .ps.ghost::after{left:0;transform:translate(0,-7px)}
+.stage-note{position:absolute;left:50%;bottom:12%;transform:translateX(-50%);z-index:5;font-size:12px;font-weight:600;background:var(--bg-app);color:var(--premium);padding:4px 10px;border-radius:6px;white-space:nowrap}
+
+/* notes below */
+.notes{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:32px;padding-top:28px;border-top:1px solid var(--border-subtle)}
+.notes h3{font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--text-3);margin:0 0 8px}
+.notes ul{margin:0;padding-left:18px;color:var(--text-2);font-size:14px}
+.notes li{margin:4px 0}
+.notes li b{color:var(--text-1)}
+
+/* ===== Stickers: every look takes --c (tint) and --on (text on tint) ===== */
+.stk{--c:var(--accent);--on:#fff;display:inline-flex;align-items:center;font-weight:800;color:#fff;white-space:nowrap;line-height:1}
+.stk .ic{display:grid;place-items:center;flex:0 0 auto;font-weight:900;color:var(--on)}
+.stk .nm{display:flex;align-items:center;max-width:13em;overflow:hidden;text-overflow:ellipsis}
+.stk.long .nm{font-size:.8em}
+.stk .pair{display:inline-flex;align-items:center;gap:.35em}
+.stk .sep{opacity:.4;margin:0 .2em}
+/* Eklipse family, slimmed to StreamLadder proportions: ~2em tall, .1em borders, 1.2-1.5em icons */
+.stk{letter-spacing:-.02em}
+.s-block .ic{width:2em;height:2em;background:var(--c);border-radius:.3em 0 0 .3em;font-size:1em}
+.s-block .nm{height:2em;padding:0 .75em;background:var(--plate);border:.1em solid var(--c);border-left:0;border-radius:0 .3em .3em 0}
+.s-round .ic{position:relative;z-index:1;width:2.2em;height:2.2em;border-radius:50%;background:var(--c);margin-right:-1em}
+.s-round .nm{height:1.9em;padding:0 .85em 0 1.35em;background:var(--plate);border:.1em solid var(--c);border-radius:0 1em 1em 0}
+.s-fade{height:2em;background:linear-gradient(90deg,var(--c) 0 26%,var(--plate) 66%);border-radius:1em 0 0 1em;padding:0 .85em 0 .3em;gap:1em}
+.s-fade .ic{width:1.5em;height:1.5em}
+.s-cap .ic{position:relative;z-index:1;width:2.3em;height:2.3em;border-radius:50%;background:var(--c)}
+.s-cap .nm{height:1.9em;padding:0 .9em 0 1.4em;margin-left:-1.1em;background:var(--plate);border-radius:0 1em 1em 0;box-shadow:0 .12em .22em rgb(0 0 0/.35)}
+.s-solid{height:1.9em;padding:0 .8em;gap:.45em;background:var(--c);color:var(--on);border-radius:.25em;box-shadow:0 .12em .22em rgb(0 0 0/.35)}
+.s-under{flex-direction:column;align-items:flex-start;padding:.42em .85em .38em;background:var(--plate);border-radius:1em;gap:.22em}
+.s-under .row{display:flex;align-items:center;gap:.4em}
+.s-under .ul{height:.14em;width:100%;background:var(--c);border-radius:.2em}
+.s-under .ic{width:1.3em;height:1.3em;border-radius:.25em;background:var(--c);font-size:.8em}
+.s-row{height:2em;padding:0 .8em 0 .35em;gap:.45em;background:var(--plate);border-radius:1em;border:.1em solid var(--c)}
+.s-row .ic,.s-stack .ic,.s-glow .ic{width:1.35em;height:1.35em;border-radius:50%;background:var(--pc);color:var(--po);font-size:.8em}
+.s-row .icons,.s-stack .icons{display:flex;gap:.2em}
+.s-stack{flex-direction:column;gap:.25em}
+.s-stack .ic{border-radius:.3em}
+.s-stack .nm{height:1.8em;padding:0 .8em;background:var(--c);color:var(--on);border-radius:.3em}
+/* StreamLadder family, now tinted */
+.s-neon{height:2.5em;padding:0 1.1em;background:#000;border-radius:.3em;text-transform:uppercase;letter-spacing:.06em;color:color-mix(in srgb,var(--c) 20%,#fff);text-shadow:-.08em 0 var(--c),.08em 0 color-mix(in srgb,var(--c) 35%,#2EC5FF),0 0 .55em var(--c)}
+.s-sparkle{height:2.5em;padding:0 1.2em;gap:.5em;background:linear-gradient(90deg,color-mix(in srgb,var(--c) 55%,#fff),var(--c));border-radius:1.3em;color:var(--on)}
+.s-sparkle::before,.s-sparkle::after{content:"✦";font-size:.8em;color:#FFF3B0}
+.s-soft{height:2.5em;padding:0 .9em 0 .4em;gap:.6em;background:color-mix(in srgb,var(--c) 16%,#fff);color:color-mix(in srgb,var(--c) 85%,#000);border-radius:.4em}
+.s-soft .ic{width:1.8em;height:1.8em;border-radius:.35em;background:color-mix(in srgb,var(--c) 85%,#000);color:#fff}
+.s-glow{height:2.6em;padding:0 1em;gap:.45em;background:var(--c);color:var(--on);border-radius:.6em;box-shadow:0 0 .8em color-mix(in srgb,var(--c) 60%,#fff)}
+.s-glow .ic{background:color-mix(in srgb,var(--c) 70%,#000);color:#fff}
+.s-live{height:2.5em;background:var(--plate);border-radius:.3em;overflow:hidden}
+.s-live .ic{width:2.5em;height:2.5em;background:var(--c)}
+.s-live .nm{padding:0 .8em}
+.s-live .lv{margin-right:.6em;padding:.25em .45em;border-radius:.25em;background:#E5243B;font-size:.7em;letter-spacing:.06em}
+.s-follow{flex-direction:column;align-items:center;gap:.25em;padding:.55em 1.2em .45em;background:var(--plate);border-radius:1.4em}
+.s-follow small{font-size:.62em;letter-spacing:.14em;color:var(--c)}
+.s-follow .ul{height:.2em;width:70%;background:var(--c);border-radius:.2em}
+/* animated, PRO */
+.s-slide{height:2.2em;gap:.4em}
+.s-slide .ic{width:2.2em;height:2.2em;border-radius:.4em;background:var(--c);animation:slideIc 2.4s ease-in-out infinite}
+.s-slide .nm{height:2.2em;padding:0 1em;background:var(--plate);border-bottom:.2em solid var(--c);animation:slideNm 2.4s ease-in-out infinite}
+@keyframes slideIc{0%,15%{transform:translateX(-1.2em);opacity:0}35%,100%{transform:none;opacity:1}}
+@keyframes slideNm{0%,30%{clip-path:inset(0 100% 0 0)}55%,100%{clip-path:inset(0 0 0 0)}}
+.s-bell{height:2.6em;padding:0 1.1em 0 .5em;gap:.6em;background:linear-gradient(90deg,color-mix(in srgb,var(--c) 45%,#fff),color-mix(in srgb,var(--c) 30%,#9FF2D3));color:color-mix(in srgb,var(--c) 30%,#120C2E);border-radius:1.3em;animation:bellPop 2.6s ease-in-out infinite}
+.s-bell .ic{width:1.8em;height:1.8em;border-radius:50%;background:color-mix(in srgb,var(--c) 30%,#120C2E);color:#fff;font-size:.8em}
+@keyframes bellPop{0%,60%,100%{transform:scale(1)}70%{transform:scale(1.08)}80%{transform:scale(.97)}}
+.s-pulse{height:2.6em;padding:0 1em 0 .5em;gap:.6em;background:var(--plate);border-radius:.7em;border:.18em solid var(--c);animation:edge 1.8s ease-in-out infinite}
+.s-pulse .ic{width:1.8em;height:1.8em;border-radius:.4em;background:var(--c)}
+@keyframes edge{50%{box-shadow:0 0 .9em var(--c)}}
+/* animated multi */
+.s-bounce{flex-direction:column;gap:.3em}
+.s-bounce .icons,.s-drop .icons{display:flex;gap:.22em}
+.s-bounce .ic{width:1.45em;height:1.45em;border-radius:50%;background:var(--pc);color:var(--po);font-size:.8em;animation:bnc 1.6s ease-in-out infinite}
+.s-bounce .nm{height:1.9em;padding:0 .9em;background:var(--plate);border-radius:.35em;border-bottom:.14em solid var(--c)}
+.s-drop{height:2em;padding:0 .8em 0 .35em;gap:.45em;background:var(--c);color:var(--on);border-radius:.35em;box-shadow:.22em .22em 0 color-mix(in srgb,var(--c) 45%,#000)}
+.s-drop .ic{width:1.35em;height:1.35em;border-radius:.3em;background:var(--plate);color:#fff;font-size:.8em;animation:drp 2.4s ease-out infinite}
+.s-bounce .ic:nth-child(2),.s-drop .ic:nth-child(2){animation-delay:.15s}
+.s-bounce .ic:nth-child(3),.s-drop .ic:nth-child(3){animation-delay:.3s}
+.s-bounce .ic:nth-child(4),.s-drop .ic:nth-child(4){animation-delay:.45s}
+@keyframes bnc{0%,60%,100%{transform:none}30%{transform:translateY(-.45em)}}
+@keyframes drp{0%,10%{transform:translateY(-1.2em);opacity:0}30%,100%{transform:none;opacity:1}}
+.look-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}
+.look-bar .pills{margin:0}
+.mtog{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--text-2);cursor:pointer;user-select:none}
+.mtog input{position:absolute;opacity:0;pointer-events:none}
+.mtog .trk{position:relative;width:34px;height:20px;border-radius:99px;background:var(--color-ek-grey);transition:background .15s}
+.mtog .trk::after{content:"";position:absolute;top:3px;left:3px;width:14px;height:14px;border-radius:50%;background:var(--color-ek-white);transition:left .15s}
+.mtog input:checked+.trk{background:var(--accent)}
+.mtog input:checked+.trk::after{left:17px}
+.mtog input:focus-visible+.trk{outline:2px solid var(--accent-text);outline-offset:2px}
+.group-h{display:flex;justify-content:space-between;align-items:baseline;margin:14px 0 8px;font-size:12px;font-weight:700;color:var(--text-2);text-transform:uppercase;letter-spacing:.05em}
+.group-h:first-of-type{margin-top:4px}
+.group-h small{font-weight:400;text-transform:none;letter-spacing:0;color:var(--text-3)}
+@media (prefers-reduced-motion:reduce){.stk,.stk *{animation:none!important}}
+</style>
+</head>
+<body>
+<main class="board">
+  <header class="board-head">
+    <small>Design draft · 30 Oct 2026 · round 3 · variant B3 · <a href="B2.html">compare with B2</a> · <a href="../ideas.html">ideas board</a></small>
+    <h1>B3 · Hover a look to add; the video is for move and remove</h1>
+    <p>Same panel as B2, but no "+ Add sticker" mode. You add from wherever your mouse already is:</p>
+    <div class="answers">
+      <div><b>1 · Hover a look</b>A slim "+ Add" appears on the tile and a live preview shows on the video. Click to add.</div>
+      <div><b>2 · Add only from the panel</b>The video has no add button; it is for checking, moving and removing.</div>
+      <div><b>3 · Remove on the video</b>Hover or select a sticker: ✕ in its corner, or press Delete.</div>
+      <div><b>4 · Move it</b>Drag any sticker on the video. Eklipse designs are cut slim, like StreamLadder's.</div>
+    </div>
+  </header>
+
+  <div class="scen" id="scen"><span>State</span>
+    <button data-s="default" class="on">2 stickers</button>
+    <button data-s="first">First time (no name)</button>
+    <button data-s="multi">2 names = 2 stickers</button>
+    <button data-s="full">3 stickers (max)</button>
+    <button data-s="none">All removed</button>
+    <button data-s="wide">16:9 clip</button>
+  </div>
+
+  <section class="editor" data-od-id="b3-editor">
+    <nav class="rail" aria-hidden="true"><i>Templates</i><i class="on">Channel stickers</i><i>Captions</i><i>Elements</i><i>Effects</i><i>Audio</i></nav>
+    <div class="panel"><div class="scroll" id="scroll"></div><div id="sheet"></div></div>
+    <div class="stage" id="stage"></div>
+  </section>
+
+  <section class="notes" data-od-id="b3-notes">
+    <div>
+      <h3>What changed from B2</h3>
+      <ul>
+        <li><b>No add mode.</b> The grid always adds; B2's "+ Add sticker" then pick is gone.</li>
+        <li><b>Hover a look:</b> only "+ Add", plus a live preview on the video. To change a sticker's look: remove it and add the new one.</li>
+        <li><b>On the video:</b> click to select, drag to move, ✕ or Delete to remove. No adding on the video.</li>
+        <li><b>Remove</b> from the sticker card ✕, the video ✕, Delete, or "Remove" in the sheet.</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Kept from B2</h3>
+      <ul>
+        <li><b>One name per sticker.</b> Multi looks show several platform icons with that one name. A different name on another platform = another sticker.</li>
+        <li>Up to 3 stickers; When = whole clip, first 5 s, last 5 s.</li>
+        <li>Tint every look; "Use these stickers on every new clip"; last platform remembered.</li>
+        <li>New stickers keep the colour shown in the grid.</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Edge cases in the mock</h3>
+      <ul>
+        <li><b>3 stickers:</b> "+ Add" on tiles disabled with a reason.</li>
+        <li><b>First time:</b> adding asks for the name in the sheet.</li>
+        <li><b>Typing a name:</b> Delete/Backspace edits the text, it does not remove the sticker.</li>
+        <li><b>Touch / keyboard:</b> tiles are focusable; "+ Add" shows on focus, so no hover is needed.</li>
+        <li><b>16:9 clip:</b> same, stickers stay left-aligned.</li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<script>
+/* ===================== Data ===================== */
+const P = {
+  twitch:{l:'Twitch',g:'T',c:'#9146FF'}, youtube:{l:'YouTube',g:'▶',c:'#FF0033'},
+  kick:{l:'Kick',g:'K',c:'#53FC18'}, facebook:{l:'Facebook',g:'f',c:'#1877F2'},
+  tiktok:{l:'TikTok',g:'♪',c:'#111111'}, instagram:{l:'Instagram',g:'◎',c:'#E1306C'}, x:{l:'X',g:'X',c:'#0A0A0A'}
+};
+const ORDER = ['twitch','youtube','kick','facebook','tiktok','instagram','x'];
+const SW = [['Purple','#8F47F5'],['Yellow','#F7C744'],['Mint','#7FF29C'],['Red','#E2434F'],['Blue','#2F6DF2'],['Green','#61DE45'],['Black','#050505']];
+// One library. kind: single | multi | name (no icon). orig: the look's own colour (null = platform colour).
+const LOOKS = [
+  {id:'block',n:'Block',kind:'single'},{id:'round',n:'Round',kind:'single'},{id:'fade',n:'Fade',kind:'single'},
+  {id:'cap',n:'Circle cap',kind:'single'},{id:'live',n:'Live badge',kind:'single'},{id:'follow',n:'Follow me',kind:'single'},
+  {id:'soft',n:'Soft plate',kind:'single',orig:'#6A3FD8'},{id:'solid',n:'Solid',kind:'single'},{id:'under',n:'Underline',kind:'single'},
+  {id:'neon',n:'Neon',kind:'name',orig:'#FF2E63'},{id:'sparkle',n:'Sparkle',kind:'name',orig:'#B05CF6'},
+  {id:'row',n:'Icons row',kind:'multi'},{id:'stack',n:'Icons on top',kind:'multi'},{id:'glow',n:'Glow',kind:'multi',orig:'#0E8C8C'},
+  {id:'slide',n:'Slide in',kind:'single',anim:1},{id:'pulse',n:'Edge pulse',kind:'single',anim:1},{id:'bell',n:'Subscribe bell',kind:'name',anim:1,orig:'#9B87F5'},
+  {id:'bounce',n:'Bouncing icons',kind:'multi',anim:1},{id:'drop',n:'Icons drop in',kind:'multi',anim:1}
+];
+const look = id => LOOKS.find(l=>l.id===id);
+const MAX = 3, CLIP = 30;
+const TIMING = {whole:[0,CLIP,'Whole clip'], start:[0,5,'First 5 s'], end:[CLIP-5,CLIP,'Last 5 s'], custom:[0,CLIP,'Custom']};
+// Custom keeps its own from/to (seconds); the presets are fixed
+const span = x => x.timing==='custom' ? [x.from, x.to, 'Custom'] : TIMING[x.timing];
+const validSpan = x => x.timing!=='custom' || (Number.isFinite(x.from) && Number.isFinite(x.to) && x.from>=0 && x.to<=CLIP && x.to-x.from>=1);
+const esc = s => String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const lum = hex => { const n=parseInt(hex.slice(1),16), r=n>>16&255, g=n>>8&255, b=n&255; return (0.299*r+0.587*g+0.114*b)/255; };
+
+/* ===================== State ===================== */
+let S, uid = 1;
+const sticker = (lk, plats, color='original', timing='whole', name='quan1102') => ({id:'s'+(uid++), look:lk, plats, color, timing, name});
+const SCEN = {
+  default: () => ({list:[sticker('block',['twitch']), sticker('bell',['youtube'],'Red','end','@quanplays')]}),
+  first:   () => ({list:[], lastName:''}),
+  multi:   () => ({list:[sticker('row',['twitch','youtube']), sticker('cap',['tiktok'],'original','end','quan.clips')]}),
+  full:    () => ({list:[sticker('block',['twitch']), sticker('follow',['tiktok'],'original','start','quan.clips'), sticker('bell',['youtube'],'Red','end','@quanplays')]}),
+  none:    () => ({list:[]}),
+  wide:    () => ({list:[sticker('block',['twitch']), sticker('bell',['youtube'],'Red','end','@quanplays')], wide:true})
+};
+function reset(name){
+  const s = SCEN[name]();
+  S = {lastName:'quan1102', ...s, scen:name, ghost:null, pop:null, flash:'', hoverY:60, lastLook:'block', sel:s.list[0]?.id || null, tab:'Animated', multi:false, time: name==='full'?3:27, keep:true, last:'twitch', note:'', undo:null, needName:''};
+  render();
+}
+const cur = () => S.list.find(x=>x.id===S.sel);
+
+/* ===================== Sticker renderer ===================== */
+function draw(lookId, plats, color, name){
+  const L = look(lookId), p0 = plats[0];
+  const sw = SW.find(s=>s[0]===color);
+  const c = color==='original' ? (L.orig || (p0 ? P[p0].c : '#8F47F5')) : sw ? sw[1] : color; // custom = hex
+  const on = lum(c) > .62 ? '#0B0B0B' : '#FFFFFF';
+  name = name || 'your name'; const long = name.length > 14 ? ' long' : '';
+  const one = p0 ? `<i class="ic">${P[p0].g}</i>` : '';
+  const nm = `<b class="nm">${esc(name)}</b>`;
+  const pi = p => `style="--pc:${color==='original'?P[p].c:c};--po:${color==='original'?(lum(P[p].c)>.62?'#0B0B0B':'#fff'):on}"`;
+  const icons = `<span class="icons">${plats.slice(0,4).map(p=>`<i class="ic" ${pi(p)}>${P[p].g}</i>`).join('')}</span>`;
+  const multiBody = icons + nm;
+  const body = {
+    block:one+nm, round:one+nm, fade:one+nm, cap:one+nm, slide:one+nm, pulse:one+nm, solid:one+nm,
+    under:`<span class="row">${one}${nm}</span><span class="ul"></span>`,
+    soft:one+nm, live:one+nm+'<span class="lv">LIVE</span>',
+    follow:`<span style="display:flex;align-items:center;gap:.5em">${p0?`<i class="ic" style="color:var(--c)">${P[p0].g}</i>`:''}${nm}</span><small>FOLLOW ME</small><span class="ul"></span>`,
+    neon:nm, sparkle:nm, bounce:icons+nm, drop:icons+nm, bell:`<i class="ic">◔</i>${nm}`,
+    row:multiBody, stack:multiBody, glow:multiBody
+  }[lookId];
+  return `<span class="stk s-${lookId}${long}" style="--c:${c};--on:${on}">${body}</span>`;
+}
+// platforms a look draws for a sticker that wants `plats`
+function platsFor(L, plats){
+  if (L.kind==='multi') return plats.length>1 ? plats : [plats[0]||S.last, (plats[0]||S.last)==='youtube'?'twitch':'youtube'];
+  return plats.length ? [plats[0]] : [S.last];
+}
+
+/* ===================== Panel ===================== */
+function renderScroll(){
+  const st = cur(), full = S.list.length >= MAX;
+  const basePlats = st ? st.plats : [S.last], col = st ? st.color : 'original';
+  // Animated / Static are the tabs; multi-platform is a toggle on top of either
+  const list = LOOKS.filter(l=> (S.tab==='Animated') === !!l.anim && (S.multi ? l.kind==='multi' : l.kind!=='multi'));
+  const rows = S.list.map((x,i)=>{
+    const [a,b,label] = span(x);
+    return `<div class="sgroup${x.id===S.sel?' open':''}"><div class="srow${x.id===S.sel?' sel':''}" role="button" tabindex="0" data-act="select" data-v="${x.id}"><span class="mini">${draw(x.look,x.plats,x.color,x.name)}</span><span><b>${esc(x.name||'No name yet')}</b><small>${validSpan(x)?`${label} · ${fmt(a)}–${fmt(b)}`:"Custom · set a time range"}</small></span><button class="x" data-act="remove-item" data-v="${x.id}" title="Remove sticker ${i+1}" aria-label="Remove sticker ${i+1}">✕</button></div>${x.id===S.sel?sheetHTML():''}</div>`;
+  }).join('');
+  return `<div class="ph"><h4>Channel stickers</h4><p>Let viewers know where to find you. Hover a look and click + Add.</p></div>
+  <div class="sec" style="margin-top:0"><h5>On this clip</h5><span>${S.list.length} of ${MAX}</span></div>
+  <div class="onclip">${rows || '<div class="emptyclip">No channel sticker yet. Hover a look below and click <b>+ Add</b>.</div>'}</div>
+  ${full ? '<p class="hint warn">Up to 3 stickers per clip.</p>' : ''}
+  <label class="check"><input type="checkbox" data-act="keep" ${S.keep?'checked':''}> Use these stickers on every new clip</label>
+  <div class="sec" id="looks"><h5>Looks</h5><span>${LOOKS.length} looks · all recolour</span></div>
+  <div class="look-bar"><div class="pills">${['Animated','Static'].map(f=>`<button class="pill${S.tab===f?' on':''}" data-act="tab" data-v="${f}">${f}</button>`).join('')}</div>
+    <label class="mtog"><input type="checkbox" data-act="multi" ${S.multi?'checked':''}><span class="trk"></span>Multi-platform</label></div>
+  ${list.length ? `<div class="tiles">${list.map(L=>{
+    const pl = platsFor(L, basePlats);
+    return `<div class="tile${st&&st.look===L.id?' sel':''}" tabindex="0" data-v="${L.id}" title="${L.n}">${L.anim?'<span class="pro">PRO</span>':''}${draw(L.id, pl, col, st ? st.name : S.lastName)}
+      <span class="hov"><button data-act="look-add" data-v="${L.id}" ${full?'disabled title="3 stickers max"':''}>+ Add</button></span></div>`;
+  }).join('')}</div>` : '<div class="emptyclip">No looks here yet.</div>'}`;
+}
+
+// The bottom area is gone: style editing expands under the selected sticker card (sheetHTML).
+function renderSheet(){ return ''; }
+function sheetHTML(){
+  const st = cur();
+  if (!st) return '';
+  const L = look(st.look), i = S.list.indexOf(st);
+  const custom = st.color.startsWith('#');
+  return `<div class="sheet">
+    ${S.note?`<div class="note">${S.note}<button class="btn" data-act="undo">Undo</button></div>`:''}
+    <div class="name-row"><label class="lbl" for="cs-name">Channel name</label>
+    <input id="cs-name" class="field${!st.name?' need':''}" data-act="name" data-key="name" maxlength="24" value="${esc(st.name)}" placeholder="Your channel name"></div>
+    <div class="gap"></div>
+    <label class="lbl">Platform icons <small>· ${L.kind==='multi'?'pick 2 to 4, same name':'pick 1'}</small></label>
+    <div class="platrow">${ORDER.map(p=>`<button class="pchip" data-act="plat" data-v="${p}" aria-pressed="${st.plats.includes(p)}" title="${P[p].l}" aria-label="${P[p].l}" style="--pc:${P[p].c};--po:${lum(P[p].c)>.62?'#0B0B0B':'#fff'}"><span class="pg">${P[p].g}</span></button>`).join('')}</div>
+    <div class="gap"></div>
+    <label class="lbl">Colour</label>
+    <div class="swatches"><button class="sw orig" data-act="color" data-v="original" aria-pressed="${st.color==='original'}">Original</button>${SW.map(s=>`<button class="sw" data-act="color" data-v="${s[0]}" aria-pressed="${st.color===s[0]}" title="${s[0]}" style="--sc:${s[1]}"></button>`).join('')}<label class="sw custom" title="Custom colour" aria-pressed="${custom}" style="${custom?'border-color:#fff':''}"><input type="color" data-act="custom" value="${custom?st.color:'#8F47F5'}"></label></div>
+    <div class="gap"></div>
+    <label class="lbl">When</label>
+    <div class="seg">${Object.entries(TIMING).map(([k,v])=>`<button class="${st.timing===k?'on':''}" data-act="timing" data-v="${k}">${v[2]}</button>`).join('')}</div>
+    ${st.timing==='custom'?`<div class="custom-time">
+      <label>From<span class="tin"><input class="field" data-act="from" data-key="from" inputmode="numeric" maxlength="2" value="${Number.isFinite(st.from)?st.from:''}"><em>s</em></span></label>
+      <label>To<span class="tin"><input class="field" data-act="to" data-key="to" inputmode="numeric" maxlength="2" value="${Number.isFinite(st.to)?st.to:''}"><em>s</em></span></label>
+      <button class="btn" data-act="from-playhead" title="Move the start to the playhead, keep the length">Start at ${fmt(S.time)}</button>
+      <div class="tbar" aria-hidden="true">${validSpan(st)?`<span style="left:${st.from/CLIP*100}%;width:${(st.to-st.from)/CLIP*100}%"></span>`:''}<i style="left:${S.time/CLIP*100}%"></i></div>
+      <p class="hint${validSpan(st)?'':' warn'}">${validSpan(st)?`Shows ${fmt(st.from)}–${fmt(st.to)} (${st.to-st.from} s) of the ${CLIP} s clip.`:`Pick a range inside 0–${CLIP} s, at least 1 s long.`}</p>
+    </div>`:''}
+  </div>`;
+}
+const fmt = s => `0:${String(s).padStart(2,'0')}`;
+
+/* ===================== Preview stage ===================== */
+const Y0 = () => S.wide ? 88 : 60, STEP = () => S.wide ? 11 : 7;
+const visibleNow = () => S.list.filter(x=>{if(!validSpan(x))return false;const [a,b]=span(x);return S.time>=a&&S.time<b;});
+// stickers without a dragged position stack upwards from the default slot
+function positions(){
+  const out = {}; let n = 0;
+  visibleNow().forEach(x=>{ out[x.id] = x.y ?? (Y0() - (n++)*STEP()); });
+  return out;
+}
+const nextY = () => Y0() - visibleNow().filter(x=>x.y==null).length*STEP();
+function renderPhone(){
+  const pos = positions(), g = S.ghost;
+  const stk = visibleNow().map(x=>`<div class="ps${x.id===S.sel?' sel':''}" role="button" tabindex="0" data-act="select" data-v="${x.id}" data-id="${x.id}" style="top:${pos[x.id]}%" title="Click to edit · drag to move · Delete to remove">${draw(x.look,x.plats,x.color,x.name)}<button class="px" data-act="remove-item" data-v="${x.id}" aria-label="Remove sticker" title="Remove">✕</button></div>`).join('');
+  const ghost = g ? `<span class="ps ghost" data-label="${g.label}" style="top:${g.y}%">${draw(g.look,g.plats,g.color,g.name)}</span>` : '';
+  const n = visibleNow().length;
+  return `<div class="phone${S.wide?' wide':''}" id="phone">${stk}${ghost}${S.flash?`<span class="stage-note">${S.flash}</span>`:''}<span class="cap">that was close</span><span class="game">Gameplay</span></div>
+  <p class="cap-note">${n?`${n} sticker${n>1?'s':''} at ${fmt(S.time)}. Click to edit, drag to move, ✕ or Delete to remove.`:`No sticker at ${fmt(S.time)}.`}</p>`;
+}
+function renderStage(){
+  return `<div id="phwrap" style="display:flex;flex-direction:column;align-items:center;gap:14px">${renderPhone()}</div>
+  <div class="scrub"><span id="tnow">${fmt(S.time)}</span><input type="range" min="0" max="${CLIP-1}" value="${S.time}" data-act="time" aria-label="Clip time"><span>${fmt(CLIP)}</span></div>`;
+}
+const repaintPhone = () => { document.getElementById('phwrap').innerHTML = renderPhone(); };
+
+/* ===================== Render + events ===================== */
+function render(){
+  const a = document.activeElement, key = a?.dataset?.key, pos = a?.selectionStart, top = document.getElementById('scroll').scrollTop;
+  document.getElementById('scroll').innerHTML = renderScroll();
+  document.getElementById('sheet').innerHTML = renderSheet();
+  document.getElementById('stage').innerHTML = renderStage();
+  document.getElementById('scroll').scrollTop = top;
+  if (key){ const el = document.querySelector(`[data-key="${key}"]`); if (el){ el.focus(); el.setSelectionRange(pos,pos); } }
+}
+function setPlats(st, plats){ st.plats = plats; if (plats[0]) S.last = plats[0]; }
+function addSticker(id, y){
+  const L = look(id), st = cur();
+  S.note=''; S.undo=null; S.pop=null; S.ghost=null;
+  if (S.list.length >= MAX){ flash('3 stickers max. Remove one to add another.'); return; }
+  const plats = platsFor(L, [S.last]);
+  const n = sticker(id, plats, st ? st.color : 'original', S.list.some(x=>x.timing==='whole')?'end':'whole', st ? st.name : S.lastName);
+  if (y != null) n.y = y;
+  S.list.push(n); S.sel = n.id; S.lastLook = id;
+  if (!n.name) setTimeout(()=>document.querySelector('[data-key="name"]')?.focus());
+  const [a,b] = TIMING[n.timing]; if (S.time<a||S.time>=b) S.time = a;
+}
+function swapLook(id){
+  const L = look(id), st = cur(); if (!st) return;
+  S.note=''; S.undo=null; S.ghost=null;
+  const before = {look:st.look, plats:[...st.plats]};
+  if (L.kind==='multi' && st.plats.length<2){ setPlats(st, platsFor(L, st.plats)); S.note = `Added ${P[st.plats[1]].l} so this look has 2 channels.`; S.undo = before; }
+  if (L.kind!=='multi' && st.plats.length>1){ S.note = `This look shows one channel: kept ${P[st.plats[0]].l}.`; S.undo = before; setPlats(st, [st.plats[0]]); }
+  st.look = id; S.lastLook = id;
+}
+let flashT;
+function flash(msg){ S.flash = msg; clearTimeout(flashT); flashT = setTimeout(()=>{ S.flash=''; repaintPhone(); }, 2200); }
+
+document.getElementById('scen').addEventListener('click', e=>{
+  const b = e.target.closest('button'); if(!b) return;
+  document.querySelectorAll('#scen button').forEach(x=>x.classList.toggle('on', x===b)); reset(b.dataset.s);
+});
+document.querySelector('.editor').addEventListener('click', e=>{
+  const b = e.target.closest('[data-act]'); if(!b || b.tagName==='INPUT' || b.disabled) return;
+  const a = b.dataset.act, v = b.dataset.v, st = cur();
+  if (a==='select'){ if (S.justMoved){ S.justMoved=false; return; } S.sel = v; S.note=''; S.needName=''; S.pop=null; }
+  if (a==='tab') S.tab = v;
+  if (a==='look-add'){ if (S.list.length>=MAX){ flash('3 stickers max. Remove one to add another.'); } else addSticker(v); }
+  if (a==='look-swap') swapLook(v);
+  if (a==='remove-item'){ S.list = S.list.filter(x=>x.id!==v); if (S.sel===v) S.sel = S.list[0]?.id || null; S.note=''; render(); return; }
+  if (a==='remove'){ S.list = S.list.filter(x=>x!==st); S.sel = S.list[0]?.id || null; S.note=''; }
+  if (a==='undo' && S.undo){ Object.assign(st, S.undo); S.undo=null; S.note=''; }
+  if (a==='color') st.color = v;
+  if (a==='timing'){ st.timing = v;
+    if (v==='custom' && st.from==null){ st.from = Math.min(S.time, CLIP-5); st.to = st.from + 5; }
+    const [x,y]=span(st); if (S.time<x||S.time>=y) S.time = x; }
+  if (a==='from-playhead' && st){ const len = validSpan(st) ? st.to-st.from : 5; st.from = Math.min(S.time, CLIP-1); st.to = Math.min(CLIP, st.from+len); }
+  if (a==='plat'){
+    const L = look(st.look), on = st.plats.includes(v);
+    if (L.kind==='multi'){ if (on && st.plats.length<=2) { S.note='Multi looks need 2 channels. Pick a single look for one.'; return render(); } if (!on && st.plats.length>=4){ S.note='Up to 4 channels on one sticker.'; return render(); }
+      setPlats(st, on ? st.plats.filter(p=>p!==v) : ORDER.filter(p=>[...st.plats,v].includes(p))); }
+    else setPlats(st, [v]);
+    S.note='';
+  }
+  render();
+});
+document.querySelector('.editor').addEventListener('input', e=>{
+  const t = e.target, a = t.dataset.act;
+  if (a==='from'||a==='to'){ const n = t.value.trim()===''?NaN:+t.value; cur()[a] = n; const st = cur(); if (validSpan(st)){ const [x,y]=span(st); if (S.time<x||S.time>=y) S.time = x; } render(); }
+  if (a==='name'){ cur().name = t.value; S.lastName = t.value; render(); }
+  if (a==='time'){ S.time = +t.value; document.getElementById('phwrap').innerHTML = renderPhone(); document.getElementById('tnow').textContent = fmt(S.time); }
+  if (a==='custom'){ cur().color = t.value; document.getElementById('scroll').innerHTML = renderScroll(); document.getElementById('phwrap').innerHTML = renderPhone();  }
+});
+document.querySelector('.editor').addEventListener('change', e=>{
+  if (e.target.dataset.act==='keep') S.keep = e.target.checked;
+  if (e.target.dataset.act==='multi'){ S.multi = e.target.checked; render(); }
+  if (e.target.dataset.act==='custom') render();
+});
+/* ===================== B3: hover, drag and move ===================== */
+const yIn = (e, el) => { const r = el.getBoundingClientRect(); return Math.max(8, Math.min(92, (e.clientY - r.top) / r.height * 100)); };
+// 1 · hovering a tile previews it on the video
+let hoverKey = '';
+document.getElementById('scroll').addEventListener('mousemove', e=>{
+  const t = e.target.closest('.tile'), swap = e.target.closest('[data-act=look-swap]');
+  const key = t ? t.dataset.v + (swap?':swap':'') : '';
+  if (key === hoverKey) return; hoverKey = key;
+  const st = cur();
+  if (!t) S.ghost = null;
+  else if (swap && st) S.ghost = {look:t.dataset.v, plats:platsFor(look(t.dataset.v), st.plats), color:st.color, name:st.name, y:positions()[st.id] ?? nextY(), label:`Replaces sticker ${S.list.indexOf(st)+1}`};
+  else if (S.list.length >= MAX) S.ghost = null;
+  else S.ghost = {look:t.dataset.v, plats:platsFor(look(t.dataset.v), [S.last]), color:st?st.color:'original', name:st?st.name:S.lastName, y:nextY(), label:'Click to add here'};
+  repaintPhone();
+});
+document.getElementById('scroll').addEventListener('mouseleave', ()=>{ hoverKey=''; if (S.ghost){ S.ghost=null; repaintPhone(); } });
+const stage = document.getElementById('stage');
+// Delete / Backspace removes the selected sticker (not while typing)
+document.addEventListener('keydown', e=>{
+  if ((e.key==='Delete'||e.key==='Backspace') && S.sel && !e.target.closest('input,textarea')){ e.preventDefault(); S.list = S.list.filter(x=>x.id!==S.sel); S.sel = S.list[0]?.id || null; render(); }
+});
+// 4 · drag a sticker on the video to move it
+let moving = null;
+stage.addEventListener('pointerdown', e=>{
+  if (e.target.closest('.px')) return;
+  const b = e.target.closest('.ps:not(.ghost)'); if (!b) return;
+  moving = {id:b.dataset.id, el:b, y0:e.clientY, moved:false}; b.setPointerCapture(e.pointerId);
+});
+stage.addEventListener('pointermove', e=>{
+  if (!moving) return;
+  if (Math.abs(e.clientY - moving.y0) > 3){ moving.moved = true; moving.el.classList.add('moving'); }
+  if (moving.moved){ moving.y = yIn(e, document.getElementById('phone')); moving.el.style.top = moving.y + '%'; }
+});
+stage.addEventListener('pointerup', ()=>{
+  if (!moving) return;
+  const m = moving; moving = null;
+  if (m.moved){ const st = S.list.find(x=>x.id===m.id); st.y = m.y; S.sel = m.id; S.justMoved = true; render(); setTimeout(()=>S.justMoved=false, 0); }
+});
+reset('default');
+</script>
+</body>
+</html>

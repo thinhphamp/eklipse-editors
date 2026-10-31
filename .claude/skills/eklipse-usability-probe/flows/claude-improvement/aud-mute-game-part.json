@@ -1,0 +1,80 @@
+{
+  "id": "aud-mute-game-part",
+  "flow": "A7",
+  "menu": "Audio",
+  "persona": "heavy-editor",
+  "target": "claude-improvement",
+  "weight": 0.2,
+  "mission": "Cut the clip into two parts at about 0:20. Keep the game sound in the first part but mute the game sound in the second part, then export.",
+  "start": {
+    "screen": "L00"
+  },
+  "checkpoints": [
+    {
+      "id": "split",
+      "check": "state.splitPoints.length > 0",
+      "describe": "The clip is split into parts"
+    },
+    {
+      "id": "muted-second",
+      "check": "state.mutedParts.some(k => k !== '0.00') && !state.mutedParts.includes('0.00')",
+      "describe": "The game sound is muted in a later part but not in the first part"
+    },
+    {
+      "id": "export",
+      "check": "state.exported === true",
+      "describe": "The clip export has finished"
+    }
+  ],
+  "bestPath": [
+    {
+      "do": "click",
+      "selector": ".video-block"
+    },
+    {
+      "do": "click",
+      "selector": ".ruler",
+      "positionRatio": 0.33
+    },
+    {
+      "do": "click",
+      "selector": "button[aria-label='Split clip at current time']"
+    },
+    {
+      "do": "click",
+      "selector": ".rail nav button:has-text('Audio')"
+    },
+    {
+      "do": "click",
+      "selector": ".ruler",
+      "positionRatio": 0.45
+    },
+    {
+      "do": "click",
+      "selector": "button:has-text('Mute game sound for this part')"
+    },
+    {
+      "do": "click",
+      "selector": ".tb-primary"
+    },
+    {
+      "do": "click",
+      "selector": ".export-primary"
+    }
+  ],
+  "bestTimeSeconds": null,
+  "budget": {
+    "minutes": 12
+  },
+  "why": {
+    "data": "Heavy editors split clips (+30.8 export gap); after a split there is no way to keep the game sound in one part and drop it in another.",
+    "source": "plans/261028-editor-menu-probes/reports/audio-report-1-pain-points.md"
+  },
+  "input": {
+    "clip": null
+  },
+  "playerIds": [
+    "heavy-explorer",
+    "heavy-meticulous"
+  ]
+}

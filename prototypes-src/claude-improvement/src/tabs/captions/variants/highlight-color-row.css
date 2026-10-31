@@ -1,0 +1,4 @@
+.captions-hl-row{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:6px 14px;font-size:var(--fs-label)}
+.captions-hl-row div{display:flex;gap:6px}
+.captions-hl-row button{width:22px;height:22px;border-radius:50%;border:2px solid var(--border);cursor:pointer;padding:0}
+.captions-hl-row button[aria-pressed=true]{border-color:var(--accent);box-shadow:0 0 0 2px var(--bg-panel),0 0 0 4px var(--accent)}

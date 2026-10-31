@@ -1,0 +1,10 @@
+.phone-preview .preview-caption.caption-live{pointer-events:auto;cursor:grab;z-index:7;transform:translateY(-50%);display:block;box-sizing:border-box;line-height:1.08;user-select:none;letter-spacing:normal;font-size:inherit;font-weight:normal;font-style:normal;color:var(--text-1);text-shadow:none;-webkit-text-stroke:0}
+.phone-preview .preview-caption.caption-selected{outline:2px solid var(--accent);outline-offset:5px}
+.caption-content{display:flex;align-items:center;justify-content:center;gap:.18em;line-height:1.1;padding:.08em}
+.caption-word-line{min-width:0}.caption-avatar-icon{display:inline-flex;align-items:center;justify-content:center;border:2px solid var(--text-1);border-radius:50%;width:1.3em;height:1.3em;flex-shrink:0;font-size:.7em;color:var(--bg-app);-webkit-text-stroke:0;text-shadow:none}
+.caption-emoji-icon{font-size:.8em;-webkit-text-stroke:0;text-shadow:none}
+.preview-caption[data-avatar-position='Top'] .caption-content{flex-direction:column}.preview-caption[data-avatar-position='Bottom'] .caption-content{flex-direction:column}.preview-caption[data-avatar-position='Bottom'] .caption-avatar-icon{order:2}.preview-caption[data-avatar-position='Right'] .caption-avatar-icon{order:2}
+.caption-handle{position:absolute;right:-9px;bottom:-9px;width:12px;height:12px;background:var(--handle-fill);border:2px solid var(--accent);border-radius:50%;cursor:nwse-resize}
+.caption-toolbar{position:absolute;left:50%;bottom:calc(100% + 12px);transform:translateX(-50%);display:flex;gap:2px;padding:3px;border-radius:5px;background:var(--bg-card);white-space:nowrap;box-shadow:0 2px 8px var(--shadow-ink);-webkit-text-stroke:0;text-shadow:none}
+.caption-toolbar button{border:0;background:var(--bg-card);color:var(--text-1);font-size:var(--fs-label);padding:4px}.caption-toolbar button:hover{background:var(--bg-hover)}
+.preview-caption[data-avatar-position='Top'] .caption-emoji-icon,.preview-caption[data-avatar-position='Left'] .caption-emoji-icon{order:-1}.preview-caption[data-avatar-position='Bottom'] .caption-emoji-icon,.preview-caption[data-avatar-position='Right'] .caption-emoji-icon{order:2}

@@ -1,0 +1,38 @@
+{
+  "id": "elements-add-gg-gif",
+  "feature": "Elements",
+  "personaRefs": [
+    "ai-edit-accepter",
+    "first-clip-newcomer",
+    "meme-heavy-power-editor"
+  ],
+  "target": "claude-improvement",
+  "start": {
+    "screen": "default"
+  },
+  "goal": "Add an animated GG on screen, like a reaction, so it pops up on the clip.",
+  "success": {
+    "check": "state.elements.some(e => e.category === 'Gifs' && /\\bgg\\b/i.test(e.label))",
+    "describe": "The GG GIF is on the clip"
+  },
+  "budget": {
+    "steps": 8,
+    "scrolls": 4,
+    "minutes": 4
+  },
+  "bestPath": [
+    {
+      "do": "click",
+      "selector": ".rail nav button:has-text('Elements')"
+    },
+    {
+      "do": "click",
+      "selector": ".elements-tile:has-text('GG')"
+    }
+  ],
+  "why": {
+    "data": "User-added reactions and memes go with +32.7 export points (same user); AI-placed memes -4.1",
+    "source": "docs/knowledge/editor-direction-research.md"
+  },
+  "holdout": false
+}

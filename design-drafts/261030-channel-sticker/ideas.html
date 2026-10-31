@@ -1,0 +1,578 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Channel sticker · ideas board · round 1</title>
+<style>
+/* ===== Tokens: copied from prototypes-src/claude-improvement/src/theme/tokens.css (Eklipse dark) ===== */
+:root{
+  --color-ek-purple:#735EF4;--color-ek-purple-light:#A496F8;--color-ek-yellow:#FFA036;
+  --color-ek-grey-light:#A3A3BF;--color-ek-grey:#434359;--color-ek-grey-dark:#2B2B38;--color-ek-grey-darker:#1B1B26;
+  --color-ek-grey-black:#11111A;--color-ek-success:#46F88D;--color-ek-danger:#EF3149;--color-ek-white:#FFFFFF;
+  --color-ek-text-secondary:#D0D0D0;--color-ek-border-secondary:#FFFFFF14;--color-ek-hover:#383849;--color-ek-black:#000000;
+  --font-ui:'Hanken Grotesk',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --bg-app:var(--color-ek-grey-black);--bg-panel:var(--color-ek-grey-darker);--bg-card:var(--color-ek-grey-dark);
+  --bg-hover:var(--color-ek-hover);--bg-inset:var(--color-ek-grey-black);
+  --border:var(--color-ek-grey);--border-subtle:var(--color-ek-border-secondary);
+  --text-1:var(--color-ek-white);--text-2:var(--color-ek-text-secondary);--text-3:var(--color-ek-grey-light);
+  --accent:var(--color-ek-purple);--accent-text:var(--color-ek-purple-light);
+  --accent-soft:color-mix(in srgb,var(--color-ek-purple) 22%,var(--color-ek-grey-dark));
+  --premium:var(--color-ek-yellow);--success:var(--color-ek-success);--danger:var(--color-ek-danger);
+  /* sticker art (draft only; would become --art-* tokens) */
+  --plate:#151515;--plate-2:#1F1F24;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg-app);color:var(--text-1);font:15px/1.5 var(--font-ui)}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer}
+button:focus-visible,input:focus-visible{outline:2px solid var(--accent-text);outline-offset:2px}
+
+/* ===== Board chrome ===== */
+.board{max-width:1180px;margin:0 auto;padding:48px 24px 96px}
+.board-head{max-width:780px;margin-bottom:40px}
+.board-head small,.kicker{color:var(--text-3);font-size:13px;letter-spacing:.04em;text-transform:uppercase}
+.board-head h1{font-size:32px;line-height:1.2;margin:8px 0 12px;letter-spacing:-.01em}
+.board-head p{color:var(--text-2);margin:0 0 8px}
+.block{padding:40px 0;border-top:1px solid var(--border-subtle)}
+.block>h2{font-size:24px;margin:0 0 6px}
+.block>p{color:var(--text-2);margin:0 0 20px;max-width:780px}
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start}
+.compare figure{margin:0}
+.compare img{width:100%;border:1px solid var(--border);border-radius:10px;display:block}
+.compare figcaption{font-size:13px;color:var(--text-3);margin-top:8px}
+table.map{width:100%;border-collapse:collapse;font-size:14px}
+.map th,.map td{text-align:left;vertical-align:top;padding:10px 12px;border-bottom:1px solid var(--border-subtle)}
+.map th{color:var(--text-3);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.04em}
+.map td:first-child{color:var(--text-1);font-weight:600;white-space:nowrap}
+.map td{color:var(--text-2)}
+.map td.keep{color:var(--text-1)}
+.map .from{display:inline-block;font-size:11px;padding:1px 7px;border-radius:99px;background:var(--bg-card);color:var(--text-3);margin-left:4px}
+.map .from.ek{background:var(--accent-soft);color:var(--accent-text)}
+
+.idea{display:grid;grid-template-columns:572px 1fr;gap:40px;padding:48px 0;border-top:1px solid var(--border-subtle)}
+.idea-notes h2{font-size:24px;line-height:1.2;margin:0 0 6px}
+.tag{display:inline-block;font-size:12px;padding:2px 10px;border-radius:99px;background:var(--bg-card);color:var(--text-2);margin-bottom:12px}
+.tag.rec{background:var(--accent);color:var(--color-ek-white)}
+.idea-notes .one{font-size:17px;color:var(--text-2);margin:0 0 16px}
+.idea-notes h3{font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--text-3);margin:20px 0 6px}
+.idea-notes ul{margin:0;padding-left:18px;color:var(--text-2)}
+.idea-notes li{margin:3px 0}
+.idea-notes li b{color:var(--text-1);font-weight:600}
+.scen{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 10px}
+.scen span{font-size:12px;color:var(--text-3);align-self:center;margin-right:4px}
+.scen button{font-size:12px;padding:4px 10px;border-radius:99px;border:1px solid var(--border);background:none;color:var(--text-2)}
+.scen button.on{background:var(--bg-card);color:var(--text-1);border-color:var(--accent)}
+
+/* ===== Mini clip preview (9:16): facecam top, game bottom, sticker y 60, captions y 75 ===== */
+.clip{position:relative;width:160px;aspect-ratio:9/16;border-radius:10px;overflow:hidden;border:1px solid var(--border);background:color-mix(in srgb,var(--color-ek-success) 10%,var(--color-ek-grey));float:right;margin:0 0 12px 20px}
+.clip::before{content:"Facecam";position:absolute;inset:0 0 58% 0;background:color-mix(in srgb,var(--color-ek-purple) 45%,var(--color-ek-grey-dark));display:grid;place-items:center;font-size:10px;color:var(--text-3)}
+.clip::after{content:"Gameplay";position:absolute;left:0;right:0;bottom:6px;text-align:center;font-size:10px;color:var(--text-3)}
+.clip .on-clip{position:absolute;left:50%;top:60%;transform:translate(-50%,-50%);font-size:6px}
+.clip .cap{position:absolute;left:0;right:0;top:75%;text-align:center;font-weight:800;font-size:11px;text-transform:uppercase;text-shadow:0 1px 0 var(--color-ek-black)}
+.clip.wide{aspect-ratio:16/9;width:200px}
+.clip.wide::before{inset:0 70% 62% 0}
+.clip.wide .on-clip{left:6%;top:86%;transform:translateY(-50%)}
+.clip.wide .cap{top:68%}
+
+/* ===== Editor mock: rail + side panel (520px like .side-panel) ===== */
+.editor{display:flex;height:780px;border:1px solid var(--border);border-radius:12px;overflow:hidden;background:var(--bg-panel)}
+.rail{width:52px;flex:0 0 52px;border-right:1px solid var(--border);display:flex;flex-direction:column;align-items:center;gap:4px;padding:12px 0;background:var(--bg-app)}
+.rail i{display:flex;flex-direction:column;align-items:center;font-style:normal;font-size:9px;line-height:1.1;text-align:center;color:var(--text-3);gap:3px;padding:6px 2px;width:48px;border-radius:8px}
+.rail i::before{content:"";width:18px;height:18px;border-radius:5px;border:1.5px solid currentColor}
+.rail i.on{color:var(--text-1);background:var(--bg-card)}
+.rail i.on::before{border-color:var(--accent-text);background:var(--accent-soft)}
+.rail i.new::after{content:"NEW";font-size:7px;font-weight:700;color:var(--accent-text)}
+.panel{position:relative;width:520px;overflow:auto;padding:18px 16px 40px;scrollbar-width:thin}
+.ph{padding-bottom:14px;margin-bottom:14px;border-bottom:1px solid var(--border-subtle)}
+.ph h4{font-size:18px;line-height:1.2;margin:0 0 4px}
+.ph p{font-size:14px;margin:0;color:var(--text-3)}
+.card{background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:10px;padding:14px}
+.lbl{display:block;font-size:12px;font-weight:600;color:var(--text-2);margin:0 0 6px}
+.lbl small{font-weight:400;color:var(--text-3)}
+.field{width:100%;height:40px;border-radius:8px;border:1px solid var(--border);background:var(--bg-inset);padding:0 12px}
+.field:focus{border-color:var(--accent);outline:none}
+.hint{font-size:12px;color:var(--text-3);margin:6px 0 0}
+.hint.warn{color:var(--premium)}
+.gap{height:14px}
+.sec{margin:20px 0 10px;display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.sec h5{font-size:15px;margin:0}
+.sec span{font-size:12px;color:var(--text-3)}
+.sec button{border:0;background:none;color:var(--accent-text);font-size:12px;padding:0}
+
+/* platform toggles */
+.plats{display:flex;flex-wrap:wrap;gap:6px}
+.pbtn{position:relative;width:44px;height:44px;border-radius:10px;border:1.5px solid transparent;background:var(--bg-hover);display:grid;place-items:center;padding:0}
+.pbtn .pg{width:24px;height:24px;border-radius:6px;display:grid;place-items:center;font-size:12px;font-weight:800;background:var(--pc);color:var(--po)}
+.pbtn[aria-pressed=true]{border-color:var(--accent);background:var(--accent-soft)}
+.pbtn[aria-pressed=true]::after{content:"✓";position:absolute;top:-6px;right:-6px;width:16px;height:16px;border-radius:50%;background:var(--accent);font-size:10px;display:grid;place-items:center;color:var(--color-ek-white)}
+.pbtn .nw{position:absolute;bottom:-7px;left:50%;transform:translateX(-50%);font-size:8px;font-weight:700;padding:0 4px;border-radius:4px;background:var(--bg-panel);color:var(--accent-text)}
+.pchip{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 10px 0 6px;border-radius:99px;border:1px solid var(--border);background:none;font-size:13px;color:var(--text-2)}
+.pchip .pg{width:20px;height:20px;border-radius:5px;display:grid;place-items:center;font-size:10px;font-weight:800;background:var(--pc);color:var(--po)}
+.pchip[aria-pressed=true]{border-color:var(--accent);background:var(--accent-soft);color:var(--text-1)}
+
+/* colours */
+.swatches{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.sw{width:30px;height:30px;border-radius:7px;border:2px solid transparent;background:var(--sc);padding:0}
+.sw.auto{width:auto;padding:0 10px;font-size:12px;background:var(--bg-hover);color:var(--text-2);display:flex;align-items:center;gap:6px}
+.sw.auto::before{content:"";width:12px;height:12px;border-radius:3px;background:var(--sc)}
+.sw[aria-pressed=true]{border-color:var(--color-ek-white)}
+.swatches.off{opacity:.35;pointer-events:none}
+
+/* on-clip status */
+.status{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.status b{font-size:13px}
+.status small{display:block;font-size:12px;color:var(--text-3);font-weight:400}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--success);margin-right:6px}
+.dot.off{background:var(--text-3)}
+.btn{height:34px;padding:0 14px;border-radius:8px;border:1px solid var(--border);background:none;font-size:13px;color:var(--text-1)}
+.btn.pri{background:var(--accent);border-color:var(--accent);color:var(--color-ek-white)}
+.check{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-2);margin-top:10px}
+.check input{accent-color:var(--accent);width:16px;height:16px}
+
+/* design tiles */
+.tiles{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.tiles.three{grid-template-columns:repeat(3,1fr)}
+.tile{position:relative;height:92px;border-radius:10px;border:1.5px solid var(--border-subtle);background:var(--bg-card);display:grid;place-items:center;overflow:hidden;padding:4px}
+.tiles.three .tile{height:78px}
+.tile:hover{background:var(--bg-hover)}
+.tile.sel{border-color:var(--accent);background:var(--accent-soft)}
+.tile .tg{position:absolute;top:5px;left:6px;font-size:10px;font-weight:600;color:var(--text-3)}
+.tile .pro{position:absolute;top:5px;right:6px;font-size:9px;font-weight:800;padding:1px 6px;border-radius:4px;background:var(--premium);color:var(--color-ek-black)}
+.tile .fx{position:absolute;bottom:5px;right:6px;font-size:10px;color:var(--text-3)}
+.tiles.three .tile .stk{font-size:9px}
+.tile .stk{font-size:11px}
+.empty{border:1px dashed var(--border);border-radius:10px;padding:16px;color:var(--text-3);font-size:13px;text-align:center}
+.strip{display:grid;grid-auto-flow:column;grid-auto-columns:46%;gap:8px;overflow-x:auto;padding-bottom:6px;scrollbar-width:thin}
+.seg{display:inline-flex;background:var(--bg-inset);border-radius:8px;padding:3px;gap:2px}
+.seg button{border:0;background:none;padding:5px 12px;border-radius:6px;font-size:12px;color:var(--text-3)}
+.seg button.on{background:var(--bg-card);color:var(--text-1)}
+.pills{display:flex;gap:6px;flex-wrap:wrap}
+.pill{height:30px;padding:0 12px;border-radius:99px;border:1px solid var(--border);background:none;font-size:12px;color:var(--text-2)}
+.pill.on{background:var(--color-ek-white);color:var(--color-ek-black);border-color:var(--color-ek-white)}
+
+/* B: sticky name bar + edit sheet */
+.sticky{position:sticky;top:-18px;z-index:2;background:var(--bg-panel);padding:8px 0 10px;margin-top:-8px}
+.sheet{position:sticky;bottom:-40px;z-index:3;margin:16px -16px -40px;padding:14px 16px 18px;background:var(--bg-card);border-top:1px solid var(--border);box-shadow:0 -12px 24px var(--bg-app)}
+.sheet-head{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.sheet-head .prev{flex:1;height:64px;border-radius:8px;background:var(--bg-inset);display:grid;place-items:center}
+.sheet-head .prev .stk{font-size:12px}
+.sheet .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+
+/* C: channel rows */
+.chan{display:grid;grid-template-columns:28px 1fr 46px 28px;gap:8px;align-items:center;margin-bottom:8px}
+.chan .pg{width:28px;height:28px;border-radius:7px;display:grid;place-items:center;font-size:12px;font-weight:800;background:var(--pc);color:var(--po)}
+.chan .field{height:36px}
+.chan .x{width:28px;height:28px;border-radius:6px;border:0;background:none;color:var(--text-3)}
+.sw-tog{position:relative;width:40px;height:22px;border-radius:99px;border:0;background:var(--color-ek-grey);padding:0}
+.sw-tog::after{content:"";position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:var(--color-ek-white);transition:left .15s}
+.sw-tog[aria-pressed=true]{background:var(--accent)}
+.sw-tog[aria-pressed=true]::after{left:21px}
+.addch{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
+.addch button{height:30px;border-radius:8px;border:1px dashed var(--border);background:none;font-size:12px;color:var(--text-2);padding:0 10px}
+.bigprev{height:96px;border-radius:10px;background:var(--bg-inset);display:grid;place-items:center;margin-bottom:12px}
+.bigprev .stk{font-size:14px}
+
+/* ===== Stickers (em-based) ===== */
+.stk{--c:var(--accent);--on:var(--color-ek-white);display:inline-flex;align-items:center;font-weight:800;color:var(--color-ek-white);white-space:nowrap;line-height:1}
+.stk .ic{display:grid;place-items:center;flex:0 0 auto;font-weight:900;color:var(--on)}
+.stk .nm{display:flex;align-items:center;max-width:13em;overflow:hidden;text-overflow:ellipsis}
+.stk.long .nm{font-size:.78em;max-width:17em}
+.s-block .ic{width:2.6em;height:2.6em;background:var(--c);border-radius:.55em 0 0 .55em;font-size:1em}
+.s-block .nm{height:2.6em;padding:0 1em;background:var(--plate);border:.18em solid var(--c);border-left:0;border-radius:0 .55em .55em 0}
+.s-round .ic{position:relative;z-index:1;width:3em;height:3em;border-radius:50%;background:var(--c);margin-right:-1.3em}
+.s-round .nm{height:2.6em;padding:0 1.1em 0 1.8em;background:var(--plate);border:.18em solid var(--c);border-radius:0 1.3em 1.3em 0}
+.s-fade{height:2.6em;background:linear-gradient(90deg,var(--c) 0 28%,var(--plate) 72%);border-radius:1.3em 0 0 1.3em;padding:0 1.1em 0 .4em;gap:1.4em}
+.s-fade .ic{width:2em;height:2em}
+.s-cap .ic{position:relative;z-index:1;width:3.2em;height:3.2em;border-radius:50%;background:var(--c)}
+.s-cap .nm{height:2.6em;padding:0 1.2em 0 1.8em;margin-left:-1.4em;background:var(--plate);border-radius:0 1.3em 1.3em 0}
+.s-solid{height:2.5em;padding:0 1em;gap:.6em;background:var(--c);color:var(--on);border-radius:.4em}
+.s-under{flex-direction:column;align-items:flex-start;padding:.6em 1em .5em;background:var(--plate);border-radius:1.4em;gap:.3em}
+.s-under .row{display:flex;align-items:center;gap:.5em}
+.s-under .ul{height:.22em;width:100%;background:var(--c);border-radius:.2em}
+.s-under .ic{width:1.5em;height:1.5em;border-radius:.3em;background:var(--c);font-size:.8em}
+.s-row{height:2.6em;padding:0 1em 0 .5em;gap:.7em;background:var(--plate);border-radius:1.3em;border:.15em solid var(--c)}
+.s-row .icons{display:flex;gap:.25em}
+.s-row .ic{width:1.7em;height:1.7em;border-radius:50%;background:var(--pc);color:var(--po);font-size:.8em}
+.s-stack{flex-direction:column;gap:.35em}
+.s-stack .icons{display:flex;gap:.3em}
+.s-stack .ic{width:1.9em;height:1.9em;border-radius:.45em;background:var(--pc);color:var(--po);font-size:.85em}
+.s-stack .nm{height:2.3em;padding:0 1em;background:var(--c);color:var(--on);border-radius:.5em}
+/* fixed-colour looks from the prototype catalog */
+.s-neon{height:2.5em;padding:0 1.1em;background:var(--color-ek-black);border-radius:.3em;text-transform:uppercase;letter-spacing:.06em;color:#FFE9F0;text-shadow:-.08em 0 #FF2E63,.08em 0 #2EC5FF,0 0 .5em #FF2E63}
+.s-sparkle{height:2.5em;padding:0 1.2em;gap:.5em;background:linear-gradient(90deg,#FF6EC7,#9B5CF6);border-radius:1.3em}
+.s-sparkle::before,.s-sparkle::after{content:"✦";font-size:.8em;color:#FFF3B0}
+.s-lav{height:2.5em;padding:0 .9em 0 .4em;gap:.6em;background:#E8E0FF;color:#6A3FD8;border-radius:.4em}
+.s-lav .ic{width:1.8em;height:1.8em;border-radius:.35em;background:#6A3FD8;color:#E8E0FF}
+.s-teal{height:2.6em;padding:0 1em;gap:.6em;background:#0E8C8C;border-radius:.6em;box-shadow:0 0 .8em #5FF5E6}
+.s-teal .ic{color:var(--color-ek-white);font-size:.85em}
+/* animated (premium) */
+.s-slide{height:2.2em;gap:.4em}
+.s-slide .ic{width:2.2em;height:2.2em;border-radius:.4em;background:var(--c);animation:slideIc 2.4s ease-in-out infinite}
+.s-slide .nm{height:2.2em;padding:0 1em;background:var(--plate);border-bottom:.2em solid var(--c);animation:slideNm 2.4s ease-in-out infinite}
+@keyframes slideIc{0%,15%{transform:translateX(-1.2em);opacity:0}35%,100%{transform:none;opacity:1}}
+@keyframes slideNm{0%,30%{clip-path:inset(0 100% 0 0)}55%,100%{clip-path:inset(0 0 0 0)}}
+.s-bell{height:2.6em;padding:0 1.1em 0 .5em;gap:.6em;background:linear-gradient(90deg,#C9B8FF,#9FF2D3);color:#1B1240;border-radius:1.3em;animation:bellPop 2.6s ease-in-out infinite}
+.s-bell .ic{width:1.8em;height:1.8em;border-radius:50%;background:#1B1240;color:#C9B8FF;font-size:.8em}
+@keyframes bellPop{0%,60%,100%{transform:scale(1)}70%{transform:scale(1.08)}80%{transform:scale(.97)}}
+.s-pulse{height:2.6em;padding:0 1em 0 .5em;gap:.6em;background:var(--plate);border-radius:.7em;border:.18em solid var(--c);animation:edge 1.8s ease-in-out infinite}
+.s-pulse .ic{width:1.8em;height:1.8em;border-radius:.4em;background:var(--c)}
+@keyframes edge{50%{box-shadow:0 0 .9em var(--c)}}
+@media (prefers-reduced-motion:reduce){.stk,.stk *{animation:none!important}}
+</style>
+</head>
+<body>
+<main class="board">
+
+<header class="board-head">
+  <small>Design draft · 30 Oct 2026 · round 1 · feature: channel sticker</small>
+  <h1>Channel sticker gets its own tab, 2nd below Templates</h1>
+  <p>Today the sticker lives at the top of Elements as the "brand card". The main Eklipse app has a dedicated
+     <b>Channel Stickers</b> menu with a name, one platform, 7 colours and Single / Multi designs. This board merges
+     both into one tab, then shows three ways to lay it out.</p>
+  <p>Every mock is clickable: type a name, toggle platforms, pick colours and designs. The chips above each mock switch
+     edge cases.</p>
+</header>
+
+<section class="block" data-od-id="current">
+  <span class="kicker">Starting point</span>
+  <h2>What we have on each side</h2>
+  <p>Left: main Eklipse app (your screenshot). Right: what to keep from the prototype, and where each piece comes from.</p>
+  <div class="compare">
+    <figure><img src="../../mvtsggal-image.png" alt="Main Eklipse app: Channel Stickers menu with Channel Name, Select Platforms, colours, Single and Multi Channel Name tabs"><figcaption>Main app · Channel Stickers menu</figcaption></figure>
+    <table class="map">
+      <thead><tr><th></th><th>Combined tab</th></tr></thead>
+      <tbody>
+        <tr><td>Name</td><td class="keep">One channel name, saved, live in every tile <span class="from ek">main app</span><span class="from">prototype</span></td></tr>
+        <tr><td>Platforms</td><td class="keep">Pick one <b>or several</b>: Twitch, YouTube, Kick, Facebook <span class="from ek">main app</span> + TikTok, Instagram, X <span class="from">prototype</span></td></tr>
+        <tr><td>Single / Multi</td><td>The tabs go away. 1 platform shows single designs, 2+ shows multi designs.</td></tr>
+        <tr><td>Colour</td><td class="keep">"Platform colour" + 7 swatches <span class="from ek">main app</span>. Recolours Eklipse designs only.</td></tr>
+        <tr><td>Designs</td><td class="keep">Eklipse designs (recolour) + catalog looks, incl. animated PRO <span class="from">prototype</span></td></tr>
+        <tr><td>On the clip</td><td class="keep">Whole clip, under the facecam, above captions; <b>Add to every new clip</b> on by default; remembered and saved in templates <span class="from">prototype</span></td></tr>
+        <tr><td>Elements</td><td>Social Stickers section and brand card leave Elements; a one-line pointer stays for a few releases.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ===== Variant A ===== -->
+<section class="idea" data-od-id="variant-a">
+  <div>
+    <div class="scen" data-for="A"><span>State</span>
+      <button data-scen="default" class="on">Default</button><button data-scen="first">First time</button>
+      <button data-scen="multi">3 platforms</button><button data-scen="long">Long name</button>
+      <button data-scen="fixed">Fixed-colour look</button><button data-scen="off">Removed from clip</button>
+    </div>
+    <div class="editor"><nav class="rail" aria-hidden="true"><i>Templates</i><i class="on new">Channel</i><i>Captions</i><i>Elements</i><i>Effects</i><i>Audio</i></nav>
+      <div class="panel" id="A"></div></div>
+  </div>
+  <div class="idea-notes">
+    <div class="clip" id="A-clip"></div>
+    <span class="tag">Round 1 recommendation</span>
+    <h2>A · Set up your channel, then pick a design</h2>
+    <p class="one">The main app's order (name, platforms, colour, then designs) on top of the prototype's saved sticker.</p>
+    <h3>How it works</h3>
+    <ul>
+      <li>Top card: <b>name</b>, <b>platform</b> toggles (several allowed), <b>colour</b>.</li>
+      <li>The grid below only shows designs that fit your platforms. One platform: single designs. Two or more: multi designs. No tabs to learn.</li>
+      <li>Status row under the card: on this clip, remove, <b>add to every new clip</b>.</li>
+      <li>Grid groups: <b>Eklipse</b> (follow your colour) and <b>More looks</b> (fixed colours, animated PRO).</li>
+    </ul>
+    <h3>Pros</h3>
+    <ul><li>Same order as the main app: lowest relearning for current users.</li><li>Grid is always relevant: never shows a Kick design to a Twitch-only streamer.</li><li>Single/Multi decided for you.</li></ul>
+    <h3>Cons</h3>
+    <ul><li>Setup card takes ~230px before the first design.</li><li>Browsing looks for another platform means toggling platforms.</li></ul>
+    <h3>Edge cases</h3>
+    <ul>
+      <li><b>First time:</b> name prefilled from the connected account; with none, tiles show "your name" and a hint.</li>
+      <li><b>No platform:</b> name-only designs (no icon).</li>
+      <li><b>5+ platforms:</b> capped at 4 with a hint.</li>
+      <li><b>Long name:</b> text shrinks, 24-character cap.</li>
+      <li><b>Fixed-colour look:</b> swatches grey out with "This look has its own colours".</li>
+      <li><b>16:9 clip / split clip:</b> bottom-left on 16:9; whole clip across all parts.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ===== Variant B ===== -->
+<section class="idea" data-od-id="variant-b">
+  <div>
+    <div class="scen" data-for="B"><span>State</span>
+      <button data-scen="default" class="on">Default</button><button data-scen="first">First time</button>
+      <button data-scen="mismatch">Look for another platform</button><button data-scen="off">Removed from clip</button>
+    </div>
+    <div class="editor"><nav class="rail" aria-hidden="true"><i>Templates</i><i class="on new">Channel</i><i>Captions</i><i>Elements</i><i>Effects</i><i>Audio</i></nav>
+      <div class="panel" id="B"></div></div>
+  </div>
+  <div class="idea-notes">
+    <div class="clip" id="B-clip"></div>
+    <span class="tag rec">Picked · round 2 → <a href="variants/B2.html" style="color:inherit">open B2</a> · <a href="variants/B3.html" style="color:inherit">B3 add on hover</a></span>
+    <h2>B · Pick a look, then make it yours</h2>
+    <p class="one">The gallery is the panel. Every look is shown once, already with your name and platforms; settings open in a sheet after you pick.</p>
+    <h3>How it works</h3>
+    <ul>
+      <li>Only the name sits above the grid. Filters: All, Static, Animated, Multi.</li>
+      <li>The catalog repeats the same look per platform (neon, sparkle, pet bars exist for Twitch, YouTube and Facebook). B shows each look <b>once</b> and draws your platform into it: 52 tiles become ~15.</li>
+      <li>Picking a look opens <b>Your sticker</b> at the bottom: platforms, colour, on clip, every new clip.</li>
+    </ul>
+    <h3>Pros</h3>
+    <ul><li>First design visible right away; best for "show me what's there".</li><li>Much shorter gallery, no duplicate looks.</li></ul>
+    <h3>Cons</h3>
+    <ul><li>Platforms and colour hide in the sheet; main-app users look for them on top.</li><li>Looks made for one platform (lavender = Twitch) need a "switches to Twitch" note.</li></ul>
+    <h3>Edge cases</h3>
+    <ul>
+      <li><b>First time:</b> sheet opens with the name field focused.</li>
+      <li><b>Look for another platform:</b> tag on the tile, and picking it switches your platforms with an undo.</li>
+      <li><b>Removed from clip:</b> sheet button reads "Add to this clip".</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ===== Variant C ===== -->
+<section class="idea" data-od-id="variant-c">
+  <div>
+    <div class="scen" data-for="C"><span>State</span>
+      <button data-scen="default" class="on">Default</button><button data-scen="first">First time</button>
+      <button data-scen="rotate">3 channels · one at a time</button><button data-scen="off">Removed from clip</button>
+    </div>
+    <div class="editor"><nav class="rail" aria-hidden="true"><i>Templates</i><i class="on new">Channel</i><i>Captions</i><i>Elements</i><i>Effects</i><i>Audio</i></nav>
+      <div class="panel" id="C"></div></div>
+  </div>
+  <div class="idea-notes">
+    <div class="clip" id="C-clip"></div>
+    <span class="tag">Alternative · if Multi means different names</span>
+    <h2>C · Your channels, one handle each</h2>
+    <p class="one">A list of your channels, each with its own handle. The sticker shows them all at once, or one at a time.</p>
+    <h3>How it works</h3>
+    <ul>
+      <li>One row per channel: platform, handle, show on sticker. "+ Add" for the other platforms.</li>
+      <li><b>All at once</b> uses multi designs; <b>One at a time</b> rotates every 3 s through the channels, in any single design.</li>
+      <li>6 suggested looks for your mix in a row; "All looks" opens the full gallery page.</li>
+    </ul>
+    <h3>Pros</h3>
+    <ul><li>Fits streamers whose handle differs per platform (common for YouTube @handles).</li><li>Rotation gives multi-channel without a crowded sticker.</li></ul>
+    <h3>Cons</h3>
+    <ul><li>Most setup of the three; heavier for one-platform streamers.</li><li>New concept (rotation) to design and engineer; animated export cost.</li></ul>
+    <h3>Edge cases</h3>
+    <ul>
+      <li><b>First time:</b> one row prefilled from the connected account.</li>
+      <li><b>All rows hidden:</b> sticker off, hint to turn one on.</li>
+      <li><b>Short clip + rotate:</b> clips under 6 s show the first channel only.</li>
+    </ul>
+  </div>
+</section>
+
+</main>
+
+<script>
+/* ===== Data ===== */
+const P = {
+  twitch:{l:'Twitch',g:'T',c:'#9146FF',main:1}, youtube:{l:'YouTube',g:'▶',c:'#FF0033',main:1},
+  kick:{l:'Kick',g:'K',c:'#53FC18',o:'#0B0B0B',main:1}, facebook:{l:'Facebook',g:'f',c:'#1877F2',main:1},
+  tiktok:{l:'TikTok',g:'♪',c:'#111111'}, instagram:{l:'Instagram',g:'◎',c:'#E1306C'}, x:{l:'X',g:'X',c:'#0A0A0A'}
+};
+const ORDER = ['twitch','youtube','kick','facebook','tiktok','instagram','x'];
+// main-app swatches (from the screenshot); light ones get dark text
+const SW = [['Purple','#8F47F5'],['Yellow','#F7C744',1],['Mint','#7FF29C',1],['Red','#E2434F'],['Blue','#2F6DF2'],['Green','#61DE45',1],['Black','#050505']];
+// d = draw kind, multi = needs 2+ platforms, fit = 'any' or platforms the look exists for, fixed = own colours
+const D = [
+  {id:'block',n:'Block',d:'block',src:'ek'},{id:'round',n:'Round',d:'round',src:'ek'},
+  {id:'fade',n:'Fade',d:'fade',src:'ek'},{id:'cap',n:'Circle cap',d:'cap',src:'ek'},
+  {id:'solid',n:'Solid',d:'solid',src:'ek',nameOnly:1},{id:'under',n:'Underline',d:'under',src:'ek',nameOnly:1},
+  {id:'row',n:'Icons row',d:'row',src:'ek',multi:1},{id:'stack',n:'Icons on top',d:'stack',src:'ek',multi:1},
+  {id:'neon',n:'Neon',d:'neon',fixed:1,fit:['twitch','youtube','facebook'],nameOnly:1},
+  {id:'sparkle',n:'Sparkle',d:'sparkle',fixed:1,fit:['twitch','youtube','facebook'],nameOnly:1},
+  {id:'lav',n:'Lavender',d:'lav',fixed:1,fit:['twitch']},
+  {id:'teal',n:'Teal glow',d:'teal',fixed:1,multi:1,fit:['instagram','tiktok','youtube']},
+  {id:'slide',n:'Slide in',d:'slide',anim:1,fit:['twitch']},
+  {id:'pulse',n:'Edge pulse',d:'pulse',anim:1,fit:['kick','youtube']},
+  {id:'bell',n:'Subscribe bell',d:'bell',anim:1,fixed:1,nameOnly:1}
+];
+const byId = id => D.find(x=>x.id===id);
+const esc = s => String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+/* ===== Sticker renderer ===== */
+function sticker(id, st, nameOverride){
+  const d = byId(id), plats = st.plats.length ? st.plats : [], p0 = P[plats[0]];
+  const sw = SW.find(s=>s[0]===st.color);
+  const c = st.color==='platform' ? (p0 ? p0.c : '#8F47F5') : sw[1];
+  const on = st.color==='platform' ? (p0 && p0.o || '#FFFFFF') : (sw[2] ? '#0B0B0B' : '#FFFFFF');
+  const name = nameOverride ?? (st.name || 'your name'), long = name.length > 14 ? ' long' : '';
+  const ic = p => `<i class="ic" style="--pc:${P[p].c};--po:${P[p].o||'#fff'}">${P[p].g}</i>`;
+  const one = p0 ? `<i class="ic">${p0.g}</i>` : '';
+  const nm = `<b class="nm">${esc(name)}</b>`;
+  const tint = st.color!=='platform';
+  const icons = `<span class="icons">${plats.slice(0,4).map(p=>tint?`<i class="ic" style="--pc:${c};--po:${on}">${P[p].g}</i>`:ic(p)).join('')}</span>`;
+  const body = {
+    block: one+nm, round: one+nm, fade: one+nm, cap: one+nm, slide: one+nm, pulse: one+nm,
+    solid: one+nm, under: `<span class="row">${one}${nm}</span><span class="ul"></span>`,
+    row: icons+nm, stack: icons+nm, teal: `${plats.slice(0,3).map(p=>`<i class="ic">${P[p].g}</i>`).join('')}${nm}`,
+    neon: nm, sparkle: nm, lav: (p0?`<i class="ic">${p0.g}</i>`:'')+nm, bell: `<i class="ic">◔</i>${nm}`
+  }[d.d];
+  return `<span class="stk s-${d.d}${long}" style="--c:${c};--on:${on}">${body}</span>`;
+}
+function fits(d, plats){
+  if (!plats.length) return !!d.nameOnly && !d.multi;
+  if (plats.length===1) return !d.multi && (!d.fit || d.fit.includes(plats[0]));
+  return !!d.multi && (!d.fit || plats.every(p=>d.fit.includes(p)));
+}
+function clipHTML(st){
+  return st.onClip ? `<span class="on-clip">${sticker(st.design, st)}</span><span class="cap">that was close</span>` : `<span class="cap">that was close</span>`;
+}
+
+/* ===== Shared bits ===== */
+const platBtns = st => `<div class="plats">${ORDER.map(p=>`<button class="pbtn" data-act="plat" data-v="${p}" aria-pressed="${st.plats.includes(p)}" title="${P[p].l}${P[p].main?'':' (new vs main app)'}" style="--pc:${P[p].c};--po:${P[p].o||'#fff'}"><span class="pg">${P[p].g}</span>${P[p].main?'':'<span class="nw">NEW</span>'}</button>`).join('')}</div>`;
+const swatches = (st, off) => `<div class="swatches${off?' off':''}"><button class="sw auto" data-act="color" data-v="platform" aria-pressed="${st.color==='platform'}" style="--sc:${st.plats[0]?P[st.plats[0]].c:'#8F47F5'}">Platform colour</button>${SW.map(s=>`<button class="sw" data-act="color" data-v="${s[0]}" aria-pressed="${st.color===s[0]}" title="${s[0]}" style="--sc:${s[1]}"></button>`).join('')}</div>`;
+const statusRow = st => `<div class="status"><b><span class="dot${st.onClip?'':' off'}"></span>${st.onClip?'On this clip':'Not on this clip'}<small>${st.onClip?'0:00 to the end · under the facecam':'Your sticker is saved; add it back any time'}</small></b>${st.onClip?'<button class="btn" data-act="clip">Remove</button>':'<button class="btn pri" data-act="clip">Add to this clip</button>'}</div><label class="check"><input type="checkbox" data-act="auto" ${st.auto?'checked':''}> Add to every new clip</label>`;
+const tile = (st, d, cls='', tag='') => `<button class="tile${st.design===d.id?' sel':''}${cls}" data-act="design" data-v="${d.id}" title="${d.n}">${tag}${d.anim?'<span class="pro">PRO</span>':''}${sticker(d.id, st)}${d.fixed?'<span class="fx">own colours</span>':''}</button>`;
+const nameField = (st, ph='Channel name') => `<input class="field" data-act="name" maxlength="24" value="${esc(st.name)}" placeholder="${ph}">`;
+
+/* ===== Variant A ===== */
+function renderA(st){
+  const list = D.filter(d=>fits(d, st.plats)), ek = list.filter(d=>d.src), more = list.filter(d=>!d.src);
+  const label = !st.plats.length ? 'Name-only designs' : st.plats.length===1 ? `Designs for ${P[st.plats[0]].l}` : `Multi-platform designs · ${st.plats.map(p=>P[p].l).join(', ')}`;
+  const fixed = byId(st.design).fixed;
+  return `<div class="ph"><h4>Channel sticker</h4><p>Let viewers know where to find you. Set it once, it goes on every clip.</p></div>
+  <div class="card">
+    <label class="lbl">Channel name</label>${nameField(st)}
+    ${st.scen==='first'?'<p class="hint">Type your name, or connect Twitch to fill it in.</p>':''}
+    <div class="gap"></div>
+    <label class="lbl">Platforms <small>· pick one or more</small></label>${platBtns(st)}
+    <p class="hint${st.warn?' warn':''}">${st.warn||(!st.plats.length?'No platform: your name only.':st.plats.length===1?'Add a second platform for multi designs.':'Up to 4 platforms on one sticker.')}</p>
+    <div class="gap"></div>
+    <label class="lbl">Colour ${fixed?'<small>· this look has its own colours</small>':''}</label>${swatches(st, fixed)}
+  </div>
+  <div class="gap"></div><div class="card">${statusRow(st)}</div>
+  <div class="sec"><h5>${label}</h5><span>${list.length} designs</span></div>
+  ${ek.length?`<div class="tiles">${ek.map(d=>tile(st,d)).join('')}</div>`:''}
+  ${more.length?`<div class="sec"><h5>More looks</h5><span>own colours · animated is PRO</span></div><div class="tiles">${more.map(d=>tile(st,d)).join('')}</div>`:''}`;
+}
+
+/* ===== Variant B ===== */
+function renderB(st){
+  const f = st.filter;
+  const list = D.filter(d=> f==='All' || (f==='Static'&&!d.anim) || (f==='Animated'&&d.anim) || (f==='Multi'&&d.multi));
+  const shown = d => { // draw each look with your platforms; looks that can't, use their own
+    if (fits(d, st.plats)) return {st, tag:''};
+    const plats = d.multi ? (d.fit||['twitch','youtube']).slice(0,3) : d.fit ? [d.fit[0]] : st.plats.slice(0,1);
+    const label = d.multi && !d.fit ? 'needs 2+ platforms' : d.fit ? `${P[d.fit[0]].l}${d.fit.length>1?' +':''} only` : 'name only';
+    return {st:{...st, plats}, tag:`<span class="tg">${label}</span>`};
+  };
+  const cur = byId(st.design), fixed = cur.fixed;
+  return `<div class="ph"><h4>Channel sticker</h4><p>Pick a look. It goes on every clip with your name.</p></div>
+  <div class="sticky"><label class="lbl">Your name on the sticker</label>${nameField(st)}
+    <div class="gap" style="height:10px"></div><div class="pills">${['All','Static','Animated','Multi'].map(x=>`<button class="pill${f===x?' on':''}" data-act="filter" data-v="${x}">${x}</button>`).join('')}</div></div>
+  <div class="tiles three">${list.map(d=>{const s=shown(d);return `<button class="tile${st.design===d.id?' sel':''}" data-act="design" data-v="${d.id}" title="${d.n}">${s.tag}${d.anim?'<span class="pro">PRO</span>':''}${sticker(d.id, s.st)}</button>`}).join('')}</div>
+  <div class="sheet">
+    <div class="sheet-head"><div class="prev">${sticker(st.design, st)}</div><div><b style="font-size:14px">Your sticker</b><br><small style="color:var(--text-3);font-size:12px">${cur.n}${st.note?' · '+st.note:''}</small></div></div>
+    ${st.note?`<p class="hint warn" style="margin:-4px 0 10px">${st.note} <button class="btn" style="height:26px;padding:0 8px;margin-left:6px" data-act="undo">Undo</button></p>`:''}
+    <label class="lbl">Platforms</label><div style="display:flex;flex-wrap:wrap;gap:6px">${ORDER.map(p=>`<button class="pchip" data-act="plat" data-v="${p}" aria-pressed="${st.plats.includes(p)}" style="--pc:${P[p].c};--po:${P[p].o||'#fff'}"><span class="pg">${P[p].g}</span>${P[p].l}</button>`).join('')}</div>
+    <div class="gap" style="height:10px"></div><label class="lbl">Colour ${fixed?'<small>· own colours</small>':''}</label>${swatches(st, fixed)}
+    <div class="gap" style="height:12px"></div>${statusRow(st)}
+  </div>`;
+}
+
+/* ===== Variant C ===== */
+function renderC(st){
+  const vis = st.chans.filter(c=>c.show), visPlats = vis.map(c=>c.p);
+  const shape = {...st, plats: st.mode==='all' ? visPlats : visPlats.slice(0,1)};
+  const looks = D.filter(d=>fits(d, shape.plats)).slice(0,6);
+  if (looks.length && !looks.some(d=>d.id===st.design)) st.design = looks[0].id;
+  const rot = st.mode==='one' && vis.length>1 ? vis[st.tick % vis.length] : vis[0];
+  const prevSt = st.mode==='one' && rot ? {...st, plats:[rot.p]} : shape;
+  const prevName = st.mode==='one' && rot ? (rot.h||'your name') : (vis[0]?.h || st.name || 'your name');
+  const free = ORDER.filter(p=>!st.chans.some(c=>c.p===p));
+  return `<div class="ph"><h4>Channel sticker</h4><p>Your channels, on every clip.</p></div>
+  <div class="bigprev" id="C-prev">${vis.length?sticker(st.design, prevSt, prevName):'<span class="hint">Turn on a channel to show the sticker</span>'}</div>
+  <div class="card">
+    <label class="lbl">Your channels <small>· one handle each</small></label>
+    ${st.chans.map((c,i)=>`<div class="chan" style="--pc:${P[c.p].c};--po:${P[c.p].o||'#fff'}"><span class="pg" title="${P[c.p].l}">${P[c.p].g}</span><input class="field" data-act="handle" data-i="${i}" maxlength="24" value="${esc(c.h)}" placeholder="${P[c.p].l} handle"><button class="sw-tog" data-act="show" data-i="${i}" aria-pressed="${c.show}" title="Show on sticker"></button><button class="x" data-act="rm" data-i="${i}" title="Remove">✕</button></div>`).join('')}
+    ${free.length?`<div class="addch">${free.map(p=>`<button data-act="addch" data-v="${p}">+ ${P[p].l}</button>`).join('')}</div>`:''}
+    ${vis.length>1?`<div class="gap"></div><label class="lbl">Sticker shows</label><div class="seg"><button class="${st.mode==='all'?'on':''}" data-act="mode" data-v="all">All at once</button><button class="${st.mode==='one'?'on':''}" data-act="mode" data-v="one">One at a time</button></div>${st.mode==='one'?'<p class="hint">Switches every 3 s. Clips under 6 s show the first channel.</p>':''}`:''}
+  </div>
+  <div class="sec"><h5>Looks for your channels</h5><button data-act="noop">All looks →</button></div>
+  ${looks.length?`<div class="strip">${looks.map(d=>`<button class="tile${st.design===d.id?' sel':''}" data-act="design" data-v="${d.id}" title="${d.n}">${d.anim?'<span class="pro">PRO</span>':''}${sticker(d.id, shape, vis[0]?.h)}</button>`).join('')}</div>`:'<div class="empty">No channels on. Turn one on to see looks.</div>'}
+  <div class="sec"><h5>Colour</h5></div>${swatches(shape, byId(st.design).fixed)}
+  <div class="gap"></div><div class="card">${statusRow(st)}</div>`;
+}
+
+/* ===== State + scenarios ===== */
+const base = () => ({name:'quan1102', plats:['twitch'], color:'platform', design:'block', onClip:true, auto:true, warn:'', scen:'default', filter:'All', note:'', prev:null});
+const SCEN = {
+  A:{default:{}, first:{name:'',plats:[],design:'solid'}, multi:{plats:['twitch','youtube','kick'],design:'row'},
+     long:{name:'TheRealQuanBuiPlaysAll'}, fixed:{plats:['twitch'],design:'neon'}, off:{onClip:false}},
+  B:{default:{}, first:{name:'',plats:[],design:'solid'}, mismatch:{plats:['kick'],design:'lav',note:'Switched to Twitch for this look',prev:{plats:['kick'],design:'block'},plats2:['twitch']}, off:{onClip:false}},
+  C:{default:{}, first:{chans:[{p:'twitch',h:'',show:true}]}, rotate:{chans:[{p:'twitch',h:'quan1102',show:true},{p:'youtube',h:'@quanplays',show:true},{p:'tiktok',h:'quan.clips',show:true}],mode:'one',design:'block'}, off:{onClip:false}}
+};
+const S = {};
+function reset(v, scen){
+  const s = {...base(), ...SCEN[v][scen], scen};
+  if (v==='B' && scen==='mismatch') s.plats = ['twitch'];
+  if (v==='C'){ s.chans = (SCEN.C[scen].chans || [{p:'twitch',h:'quan1102',show:true},{p:'youtube',h:'@quanplays',show:false}]).map(c=>({...c})); s.mode = SCEN.C[scen].mode || 'all'; s.tick = 0; }
+  S[v] = s; render(v);
+}
+const R = {A:renderA, B:renderB, C:renderC};
+function render(v){
+  const el = document.getElementById(v), top = el.scrollTop;
+  el.innerHTML = R[v](S[v]); el.scrollTop = top;
+  const st = v==='C' ? {...S.C, plats:S.C.chans.filter(c=>c.show).map(c=>c.p).slice(0, S.C.mode==='all'?4:1), name:S.C.chans.find(c=>c.show)?.h||'', onClip:S.C.onClip && S.C.chans.some(c=>c.show)} : S[v];
+  document.getElementById(v+'-clip').innerHTML = clipHTML(st);
+}
+
+/* ===== Events ===== */
+document.querySelectorAll('.scen').forEach(bar=>bar.addEventListener('click',e=>{
+  const b = e.target.closest('button'); if(!b) return;
+  bar.querySelectorAll('button').forEach(x=>x.classList.toggle('on', x===b)); reset(bar.dataset.for, b.dataset.scen);
+}));
+['A','B','C'].forEach(v=>{
+  const el = document.getElementById(v);
+  el.addEventListener('click',e=>{
+    const b = e.target.closest('[data-act]'); if(!b || b.tagName==='INPUT') return;
+    const st = S[v], a = b.dataset.act, val = b.dataset.v;
+    if (a==='plat'){
+      const has = st.plats.includes(val);
+      if (!has && st.plats.length>=4){ st.warn='Up to 4 platforms fit on one sticker. Turn one off first.'; return render(v); }
+      st.warn=''; st.plats = has ? st.plats.filter(p=>p!==val) : [...st.plats, val];
+      st.plats.sort((x,y)=>ORDER.indexOf(x)-ORDER.indexOf(y));
+      if (!fits(byId(st.design), st.plats)) st.design = (D.find(d=>d.src&&fits(d,st.plats))||D.find(d=>fits(d,st.plats))||{id:'solid'}).id;
+      st.note='';
+    }
+    if (a==='color') st.color = val;
+    if (a==='design'){
+      const d = byId(val);
+      if (v==='B' && !fits(d, st.plats)){ st.prev = {plats:st.plats, design:st.design}; st.plats = d.multi ? (d.fit||['twitch','youtube']).slice(0,3) : d.fit ? [d.fit[0]] : st.plats.slice(0,1); st.note = `Switched to ${st.plats.map(p=>P[p].l).join(' + ')} for this look`; }
+      st.design = val; if (d.fixed) st.color = 'platform';
+    }
+    if (a==='undo' && st.prev){ Object.assign(st, st.prev); st.prev=null; st.note=''; }
+    if (a==='clip') st.onClip = !st.onClip;
+    if (a==='filter') st.filter = val;
+    if (a==='mode') st.mode = val;
+    if (a==='show') st.chans[b.dataset.i].show = !st.chans[b.dataset.i].show;
+    if (a==='rm') st.chans.splice(b.dataset.i,1);
+    if (a==='addch') st.chans.push({p:val,h:'',show:true});
+    if (a==='noop') return;
+    render(v);
+  });
+  el.addEventListener('change',e=>{ if(e.target.dataset.act==='auto') S[v].auto = e.target.checked; });
+  // typing updates stickers without rebuilding the input (keeps focus)
+  el.addEventListener('input',e=>{
+    const t = e.target, st = S[v];
+    if (t.dataset.act==='name') st.name = t.value;
+    else if (t.dataset.act==='handle') st.chans[t.dataset.i].h = t.value;
+    else return;
+    el.querySelectorAll('.tile,.prev,.bigprev').forEach(box=>{
+      const s = box.querySelector('.stk'); if(!s) return;
+      const nm = s.querySelector('.nm'); const name = v==='C' ? (st.chans.find(c=>c.show)?.h || 'your name') : (st.name || 'your name');
+      if (nm){ nm.textContent = name; s.classList.toggle('long', name.length>14); }
+    });
+    const st2 = v==='C' ? {...st, plats:st.chans.filter(c=>c.show).map(c=>c.p).slice(0, st.mode==='all'?4:1), name:st.chans.find(c=>c.show)?.h||''} : st;
+    document.getElementById(v+'-clip').innerHTML = clipHTML(st2);
+  });
+});
+// C rotation preview
+setInterval(()=>{ const st = S.C; if (st && st.mode==='one' && st.chans.filter(c=>c.show).length>1 && !document.getElementById('C').contains(document.activeElement)){ st.tick++; const box = document.getElementById('C-prev'); if (box){ const vis = st.chans.filter(c=>c.show), c = vis[st.tick%vis.length]; box.innerHTML = sticker(st.design, {...st, plats:[c.p]}, c.h||'your name'); } } }, 3000);
+
+reset('A','default'); reset('B','default'); reset('C','default');
+</script>
+</body>
+</html>

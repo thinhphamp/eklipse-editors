@@ -1,0 +1,76 @@
+{
+  "id": "aud-music-start-later",
+  "flow": "A4",
+  "menu": "Audio",
+  "persona": "heavy-editor",
+  "target": "claude-improvement",
+  "weight": 0.2,
+  "mission": "Add background music that comes in a bit after the clip starts, not at the very beginning, and stops when the clip ends rather than running past it. Export it.",
+  "start": {
+    "screen": "L00"
+  },
+  "checkpoints": [
+    {
+      "id": "music",
+      "check": "state.audio.some(x => x.category === 'Music')",
+      "describe": "A song is on the clip"
+    },
+    {
+      "id": "later",
+      "check": "state.audio.some(x => x.category === 'Music' && x.start > 0)",
+      "describe": "The song starts after the beginning"
+    },
+    {
+      "id": "ends",
+      "check": "state.audio.some(x => x.category === 'Music' && x.start + x.duration <= state.duration + 0.5)",
+      "describe": "The song does not run past the end of the clip"
+    },
+    {
+      "id": "export",
+      "check": "state.exported === true",
+      "describe": "The clip export has finished"
+    }
+  ],
+  "bestPath": [
+    {
+      "do": "click",
+      "selector": ".rail nav button:has-text('Audio')"
+    },
+    {
+      "do": "click",
+      "selector": ".audio-tabs button:nth-child(2)"
+    },
+    {
+      "do": "click",
+      "selector": ".audio-row-title"
+    },
+    {
+      "do": "drag",
+      "selector": ".timeline-chip.audio .chip-trim.left",
+      "to": ".timeline-content"
+    },
+    {
+      "do": "click",
+      "selector": ".tb-primary"
+    },
+    {
+      "do": "click",
+      "selector": ".export-primary"
+    }
+  ],
+  "bestTimeSeconds": null,
+  "budget": {
+    "minutes": 12
+  },
+  "why": {
+    "data": "Heavy editors use trim and music and check the result fits the clip; trim is used in 22.9% of heavy-depth projects.",
+    "source": "plans/261027-usability-probe-skill/personas.md"
+  },
+  "input": {
+    "clip": null
+  },
+  "playerIds": [
+    "heavy-explorer",
+    "heavy-meticulous"
+  ]
+}

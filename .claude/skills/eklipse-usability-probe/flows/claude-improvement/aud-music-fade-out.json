@@ -1,0 +1,70 @@
+{
+  "id": "aud-music-fade-out",
+  "flow": "A5",
+  "menu": "Audio",
+  "persona": "heavy-editor",
+  "target": "claude-improvement",
+  "weight": 0.2,
+  "mission": "Add background music and make it fade out smoothly at the end instead of stopping suddenly. Export it.",
+  "start": {
+    "screen": "L00"
+  },
+  "checkpoints": [
+    {
+      "id": "music",
+      "check": "state.audio.some(x => x.category === 'Music')",
+      "describe": "A song is on the clip"
+    },
+    {
+      "id": "fade",
+      "check": "state.audio.some(x => x.category === 'Music' && x.fadeOut > 0)",
+      "describe": "The song fades out at the end"
+    },
+    {
+      "id": "export",
+      "check": "state.exported === true",
+      "describe": "The clip export has finished"
+    }
+  ],
+  "bestPath": [
+    {
+      "do": "click",
+      "selector": ".rail nav button:has-text('Audio')"
+    },
+    {
+      "do": "click",
+      "selector": ".audio-tabs button:nth-child(2)"
+    },
+    {
+      "do": "click",
+      "selector": ".audio-row-title"
+    },
+    {
+      "do": "click",
+      "selector": "input[aria-label='Fade Audio Out']"
+    },
+    {
+      "do": "click",
+      "selector": ".tb-primary"
+    },
+    {
+      "do": "click",
+      "selector": ".export-primary"
+    }
+  ],
+  "bestTimeSeconds": null,
+  "budget": {
+    "minutes": 12
+  },
+  "why": {
+    "data": "Heavy editors adjust every tool in their usual order and check the detail; music is used in 3.8% of heavy-depth projects.",
+    "source": "plans/261027-usability-probe-skill/personas.md"
+  },
+  "input": {
+    "clip": null
+  },
+  "playerIds": [
+    "heavy-explorer",
+    "heavy-meticulous"
+  ]
+}

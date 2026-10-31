@@ -1,0 +1,12 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Behavior",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "patience", "brief"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+    "patience": { "type": "number", "minimum": 1 },
+    "brief": { "type": "string", "minLength": 10, "maxLength": 600 }
+  }
+}

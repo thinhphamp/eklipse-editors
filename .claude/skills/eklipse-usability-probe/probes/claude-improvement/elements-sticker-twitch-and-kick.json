@@ -1,0 +1,41 @@
+{
+  "target": "claude-improvement",
+  "holdout": true,
+  "id": "elements-sticker-twitch-and-kick",
+  "feature": "Elements",
+  "personaRefs": [
+    "multi-platform-brand-builder"
+  ],
+  "start": {
+    "screen": "default"
+  },
+  "goal": "I also stream on Kick now. My name sticker should show both Twitch and Kick.",
+  "success": {
+    "check": "state.elements.some(e => e.category === 'Social Stickers' && String(e.style && e.style.design) === 'sl-san14')",
+    "describe": "A sticker with both the Twitch and the Kick logo is on the clip"
+  },
+  "budget": {
+    "steps": 8,
+    "scrolls": 4,
+    "minutes": 4
+  },
+  "bestPath": [
+    {
+      "do": "click",
+      "selector": ".rail nav button:has-text('Elements')"
+    },
+    {
+      "do": "click",
+      "selector": "button:has-text('View all') >> nth=0"
+    },
+    {
+      "do": "click",
+      "selector": ".sl-tile[title='Lime inset on a purple layered plate']"
+    }
+  ],
+  "why": {
+    "data": "Kick sticker 4.4% of web projects; 2+ platforms 79.4% export",
+    "source": "plans/261027-usability-probe-skill/personas.md"
+  },
+  "notes": "Held out for the second-platform variant loop (2026-10-27)."
+}

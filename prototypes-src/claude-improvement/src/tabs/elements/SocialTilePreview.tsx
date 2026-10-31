@@ -1,0 +1,1 @@
+export function SocialTilePreview({index,onClick}:{index:number;onClick:()=>void}){return <button className="elements-tile elements-social-tile" onClick={onClick}><span><b>{index?'▣':'◉'}</b> thinhsocial <em>Follow</em></span></button>}

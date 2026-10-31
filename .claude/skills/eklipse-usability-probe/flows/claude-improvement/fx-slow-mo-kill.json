@@ -1,0 +1,71 @@
+{
+  "id": "fx-slow-mo-kill",
+  "flow": "F4",
+  "menu": "Effects",
+  "persona": "heavy-editor",
+  "target": "claude-improvement",
+  "weight": 0.2,
+  "mission": "Slow down only the big kill, about halfway through, to half speed or slower so nobody misses it, then export. The rest of the clip should keep normal speed.",
+  "start": {
+    "screen": "L00"
+  },
+  "checkpoints": [
+    {
+      "id": "slow",
+      "check": "state.effects.some(x => x.category === 'Speed Control' && x.speed <= 0.5)",
+      "describe": "A slow-motion section is on the clip"
+    },
+    {
+      "id": "short",
+      "check": "state.effects.some(x => x.category === 'Speed Control' && x.speed <= 0.5 && x.start > 0 && x.duration < 0.5 * state.duration)",
+      "describe": "It covers one moment after the start, not the whole clip"
+    },
+    {
+      "id": "export",
+      "check": "state.exported === true",
+      "describe": "The clip export has finished"
+    }
+  ],
+  "bestPath": [
+    {
+      "do": "click",
+      "selector": ".ruler",
+      "positionRatio": 0.5
+    },
+    {
+      "do": "click",
+      "selector": ".rail nav button:has-text('Effects')"
+    },
+    {
+      "do": "click",
+      "selector": ".effects-root-card:has-text('Slow down or speed up')"
+    },
+    {
+      "do": "click",
+      "selector": ".effects-speed-card:has-text('Slow motion')"
+    },
+    {
+      "do": "click",
+      "selector": ".tb-primary"
+    },
+    {
+      "do": "click",
+      "selector": ".export-primary"
+    }
+  ],
+  "bestTimeSeconds": null,
+  "budget": {
+    "minutes": 12
+  },
+  "why": {
+    "data": "Heavy editors adjust timing on one moment and check the rest is untouched; speed control is a Premium effect in the real editor.",
+    "source": "plans/261027-usability-probe-skill/personas.md"
+  },
+  "input": {
+    "clip": null
+  },
+  "playerIds": [
+    "heavy-explorer",
+    "heavy-meticulous"
+  ]
+}

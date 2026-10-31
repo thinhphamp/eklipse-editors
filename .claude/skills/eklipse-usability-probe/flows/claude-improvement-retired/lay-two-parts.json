@@ -1,0 +1,81 @@
+{
+  "id": "lay-two-parts",
+  "flow": "L4",
+  "menu": "Layouts",
+  "persona": "heavy-editor",
+  "target": "claude-improvement",
+  "weight": 0.2,
+  "mission": "The first few seconds of this clip are you talking to chat, the rest is the fight. Show only your face while you talk, then switch to a layout that shows the game for the fight. Export it.",
+  "start": {
+    "screen": "L00"
+  },
+  "checkpoints": [
+    {
+      "id": "split",
+      "check": "state.splitPoints.length > 0",
+      "describe": "The clip is split into parts"
+    },
+    {
+      "id": "talk",
+      "check": "(state.segmentLayouts['0.00'] || state.layoutId) === 'Basecam'",
+      "describe": "The opening part shows only the facecam"
+    },
+    {
+      "id": "fight",
+      "check": "state.splitPoints.some(p => (state.segmentLayouts[p.toFixed(2)] || state.layoutId) !== 'Basecam')",
+      "describe": "A later part uses a gameplay layout"
+    },
+    {
+      "id": "export",
+      "check": "state.exported === true",
+      "describe": "The clip export has finished"
+    }
+  ],
+  "bestPath": [
+    {
+      "do": "click",
+      "selector": ".video-block"
+    },
+    {
+      "do": "click",
+      "selector": ".ruler",
+      "positionRatio": 0.3
+    },
+    {
+      "do": "click",
+      "selector": "button[aria-label='Split clip at current time']"
+    },
+    {
+      "do": "click",
+      "selector": ".ruler",
+      "positionRatio": 0.05
+    },
+    {
+      "do": "click",
+      "selector": ".layout-tile:has-text('Basecam')"
+    },
+    {
+      "do": "click",
+      "selector": ".tb-primary"
+    },
+    {
+      "do": "click",
+      "selector": ".export-primary"
+    }
+  ],
+  "bestTimeSeconds": null,
+  "budget": {
+    "minutes": 12
+  },
+  "why": {
+    "data": "Heavy editors split (+30.8 export gap) and the editor applies a layout per segment after a split; this flow tests that per-part layouts are findable.",
+    "source": "plans/261027-usability-probe-skill/personas.md"
+  },
+  "input": {
+    "clip": null
+  },
+  "playerIds": [
+    "heavy-explorer",
+    "heavy-meticulous"
+  ]
+}

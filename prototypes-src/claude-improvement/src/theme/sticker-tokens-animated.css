@@ -1,0 +1,29 @@
+/* Brand colours for the animated sticker designs (hex allowed only in theme token files). */
+:root{
+  --stk-an-white:#ffffff;
+  --stk-an-black:#050505;
+  --stk-an-charcoal:#34333a;
+  --stk-an-gray:#858589;
+  --stk-an-gray-light:#d8d8dc;
+  --stk-an-twitch:#9146ff;
+  --stk-an-twitch-dark:#4f0867;
+  --stk-an-purple:#7717d7;
+  --stk-an-purple-deep:#3e075c;
+  --stk-an-purple-shadow:#25043c;
+  --stk-an-lavender:#c4acee;
+  --stk-an-pink:#e4468b;
+  --stk-an-red:#ed1c24;
+  --stk-an-red-dark:#a40913;
+  --stk-an-kick:#53fc18;
+  --stk-an-lime:#adff1f;
+  --stk-an-mint:#77dfbe;
+  --stk-an-cyan:#42e8e0;
+  --stk-an-blue:#168de2;
+  --stk-an-orange:#ff9d1f;
+  --stk-an-shadow-20:#00000033;
+  --stk-an-shadow-22:#00000038;
+  --stk-an-shadow-23:#0000003b;
+  --stk-an-shadow-25:#00000040;
+  --stk-an-shadow-28:#00000047;
+  --stk-an-white-65:#ffffffa6;
+}

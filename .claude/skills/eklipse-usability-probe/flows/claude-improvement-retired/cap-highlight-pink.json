@@ -1,0 +1,77 @@
+{
+  "id": "cap-highlight-pink",
+  "flow": "C3",
+  "menu": "Captions",
+  "persona": "heavy-editor",
+  "target": "claude-improvement",
+  "weight": 0.2,
+  "mission": "The word being spoken should light up in pink as it plays. Set that up on the subtitles, then export.",
+  "start": {
+    "screen": "default"
+  },
+  "checkpoints": [
+    {
+      "id": "pink",
+      "check": "(()=>{const c=String((()=>{try{return JSON.parse(state.captions.text)}catch(e){return {words:[],style:{},speakers:[]}}})().style.highlightColor||'');return (()=>{try{return JSON.parse(state.captions.text)}catch(e){return {words:[],style:{},speakers:[]}}})().style.highlight==='Color' && c !== '' && c !== 'var(--art-ffff81)' && c.toLowerCase() === (getComputedStyle(document.documentElement).getPropertyValue('--art-fa90df').trim().toLowerCase())})()",
+      "describe": "The spoken-word highlight colour is pink"
+    },
+    {
+      "id": "export",
+      "check": "state.exported === true",
+      "describe": "The clip export has finished"
+    }
+  ],
+  "bestPath": [
+    {
+      "do": "click",
+      "selector": ".rail nav button:has-text('Captions')"
+    },
+    {
+      "do": "click",
+      "text": "Presets"
+    },
+    {
+      "do": "click",
+      "selector": ".captions-create"
+    },
+    {
+      "do": "click",
+      "text": "Configure"
+    },
+    {
+      "do": "click",
+      "selector": ".captions-style-row:has-text('Fill')"
+    },
+    {
+      "do": "click",
+      "selector": "button[aria-label='Fill art-fa90df']"
+    },
+    {
+      "do": "click",
+      "selector": ".captions-modal footer .captions-primary"
+    },
+    {
+      "do": "click",
+      "selector": ".tb-primary"
+    },
+    {
+      "do": "click",
+      "selector": ".export-primary"
+    }
+  ],
+  "bestTimeSeconds": null,
+  "budget": {
+    "minutes": 12
+  },
+  "why": {
+    "data": "Heavy editors use more caption options than other groups; the highlight colour sits two levels deep in the style editor.",
+    "source": "plans/261027-usability-probe-skill/personas.md"
+  },
+  "input": {
+    "clip": null
+  },
+  "playerIds": [
+    "heavy-explorer",
+    "heavy-meticulous"
+  ]
+}

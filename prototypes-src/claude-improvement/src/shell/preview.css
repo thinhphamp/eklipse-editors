@@ -1,0 +1,127 @@
+.phone-preview{container-type:inline-size}
+.phone-preview .preview-caption{position:absolute;z-index:2;left:9%;right:10%;bottom:21%;display:flex;justify-content:center;align-items:center;gap:2cqw;color:var(--art-6389ff);text-align:center;font-size:7cqw;line-height:1.1;font-weight:950;letter-spacing:-.04em;-webkit-text-stroke:.35cqw var(--art-151329);text-shadow:.3cqw .4cqw 0 var(--art-171123),0 0 1.2cqw var(--art-00000077);pointer-events:none}
+.phone-preview .preview-caption.caption-words{color:var(--art-77a0ff);font-style:italic;font-size:6.7cqw}
+.phone-preview .preview-caption.caption-supersize{font-size:10cqw;letter-spacing:-.06em}
+.phone-preview .preview-caption.caption-shake span:last-child{transform:rotate(-4deg);text-shadow:-.6cqw .3cqw var(--art-e44983),.6cqw -.2cqw var(--art-13d9e8)}
+.caption-emoji-icon,.caption-avatar-icon{font-size:5cqw;-webkit-text-stroke:0;color:var(--art-ffffff)}
+.caption-avatar-icon{display:grid;place-items:center;width:7cqw;height:7cqw;border-radius:50%;background:var(--art-8d3bff)}
+.preview-item{position:absolute;z-index:4;display:grid;place-items:center}
+.preview-item.selected{outline:1.5px solid var(--accent-text);outline-offset:0}
+.preview-item-art{display:grid;place-items:center;width:100%;height:100%;padding:0;border:0;background:transparent;color:var(--art-ffffff);cursor:pointer;overflow:hidden}
+.preview-item-art>span{max-width:100%}
+.element-social{display:flex;align-items:center;justify-content:center;gap:1.1cqw;min-width:95%;padding:1cqw 1.6cqw;border-radius:1cqw;background:var(--art-562bbd);color:var(--art-ffffff);box-shadow:0 .4cqw 1.2cqw var(--art-00000099);font-size:2.4cqw;line-height:1;white-space:nowrap}
+.element-social b{font-size:2.8cqw}.element-social small{padding:.6cqw 1cqw;border-radius:2cqw;background:var(--art-ffffff);color:var(--art-25145d);font-size:1.5cqw}
+.element-text{color:var(--art-81fc41);font-size:5cqw;line-height:.94;font-weight:1000;text-align:center;text-shadow:.35cqw .4cqw 0 var(--art-111111),-.25cqw -.25cqw 0 var(--art-111111);overflow-wrap:anywhere}
+.element-reaction{padding:1cqw 1.3cqw;background:var(--art-0d0b17ed);color:var(--art-ffffff);font-size:2.6cqw;white-space:nowrap}.element-reaction b{color:var(--art-3c9eff)}
+.element-sticker{font-size:13cqw;filter:drop-shadow(0 .4cqw 1cqw var(--art-00000099))}.element-gif{display:grid;place-items:center;width:18cqw;height:16cqw;border-radius:2cqw;background:linear-gradient(135deg,var(--art-a200fb),var(--art-1054c3));font-size:10cqw}
+.element-emote{font-size:10cqw;color:var(--art-ff404b);text-shadow:0 .5cqw 1cqw var(--art-00000099)}.element-image{width:100%;height:100%;object-fit:cover;border:1px solid var(--art-eeeeee)}
+.selection-handle{position:absolute;width:1.8cqw;height:1.8cqw;border:1px solid var(--accent);border-radius:50%;background:var(--handle-fill);pointer-events:none}.selection-handle.top-left{left:-.9cqw;top:-.9cqw}.selection-handle.top-right{right:-.9cqw;top:-.9cqw}.selection-handle.bottom-left{left:-.9cqw;bottom:-.9cqw}.selection-handle.bottom-right{right:-.9cqw;bottom:-.9cqw}
+.selection-controls{position:absolute;z-index:7;transform:translateX(-50%);display:grid;justify-items:center;gap:.7cqw}
+:is(.phone-preview,.selection-layer) .selected-toolbar{position:static;display:flex;gap:0;padding:.5cqw;border-radius:.8cqw;background:var(--bg-card);box-shadow:0 .4cqw 1cqw var(--shadow-ink);white-space:nowrap}
+:is(.phone-preview,.selection-layer) .selected-toolbar button{width:5.6cqw;height:4.5cqw;padding:0;border:0;border-right:1px solid var(--border-subtle);background:var(--bg-card);color:var(--text-1);font-size:2.9cqw;cursor:pointer}:is(.phone-preview,.selection-layer) .selected-toolbar button:last-child{border-right:0;color:var(--danger-text)}
+:is(.phone-preview,.selection-layer) .selected-toolbar button:hover{background:var(--bg-hover)}
+.selection-hint{position:absolute;bottom:calc(100% + .6cqw);padding:.65cqw 1.1cqw;border-radius:.4cqw;background:var(--bg-tooltip);color:var(--text-1);font-size:1.8cqw;white-space:nowrap}
+.opacity-popover{width:43cqw;padding:2cqw 2.4cqw;border-radius:.7cqw;background:var(--bg-card);color:var(--text-1);box-shadow:0 .4cqw 1.5cqw var(--shadow-ink);font-size:2cqw}
+.opacity-popover>div{display:flex;align-items:center;gap:1cqw;margin-top:1cqw}.opacity-popover input[type=range]{width:100%;min-width:0;accent-color:var(--accent)}.opacity-popover input[type=number]{width:8cqw;border:1px solid var(--border);border-radius:.6cqw;padding:1cqw .5cqw;text-align:center;font-size:1.8cqw}.opacity-popover span{margin-left:-.7cqw}
+.stage-layouts .phone-preview .preview-caption{font-size:6cqw}
+.stage-export .phone-preview .social-meta{font-size:2.5cqw}.stage-export .phone-preview .social-meta strong{font-size:2.3cqw}.stage-export .phone-preview .social-meta b{padding:.8cqw 1.4cqw;margin-left:1cqw}.stage-export .phone-preview .social-meta p{margin:.8cqw 0}.stage-export .phone-preview .social-actions{font-size:6cqw;gap:2cqw}.stage-export .phone-preview .social-actions small{font-size:2cqw}.stage-export .phone-preview .social-top svg{width:4.5cqw;height:4.5cqw}.stage-export .phone-preview .social-top span{font-size:5cqw}
+.profile-menu{position:absolute;z-index:9;left:76px;bottom:24px;width:190px;padding:10px;border:1px solid var(--border);border-radius:10px;background:var(--bg-card);box-shadow:0 4px 12px var(--shadow-ink)}.profile-menu button{display:block;width:100%;border:0;border-radius:5px;background:var(--bg-card);padding:10px;text-align:left;color:var(--text-1);font-size:var(--fs-body)}.profile-menu button:hover{background:var(--bg-hover)}
+.preview-select{position:relative}.preview-select .safe-zone-button{width:100%;height:36px;border:1px solid var(--border);border-radius:5px;background:var(--bg-card);text-align:left;padding:0 12px;font-size:var(--fs-body)}.safe-zone-menu{position:absolute;top:39px;left:0;right:0;z-index:8;padding:5px;border:1px solid var(--border);border-radius:5px;background:var(--bg-card);box-shadow:0 3px 9px var(--shadow-ink)}.safe-zone-menu button{display:block;width:100%;padding:8px;border:0;background:var(--bg-card);text-align:left;font-size:var(--fs-body)}.safe-zone-menu button.selected,.safe-zone-menu button:hover{background:var(--accent-soft)}
+.legacy .stage-layouts{justify-content:flex-start;padding-left:168px;gap:16px}.legacy .stage-layouts .source-column{width:580px;flex:0 0 580px}.legacy .stage-layouts .preview-column{width:190px;flex:0 0 190px}
+.stage-export .preview-column{width:min(720px,calc(56.25vh - 236px));max-width:70%;max-height:none;flex:0 0 auto}.stage-export .phone-preview{width:100%;height:auto;max-height:none;aspect-ratio:9/16}
+.legacy-clutch-title{position:absolute;z-index:3;top:17%;left:30%;width:40%;padding:1cqw .3cqw;border-radius:1cqw;background:var(--art-fffffff0);color:var(--art-292929);font-size:6cqw;font-weight:700;line-height:1;text-align:center;box-shadow:0 .4cqw 1cqw var(--art-00000044)}
+@media (min-height:2500px){.stage-export{justify-content:flex-start;padding-left:53px}.stage-export .preview-column{width:1200px;max-width:none;flex:0 0 1200px;align-items:flex-start;padding-top:min(18vh,790px)}}
+
+/* Engine canvases (phase 04): the canvas fills the layout / source frame. */
+.layout-canvas>canvas,.source-canvas>canvas{position:absolute;inset:0;width:100%;height:100%;display:block;border-radius:inherit}
+.source-canvas{overflow:visible}
+.source-canvas>canvas{border-radius:5px}
+.source-crop-wrap{position:relative}.source-crop-wrap .source-canvas{width:100%}.source-crop{cursor:move}.source-crop.crop-selected{border-color:var(--accent);z-index:2}.crop-handle{position:absolute;width:9px;height:9px;background:var(--accent);border:1px solid var(--text-on-accent);cursor:nwse-resize}.crop-handle.top-left{left:-5px;top:-5px}.crop-handle.top-right{right:-5px;top:-5px}.crop-handle.bottom-left{left:-5px;bottom:-5px}.crop-handle.bottom-right{right:-5px;bottom:-5px}.crop-toolbar{position:absolute;left:50%;top:calc(100% + 8px);transform:translateX(-50%);z-index:6;display:flex;align-items:center;gap:3px;padding:4px;border-radius:6px;background:var(--bg-card);box-shadow:0 3px 12px var(--shadow-ink);white-space:nowrap}.crop-toolbar button,.crop-toolbar label{padding:5px 7px;border:0;background:transparent;color:var(--text-1);font-size:var(--fs-label)}.crop-toolbar select{max-width:90px;background:var(--bg-card);border:0;color:var(--text-1)}.crop-radius{position:absolute;top:35px;left:0;background:var(--bg-card)}
+.export-setting{display:flex;gap:8px;align-items:center;margin:10px 0;font-size:var(--fs-body)}.export-setting input[type=text],.export-setting input:not([type]){height:32px;background:var(--bg-card);border:1px solid var(--border);border-radius:4px;padding:4px;color:var(--text-1)}.export-flow{position:relative;width:min(400px,90vw);padding:28px;border-radius:8px;background:var(--bg-panel);text-align:center}.export-flow progress{width:100%;accent-color:var(--accent)}.export-flow button,.export-flow a{display:inline-block;margin:12px;padding:8px 14px;border:0;border-radius:4px;background:var(--accent);color:var(--text-on-accent)}.export-player{width:160px;aspect-ratio:9/16;margin:auto}.saved-templates button{display:block;width:100%;padding:8px;margin:5px 0;border:1px solid var(--border);background:var(--bg-card);color:var(--text-1);text-align:left}
+.shortcut-panel{position:absolute;right:8px;bottom:36px;z-index:8;width:230px;padding:14px;border:1px solid var(--border);border-radius:8px;background:var(--bg-card);box-shadow:0 4px 12px var(--shadow-ink);font-size:var(--fs-label)}.shortcut-panel p{margin:6px 0}.shortcut-panel>button{float:right}
+.preview-crop-target{position:absolute;z-index:2;border:1px solid transparent;background:transparent;cursor:pointer}.preview-crop-target.selected{border:2px solid var(--accent);box-shadow:inset 0 0 0 1px var(--handle-fill)}
+.reset-layout{margin:8px 16px;padding:6px 10px;border:1px solid var(--border);border-radius:4px;background:var(--bg-card);color:var(--text-1);font-size:var(--fs-label)}
+.preview-zoom-shell{transform-origin:center center}.preview-zoom-shell>.phone-preview{width:100%}
+
+.export-player{position:relative}.export-watermark{position:absolute;right:8px;bottom:8px;padding:3px 5px;border-radius:3px;background:var(--scrim);color:var(--text-on-accent);font-size:var(--fs-micro);font-weight:700}
+.crop-radius input{width:90px;accent-color:var(--accent)}
+
+/* The zoom wrapper must fill the preview column or the phone frame collapses (found by R2/R3). */
+.preview-zoom-shell{width:100%}
+
+/* Selecting a crop (source or preview) outlines its output area in the crop's colour, with corner handles. */
+.preview-crop-target.selected{border:2px solid var(--art-17afff);box-shadow:none}
+.preview-crop-target[data-tone=pink].selected{border-color:var(--art-f216c7)}
+.source-crop.yellow,.preview-crop-target[data-tone=yellow].selected{border-color:var(--art-ffcc27)}
+.preview-crop-target[data-tone=yellow]{border-color:var(--art-ffcc27)}
+.source-crop.yellow span{background:var(--art-ffcc27);color:var(--art-062343)}
+.source-crop.lavender,.preview-crop-target[data-tone=lavender].selected{border-color:var(--art-bb8dff)}
+.source-crop.lavender span{background:var(--art-bb8dff);color:var(--art-062343)}
+.preview-crop-target .crop-handle{pointer-events:auto}
+.preview-crop-toolbar{position:absolute;z-index:8;left:50%;bottom:2%;transform:translateX(-50%);display:flex;gap:2px;padding:3px;border-radius:5px;background:var(--bg-card);box-shadow:0 3px 12px var(--shadow-ink);white-space:nowrap}
+.preview-crop-toolbar button{border:0;background:transparent;color:var(--text-1);font-size:var(--fs-label);padding:5px;cursor:pointer}
+
+/* Crop toolbar at the reference size (≈340×40 px, 14 px text). */
+.crop-toolbar{gap:2px;padding:4px 6px;border-radius:8px}
+.crop-toolbar button,.crop-toolbar label{min-width:36px;height:32px;padding:0 8px;font-size:var(--fs-label);display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.crop-toolbar select{max-width:none;font-size:var(--fs-label)}
+
+/* Floating toolbars keep a fixed on-screen size like the reference (≈220×36 px), whatever the preview zoom. */
+:is(.phone-preview,.selection-layer) .selection-controls{gap:6px}
+:is(.phone-preview,.selection-layer) .selected-toolbar{padding:3px;border-radius:6px;box-shadow:0 3px 10px var(--shadow-ink)}
+:is(.phone-preview,.selection-layer) .selected-toolbar button{width:40px;height:30px;font-size:16px;border-radius:4px}
+:is(.phone-preview,.selection-layer) .selected-toolbar .ui-icon{width:16px;height:16px}
+:is(.phone-preview,.selection-layer) .opacity-popover{width:260px;padding:12px 14px;border-radius:8px;font-size:var(--fs-body)}
+:is(.phone-preview,.selection-layer) .opacity-popover>div{gap:8px;margin-top:8px}
+:is(.phone-preview,.selection-layer) .opacity-popover input[type=text]{width:48px;flex:0 0 48px;padding:4px;border-radius:4px;font-size:var(--fs-body)}
+/* R13 crop shape popup extends below the source stage. */
+.stage-layouts{overflow:visible;position:relative;z-index:3}
+.crop-toolbar .crop-shape-menu{display:grid;grid-template-columns:1fr;width:220px;max-height:280px;overflow:auto}
+.crop-toolbar .crop-shape-menu button{display:flex;width:100%;height:38px;justify-content:space-between;text-align:left;white-space:nowrap}
+
+/* ---- Stage fit (lead, 2026-10-22). One measured height (--fit-h, see use-stage-fit.ts) sizes the
+   source view and the preview; earlier width rules above are superseded. Canvases share the top edge,
+   the controls row sits directly under them, and nothing overflows into the playback bar. ---- */
+.stage.stage-layouts,.stage.stage-export{display:flex;align-items:flex-start;justify-content:center;gap:16px;padding:96px 24px 12px;overflow:hidden}
+.stage.stage-layouts .source-column{flex:0 0 auto;width:calc(var(--fit-h,300px)*16/9 + 14px);max-width:none;max-height:none;height:auto;min-width:0}
+.stage.stage-layouts .source-canvas{box-sizing:border-box;width:100%;height:auto;aspect-ratio:auto;height:calc(var(--fit-h,300px) + 14px)}
+.stage.stage-layouts .preview-column,.stage.stage-export .preview-column{flex:0 0 auto;width:calc(var(--fit-h,300px)*9/16 + 14px);height:auto;max-height:none;min-height:0;display:block;padding:0;align-items:initial}
+.stage .preview-zoom-shell{width:100%;height:auto;max-height:none;aspect-ratio:auto;margin:0}
+.stage .preview-zoom-shell>.phone-preview,.stage .preview-zoom-shell .phone-preview{box-sizing:border-box;width:100%;height:calc(var(--fit-h,300px) + 14px);max-width:none;max-height:none;aspect-ratio:auto}
+.stage .source-actions,.stage .preview-select{height:42px;margin-top:12px}
+.stage.stage-export .preview-select{display:none}
+/* Crop toolbar follows the selected crop like the reference: centred on it, ~16px under its bottom edge over the video, or just below the frame when the crop reaches the bottom (left/top set inline). */
+.stage.stage-layouts .crop-toolbar{right:auto;transform:translateX(-50%)}
+/* Narrow source view: the crop toolbar drops below the controls row instead of covering it. */
+.stage.stage-layouts .source-column{container-type:inline-size}
+
+.stage .preview-select select{min-width:0;font-size:var(--fs-label);padding:0 20px 0 8px}
+.stage .source-actions>button,.stage .source-actions .toggle-row{white-space:nowrap}
+
+.profile-menu{left:6px;bottom:54px}.upload-dialog{width:min(860px,calc(100vw - 48px));padding:28px 32px}.upload-today{display:inline-block;align-self:flex-start;margin:7px 0;padding:3px 7px;border-radius:4px;background:var(--bg-muted);color:var(--text-2);font-size:var(--fs-micro)}
+.toast{bottom:260px}
+/* Corner rounding card above the crop toolbar (reference: title, slider, % box; the rounding button shows as pressed). */
+.corner-rounding{position:absolute;left:0;right:0;bottom:calc(100% + 8px);margin:0 auto;width:min(320px,100%);padding:16px 18px;border-radius:10px;background:var(--bg-card);border:1px solid var(--border);box-shadow:var(--shadow-lg);color:var(--text-1);white-space:normal}
+.corner-rounding-title{font-size:var(--fs-heading);margin-bottom:12px}
+.corner-rounding-row{display:flex;align-items:center;gap:14px}
+.corner-rounding-row input[type=range]{flex:1;accent-color:var(--accent)}
+.corner-rounding-value{display:flex;align-items:center;gap:6px;width:72px;height:40px;padding:0 10px;border:1px solid var(--border);border-radius:8px}
+.corner-rounding-value input{width:100%;border:0;background:transparent;color:var(--text-1);font-size:var(--fs-body);text-align:right}
+.corner-rounding-value span{color:var(--text-3)}
+.crop-toolbar button.active{background:var(--bg-hover);border-radius:6px}
+/* Upload dialog: centred on the whole window at the reference size (~770 px), like StreamLadder's U01. */
+.modal-shade.upload-shade{position:fixed;inset:0}
+.upload-dialog{width:min(770px,calc(100vw - 48px));height:auto;max-height:calc(100vh - 48px);overflow:auto}
+
+/* Layer over the phone frame (same box minus the 7px bezel) that hosts the element toolbar unclipped. */
+.stage .preview-zoom-shell{position:relative;overflow:visible}
+.selection-layer{position:absolute;inset:7px;z-index:8;pointer-events:none}
+.selection-layer .selection-controls{pointer-events:auto}
+
+/* Opt-in probe variants. */
+.frame-adjust{position:absolute;left:8px;top:8px;z-index:10;display:flex;align-items:flex-start;gap:5px}
+.frame-adjust-toggle,.frame-nudges button{height:28px;border:1px solid var(--border);border-radius:5px;background:var(--bg-card);color:var(--text-1);box-shadow:0 1px 4px var(--shadow-ink);font-size:var(--fs-label)}
+.frame-adjust-toggle{padding:0 9px}.frame-nudges{display:grid;grid-template-columns:repeat(2,28px);gap:3px}.frame-nudges button{width:28px;font-size:14px}
+.look-save-action{display:block;margin:0 12px 12px;padding:8px 11px;border:1px solid var(--accent);border-radius:6px;background:var(--accent-veil);color:var(--accent-text);font-size:var(--fs-label);font-weight:700}
+.apply-my-look{width:100%;display:flex;align-items:center;gap:7px;margin:0 0 8px;padding:7px 9px;border:1px solid var(--accent);border-radius:6px;background:var(--accent-veil);color:var(--text-1);text-align:left;font-size:var(--fs-caption)}
+.apply-my-look>span{color:var(--accent-text);font-size:15px}.apply-my-look strong{white-space:nowrap}.apply-my-look small{overflow:hidden;color:var(--text-3);text-overflow:ellipsis;white-space:nowrap}

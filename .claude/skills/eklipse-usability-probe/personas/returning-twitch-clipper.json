@@ -1,0 +1,45 @@
+{
+  "id": "returning-twitch-clipper",
+  "rank": 1,
+  "name": "Returning Twitch clipper",
+  "experience": "returning",
+  "behavior": "Paid streamer who clips Twitch highlights every week from AI clips, reuses the last layout and makes light edits. Wants the same result fast.",
+  "knows": [
+    "my usual layout",
+    "export",
+    "captions",
+    "title",
+    "facecam"
+  ],
+  "does_not_know": [
+    "tool names in this editor",
+    "keyboard shortcuts"
+  ],
+  "patience": "low",
+  "words": [
+    "facecam on top",
+    "my usual",
+    "same as last time",
+    "post to TikTok"
+  ],
+  "tier": "legacy-premium",
+  "fixtures": {
+    "storage": {
+      "ek-claude-brand": {
+        "handle": "pixelpanda",
+        "design": "sl-stw01",
+        "platform": "Twitch",
+        "auto": true
+      },
+      "ek-claude-last-layouts": [
+        "Split",
+        "Circle facecam"
+      ],
+      "ek-claude-quality": "1080p60"
+    }
+  },
+  "provenance": [
+    "Layout reuse 72.6% of projects; 76.5% export when reused",
+    "AI clip source 74.2% export; Twitch sticker 68.0% (plans/261027-usability-probe-skill/personas.md)"
+  ]
+}

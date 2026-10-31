@@ -1,0 +1,111 @@
+{
+ "mock": true,
+ "note": "AI outputs are fixtures (Mock API badge); word fields are indexes into transcript.words",
+ "hookTitles": [
+  "Last player standing... and then THIS happened",
+  "They told me to peek. Big mistake.",
+  "Reyna low, spike down, zero chill",
+  "The clutch nobody saw coming",
+  "2 on A, 1 Jett, 0 hope"
+ ],
+ "profanity": {
+  "words": [
+   4,
+   52
+  ],
+  "note": "Demo clip has no real profanity; these marks only exercise the censor UI"
+ },
+ "emojiTags": [
+  {
+   "sentence": 0,
+   "emoji": "🔄"
+  },
+  {
+   "sentence": 1,
+   "emoji": "😤"
+  },
+  {
+   "sentence": 2,
+   "emoji": "👀"
+  },
+  {
+   "sentence": 3,
+   "emoji": "🔥"
+  },
+  {
+   "sentence": 4,
+   "emoji": "💣"
+  },
+  {
+   "sentence": 5,
+   "emoji": "🎯"
+  },
+  {
+   "sentence": 6,
+   "emoji": "💪"
+  },
+  {
+   "sentence": 7,
+   "emoji": "🩸"
+  },
+  {
+   "sentence": 8,
+   "emoji": "🅰️"
+  },
+  {
+   "sentence": 9,
+   "emoji": "🏃"
+  },
+  {
+   "sentence": 10,
+   "emoji": "😬"
+  },
+  {
+   "sentence": 11,
+   "emoji": "🏆"
+  },
+  {
+   "sentence": 12,
+   "emoji": "😩"
+  },
+  {
+   "sentence": 13,
+   "emoji": "👋"
+  }
+ ],
+ "aiShake": [
+  0,
+  18,
+  22,
+  25,
+  50
+ ],
+ "aiSupersize": [
+  6,
+  30,
+  48,
+  21,
+  15
+ ],
+ "ttsVoices": [
+  {
+   "id": "samantha",
+   "name": "Samantha",
+   "accent": "US",
+   "file": "media/tts/samantha.m4a"
+  },
+  {
+   "id": "daniel",
+   "name": "Daniel",
+   "accent": "UK",
+   "file": "media/tts/daniel.m4a"
+  },
+  {
+   "id": "karen",
+   "name": "Karen",
+   "accent": "AU",
+   "file": "media/tts/karen.m4a"
+  }
+ ],
+ "ttsSampleLine": "Wait for it... that was the cleanest clutch of the night!"
+}

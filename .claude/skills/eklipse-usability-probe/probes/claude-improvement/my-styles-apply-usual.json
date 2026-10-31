@@ -1,0 +1,34 @@
+{
+  "id": "my-styles-apply-usual",
+  "feature": "My styles",
+  "personaRefs": [
+    "returning-twitch-clipper",
+    "ai-edit-accepter"
+  ],
+  "target": "claude-improvement",
+  "scenario": "style-matches-last",
+  "start": {
+    "screen": "L00"
+  },
+  "goal": "Set this clip up my usual way, the setup I saved before.",
+  "success": {
+    "check": "state.layoutId === 'Game UI'",
+    "describe": "The saved style (Game UI) is applied"
+  },
+  "budget": {
+    "steps": 5,
+    "scrolls": 2,
+    "minutes": 3
+  },
+  "bestPath": [
+    {
+      "do": "click",
+      "selector": ".style-quickstart"
+    }
+  ],
+  "why": {
+    "data": "72.6% of web projects reuse the previous layout; 62.5% of caption users change the caption style",
+    "source": "docs/knowledge/editor-direction-research.md"
+  },
+  "holdout": false
+}

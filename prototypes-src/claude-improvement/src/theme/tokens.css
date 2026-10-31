@@ -1,0 +1,405 @@
+/* Eklipse design tokens for the editor prototype.
+   This is the ONLY file in src/ allowed to hold raw colour values (scripts/check-hex.sh).
+   Sources: eklipse-4.0/src/app/theme.css (--color-ek-*),
+            eklipse-video-editor/src/theme/eklipseTheme.ts (antd dark mapping),
+            .claude/skills/eklipse-prototype/references/eklipse-brand-tokens.md */
+
+/* Hanken Grotesk (SIL OFL 1.1, see public/fonts/LICENSE-OFL.txt), latin subset, bundled locally. */
+@font-face{font-family:'Hanken Grotesk';font-style:normal;font-display:swap;font-weight:400;src:url('/fonts/hanken-grotesk-latin-400-normal.woff2') format('woff2')}
+@font-face{font-family:'Hanken Grotesk';font-style:normal;font-display:swap;font-weight:500;src:url('/fonts/hanken-grotesk-latin-500-normal.woff2') format('woff2')}
+@font-face{font-family:'Hanken Grotesk';font-style:normal;font-display:swap;font-weight:600;src:url('/fonts/hanken-grotesk-latin-600-normal.woff2') format('woff2')}
+@font-face{font-family:'Hanken Grotesk';font-style:normal;font-display:swap;font-weight:700;src:url('/fonts/hanken-grotesk-latin-700-normal.woff2') format('woff2')}
+
+:root{
+  /* ---- Raw Eklipse palette (theme.css) ---- */
+  --color-ek-purple:#735EF4;
+  --color-ek-purple-dark:#5C4BC3;
+  --color-ek-purple-light:#A496F8;
+  --color-ek-purple-deep:#462F9B;
+  --color-ek-yellow:#FFA036;
+  --color-ek-yellow-dark:#D9882E;
+  --color-ek-yellow-light:#FFCC16;
+  --color-ek-gold:#FFB30F;
+  --color-ek-premium-pro:#FFA036;
+  --color-ek-grey-light:#A3A3BF;
+  --color-ek-grey:#434359;
+  --color-ek-grey-dark:#2B2B38;
+  --color-ek-grey-darker:#1B1B26;
+  --color-ek-grey-black:#11111A;
+  --color-ek-soft-black:#111119;
+  --color-ek-card-bg:#16161E;
+  --color-ek-success:#46F88D;
+  --color-ek-warning:#FFBC10;
+  --color-ek-danger:#EF3149;
+  --color-ek-info:#3391E8;
+  --color-ek-white:#FFFFFF;
+  --color-ek-black:#000000;
+  --color-ek-text-secondary:#D0D0D0;          /* eklipseTheme colorTextSecondary */
+  --color-ek-border-secondary:#FFFFFF14;      /* eklipseTheme colorBorderSecondary (#ffffff12), +2 for visibility */
+  --color-ek-hover:#383849;                    /* between grey-dark and grey */
+
+  /* ---- Semantic layer: components use only these ---- */
+  color-scheme:dark;
+  --font-ui:'Hanken Grotesk',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+
+  --bg-app:var(--color-ek-grey-black);
+  --bg-panel:var(--color-ek-grey-darker);
+  --bg-card:var(--color-ek-grey-dark);
+  --bg-hover:var(--color-ek-hover);
+  --bg-inset:var(--color-ek-grey-black);       /* recessed tab tracks */
+  --bg-muted:var(--color-ek-grey);             /* skeletons, switch-off track, disabled */
+  --bg-tooltip:var(--color-ek-grey);
+  --bg-media:var(--color-ek-grey-dark);      /* thumbnail wells behind content art: stays dark in every theme */
+  --frame:var(--color-ek-black);               /* phone / source bezel */
+  --scrim:rgb(0 0 0 / .72);
+  --scrim-soft:rgb(0 0 0 / .45);
+
+  --border:var(--color-ek-grey);
+  --border-subtle:var(--color-ek-border-secondary);
+
+  --text-1:var(--color-ek-white);
+  --text-2:var(--color-ek-text-secondary);
+  --text-3:var(--color-ek-grey-light);
+  --text-on-accent:var(--color-ek-white);
+  --text-on-media:var(--color-ek-white);      /* labels sitting on video or thumbnails: white in every theme */
+
+  --accent:var(--color-ek-purple);
+  --accent-hover:var(--color-ek-purple-dark);
+  --accent-text:var(--color-ek-purple-light);
+  --accent-soft:color-mix(in srgb,var(--color-ek-purple) 22%,var(--color-ek-grey-dark));
+  --accent-veil:color-mix(in srgb,var(--color-ek-purple) 28%,transparent);
+  --focus:var(--color-ek-purple-light);
+  --toggle-on:var(--color-ek-purple);
+  --handle-fill:var(--color-ek-white);
+  --playhead:var(--color-ek-white);
+
+  --premium:var(--color-ek-yellow);
+  --premium-gradient:linear-gradient(270deg,var(--color-ek-yellow) 0%,var(--color-ek-yellow-light) 100%);
+  --premium-soft:color-mix(in srgb,var(--color-ek-yellow) 16%,transparent);
+  --premium-text:var(--color-ek-grey-black);
+  --hero-gradient:radial-gradient(128% 128% at 0% -3%,var(--color-ek-gold) 0%,var(--color-ek-purple) 50%,var(--color-ek-purple-deep) 100%);
+
+  --success:var(--color-ek-success);
+  --success-soft:color-mix(in srgb,var(--color-ek-success) 16%,transparent);
+  --warning:var(--color-ek-warning);
+  --warning-soft:color-mix(in srgb,var(--color-ek-warning) 14%,var(--color-ek-grey-dark));
+  --danger:var(--color-ek-danger);
+  --danger-text:#FF6B7D;                        /* danger lifted for 4.5:1 on dark panels */
+  --danger-soft:color-mix(in srgb,var(--color-ek-danger) 30%,transparent);
+  --info:var(--color-ek-info);
+
+  /* Timeline lanes and chip colours (white chip text keeps >= 4.5:1) */
+  --timeline-bg:var(--color-ek-grey-black);
+  --timeline-lane:var(--color-ek-grey-darker);
+  --timeline-video:var(--color-ek-purple);
+  --timeline-caption:var(--color-ek-purple-dark);
+  --timeline-element:#1C7A5E;
+  --timeline-text-elements:#9A5A12;
+  --timeline-social-stickers:#17766A;
+  --timeline-reactions:#B03A45;
+  --timeline-animated-stickers:#5C4BC3;
+  --timeline-gifs:#6B47C9;
+  --timeline-twitch-emotes:#2B68A8;
+  --timeline-effect:#4E3FB0;
+  --timeline-zoom:#1D7348;
+  --timeline-speed-control:#1F7A4D;
+  --timeline-ai-word-censoring:#B0345A;
+  --timeline-audio:#137069;
+  --timeline-music:#2464A8;
+  --timeline-text-to-speech:#9C2F86;
+  --timeline-zoom-lane:var(--accent-soft);
+
+  /* Shape and depth (eklipseTheme radius 4/8) */
+  --radius-sm:4px;
+  --radius-md:8px;
+  --radius-lg:12px;
+  --shadow-ink:rgb(0 0 0 / .5);
+  --shadow-ink-soft:rgb(0 0 0 / .28);
+  --shadow-sm:0 1px 3px var(--shadow-ink-soft);
+  --shadow-md:0 4px 12px var(--shadow-ink);
+  --shadow-lg:0 8px 25px var(--shadow-ink);
+  --space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:24px;
+
+  /* ---- Type scale: one size per role. UI chrome uses only these; content art (stickers,
+     caption samples, glyph icons) keeps its own sizes. ---- */
+  --fs-micro:10px;     /* badges, tags, NEW / PRO pills */
+  --fs-caption:11px;   /* meta under a name, durations, eyebrows, timeline chips */
+  --fs-label:12px;     /* field labels, hints, chips and pills, segmented controls, section links */
+  --fs-body:13px;      /* default UI text: buttons, tabs, inputs, menus, item names, panel intro */
+  --fs-reading:14px;   /* transcript and caption words the user reads and edits */
+  --fs-heading:14px;   /* section headings, card and dialog-bar titles, project name */
+  --fs-title:18px;     /* panel titles and dialog titles */
+}
+
+
+/* ---- Themes ----
+   Default (no data-theme) = Eklipse dark. Each theme overrides the semantic layer only;
+   components never read the raw palette, so nothing else changes. Picked from the top bar,
+   kept in localStorage (ek-theme) and overridable with ?theme=. */
+:root[data-theme="graphite"]{
+  --bg-app:#0C0C0E;
+  --bg-panel:#161618;
+  --bg-card:#222225;
+  --bg-hover:#2D2D31;
+  --bg-inset:#0C0C0E;
+  --bg-muted:#3B3B40;
+  --bg-tooltip:#3B3B40;
+  --border:#343438;
+  --border-subtle:#FFFFFF12;
+  --text-1:#F4F4F5;
+  --text-2:#CACACF;
+  --text-3:#9C9CA4;
+  --accent-soft:color-mix(in srgb,var(--color-ek-purple) 20%,#222225);
+  --warning-soft:color-mix(in srgb,var(--color-ek-warning) 14%,#222225);
+  --bg-media:#222225;
+  --timeline-bg:#0C0C0E;
+  --timeline-lane:#161618;
+}
+:root[data-theme="light"],:root[data-theme="lavender"]{
+  color-scheme:light;
+  --frame:#000000;
+  --scrim:rgb(16 14 30 / .55);
+  --text-on-accent:#FFFFFF;
+  --accent:#6A54EC;
+  --accent-hover:#5440CF;
+  --accent-text:#5440CF;
+  --focus:#6A54EC;
+  --toggle-on:#6A54EC;
+  --handle-fill:#FFFFFF;
+  --success:#138A47;
+  --success-soft:color-mix(in srgb,#138A47 14%,transparent);
+  --warning:#A85F00;
+  --warning-soft:color-mix(in srgb,#FFBC10 22%,#FFFFFF);
+  --danger:#D42A40;
+  --danger-text:#C2203A;
+  --danger-soft:color-mix(in srgb,#EF3149 14%,transparent);
+  --info:#1D6CBC;
+  --accent-veil:color-mix(in srgb,#6A54EC 12%,transparent);
+  --shadow-ink:rgb(24 22 48 / .16);
+  --shadow-ink-soft:rgb(24 22 48 / .08);
+}
+:root[data-theme="light"]{
+  --bg-media:#26252F;
+  --bg-app:#EDEEF2;
+  --bg-panel:#FFFFFF;
+  --bg-card:#F4F4F7;
+  --bg-hover:#E8E8EE;
+  --bg-inset:#EAEAEF;
+  --bg-muted:#D3D4DC;
+  --bg-tooltip:#2B2B38;
+  --border:#DADAE2;
+  --border-subtle:#E9E9EE;
+  --text-1:#15151C;
+  --text-2:#3D3D4A;
+  --text-3:#676775;
+  --playhead:#15151C;
+  --accent-soft:color-mix(in srgb,#6A54EC 11%,#FFFFFF);
+  --timeline-bg:#F4F4F7;
+  --timeline-lane:#FFFFFF;
+}
+:root[data-theme="lavender"]{
+  --bg-media:#272338;
+  --bg-app:#E8E5F6;
+  --bg-panel:#F6F5FC;
+  --bg-card:#FFFFFF;
+  --bg-hover:#ECE9F8;
+  --bg-inset:#E7E4F4;
+  --bg-muted:#CFCAE6;
+  --bg-tooltip:#2A2540;
+  --border:#DAD5EE;
+  --border-subtle:#E6E2F4;
+  --text-1:#18142C;
+  --text-2:#3E3858;
+  --text-3:#665F80;
+  --playhead:#18142C;
+  --accent-soft:color-mix(in srgb,#6A54EC 14%,#FFFFFF);
+  --timeline-bg:#F0EEFA;
+  --timeline-lane:#FFFFFF;
+}
+/* Theme picker swatches: each shows panel / card / accent of its theme */
+.theme-swatch{--sw-a:#1B1B26;--sw-b:#2B2B38;--sw-c:#735EF4}
+.theme-swatch[data-swatch="graphite"]{--sw-a:#161618;--sw-b:#2D2D31;--sw-c:#735EF4}
+.theme-swatch[data-swatch="light"]{--sw-a:#FFFFFF;--sw-b:#E3E3EA;--sw-c:#6A54EC}
+.theme-swatch[data-swatch="lavender"]{--sw-a:#F6F5FC;--sw-b:#DCD6F2;--sw-c:#6A54EC}
+
+/* ---- Content art palette ----
+   Colours that depict user content rather than UI chrome: caption preset samples, sticker,
+   GIF and social-banner thumbnails, the simulated platform overlay, layout crop boxes.
+   They stay as the reference showed them; phase 03/05 may replace them with real assets.
+   GENERATED-ART-START */
+:root{
+  --art-000000:#000000;
+  --art-00000022:#00000022;
+  --art-00000044:#00000044;
+  --art-00000055:#00000055;
+  --art-00000077:#00000077;
+  --art-00000099:#00000099;
+  --art-050505:#050505;
+  --art-062343:#062343;
+  --art-080808:#080808;
+  --art-090909:#090909;
+  --art-0d0b17ed:#0D0B17ED;
+  --art-101015:#101015;
+  --art-1054c3:#1054C3;
+  --art-111111:#111111;
+  --art-119e88:#119E88;
+  --art-127970:#127970;
+  --art-13d9e8:#13D9E8;
+  --art-13f3d0:#13F3D0;
+  --art-147367:#147367;
+  --art-151329:#151329;
+  --art-151515:#151515;
+  --art-16b8ff15:#16B8FF15;
+  --art-171123:#171123;
+  --art-171717:#171717;
+  --art-17afff:#17AFFF;
+  --art-18b7ff:#18B7FF;
+  --art-18d9cd:#18D9CD;
+  --art-19191b:#19191B;
+  --art-1a1a1a:#1A1A1A;
+  --art-207bff:#207BFF;
+  --art-220020:#220020;
+  --art-222222:#222222;
+  --art-234860:#234860;
+  --art-235713:#235713;
+  --art-25145d:#25145D;
+  --art-255c00:#255C00;
+  --art-28c9e7:#28C9E7;
+  --art-292929:#292929;
+  --art-2993bb:#2993BB;
+  --art-333333:#333333;
+  --art-359d9e:#359D9E;
+  --art-3c9eff:#3C9EFF;
+  --art-3d3d3d:#3D3D3D;
+  --art-444444:#444444;
+  --art-47fa4b:#47FA4B;
+  --art-487a5f:#487A5F;
+  --art-49346d:#49346D;
+  --art-533927:#533927;
+  --art-5432ae:#5432AE;
+  --art-54b9d6:#54B9D6;
+  --art-555555:#555555;
+  --art-562bbd:#562BBD;
+  --art-58b4fb:#58B4FB;
+  --art-5a5a5a:#5A5A5A;
+  --art-5c78f9:#5C78F9;
+  --art-5ffadf:#5FFADF;
+  --art-6030d0:#6030D0;
+  --art-60ddf9:#60DDF9;
+  --art-6389ff:#6389FF;
+  --art-64c1d9:#64C1D9;
+  --art-6537a8:#6537A8;
+  --art-666666:#666666;
+  --art-66f7da:#66F7DA;
+  --art-6b6cff:#6B6CFF;
+  --art-6c68ff:#6C68FF;
+  --art-6c6bff:#6C6BFF;
+  --art-6c74ff:#6C74FF;
+  --art-6d42f2:#6D42F2;
+  --art-6d6bff:#6D6BFF;
+  --art-6de5ef:#6DE5EF;
+  --art-702336:#702336;
+  --art-705b46:#705B46;
+  --art-70c5ff:#70C5FF;
+  --art-7277ff:#7277FF;
+  --art-73fc32:#73FC32;
+  --art-777777:#777777;
+  --art-77a0ff:#77A0FF;
+  --art-79cddd:#79CDDD;
+  --art-8030d5:#8030D5;
+  --art-8045e0:#8045E0;
+  --art-81fc41:#81FC41;
+  --art-855b44:#855B44;
+  --art-8623ff:#8623FF;
+  --art-888888:#888888;
+  --art-8d3bff:#8D3BFF;
+  --art-9765f1:#9765F1;
+  --art-994124:#994124;
+  --art-999999:#999999;
+  --art-9ac6ff99:#9AC6FF99;
+  --art-9de9fa:#9DE9FA;
+  --art-a01ec9:#A01EC9;
+  --art-a0237c:#A0237C;
+  --art-a0a0a0:#A0A0A0;
+  --art-a200fb:#A200FB;
+  --art-a577c8:#A577C8;
+  --art-a8ff00:#A8FF00;
+  --art-a969ef:#A969EF;
+  --art-aaaaaa:#AAAAAA;
+  --art-aab5ea:#AAB5EA;
+  --art-ab60fa:#AB60FA;
+  --art-ab85ff:#AB85FF;
+  --art-ad1932:#AD1932;
+  --art-ae741b:#AE741B;
+  --art-b344dd:#B344DD;
+  --art-b3ff42:#B3FF42;
+  --art-b5f7ff:#B5F7FF;
+  --art-b5ff49:#B5FF49;
+  --art-b6b6b6:#B6B6B6;
+  --art-b90019:#B90019;
+  --art-b991ff:#B991FF;
+  --art-b9f6ff:#B9F6FF;
+  --art-bb258f:#BB258F;
+  --art-bb8dff:#BB8DFF;
+  --art-c8bdd8:#C8BDD8;
+  --art-c8cdcb:#C8CDCB;
+  --art-cdf0ff:#CDF0FF;
+  --art-d0b7ff:#D0B7FF;
+  --art-d0d0d5:#D0D0D5;
+  --art-d1a3ff:#D1A3FF;
+  --art-d477d9:#D477D9;
+  --art-d4b6ff:#D4B6FF;
+  --art-d4d4d6:#D4D4D6;
+  --art-d6a4fd:#D6A4FD;
+  --art-d7f0ff:#D7F0FF;
+  --art-d8efff:#D8EFFF;
+  --art-d9c0a4:#D9C0A4;
+  --art-dbaeff:#DBAEFF;
+  --art-dddddd:#DDDDDD;
+  --art-dedee0:#DEDEE0;
+  --art-e44983:#E44983;
+  --art-e4feff:#E4FEFF;
+  --art-e62256:#E62256;
+  --art-e815c0:#E815C0;
+  --art-e85564:#E85564;
+  --art-e877e9:#E877E9;
+  --art-e8bb54:#E8BB54;
+  --art-eaff00:#EAFF00;
+  --art-ed12c015:#ED12C015;
+  --art-ed54c0:#ED54C0;
+  --art-edfc3e:#EDFC3E;
+  --art-eeeeee:#EEEEEE;
+  --art-efefff:#EFEFFF;
+  --art-f216c7:#F216C7;
+  --art-f4f400:#F4F400;
+  --art-f8ddff:#F8DDFF;
+  --art-f8f8f8:#F8F8F8;
+  --art-f9dfff:#F9DFFF;
+  --art-fa4baf:#FA4BAF;
+  --art-fa90df:#FA90DF;
+  --art-fb4480:#FB4480;
+  --art-fce1ff:#FCE1FF;
+  --art-fe1791:#FE1791;
+  --art-feb173:#FEB173;
+  --art-ff1d1d:#FF1D1D;
+  --art-ff403b:#FF403B;
+  --art-ff404b:#FF404B;
+  --art-ff5d11:#FF5D11;
+  --art-ff8f4b:#FF8F4B;
+  --art-ff91dc:#FF91DC;
+  --art-ff994f:#FF994F;
+  --art-ff9a9a:#FF9A9A;
+  --art-ffc1c1:#FFC1C1;
+  --art-ffcc27:#FFCC27;
+  --art-ffcd31:#FFCD31;
+  --art-ffda00:#FFDA00;
+  --art-ffdb25:#FFDB25;
+  --art-ffe2f5:#FFE2F5;
+  --art-ffed7a:#FFED7A;
+  --art-ffff81:#FFFF81;
+  --art-ffffff:#FFFFFF;
+  --art-ffffffde:#FFFFFFDE;
+  --art-fffffff0:#FFFFFFF0;
+}
+/* GENERATED-ART-END */
+:root{--tooltip-fill:#0B0B0D;--tooltip-text:#FFFFFF;--tooltip-chip:#E9E9ED;--tooltip-chip-text:#17171B}

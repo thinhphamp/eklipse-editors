@@ -1,0 +1,6 @@
+.part-picker{display:flex;flex-direction:column;gap:6px;margin:0 0 16px}
+.part-row{display:flex;align-items:center;gap:10px;padding:8px 12px;border:1px solid var(--border);border-radius:10px;background:transparent;color:var(--text-1);font-size:var(--fs-body);text-align:left}
+.part-row span{color:var(--text-3)}
+.part-row em{flex:1;font-style:normal;color:var(--text-2,var(--text-1))}
+.part-row small{color:var(--accent-text);font-size:var(--fs-caption)}
+.part-row.active{border-color:var(--accent)}

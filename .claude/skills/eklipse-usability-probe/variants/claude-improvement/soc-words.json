@@ -1,0 +1,53 @@
+{
+  "id": "soc-words",
+  "problem": "'Brand' is not the user's word: finish chip and card say Socials, with platform icons, gallery inline under the card",
+  "menu": "Elements",
+  "stack": [
+    "el-jump",
+    "style-lastclip",
+    "brand-platforms",
+    "look-save",
+    "frame-handle",
+    "layout-describe"
+  ],
+  "targets": [
+    "soc-moving-tag",
+    "soc-tiktok-instead",
+    "el-my-channel-name",
+    "h4-brand-setup"
+  ],
+  "untouched": [
+    "aud-add-background-music",
+    "aud-game-quieter",
+    "aud-music-fade-out",
+    "aud-music-quieter",
+    "aud-music-start-later",
+    "aud-mute-game-part",
+    "aud-sfx-at-kill",
+    "cap-bold-words",
+    "cap-change-look",
+    "cap-fix-misheard-word",
+    "cap-highlight-pink",
+    "cap-rename-speaker",
+    "exp-lower-quality",
+    "exp-sharpest-quality",
+    "exp-wide-sharpest",
+    "fx-bleep-swearing",
+    "fx-hit-harder",
+    "fx-slow-mo-kill",
+    "fx-speed-up-boring-part",
+    "fx-zoom-on-kill",
+    "h2-meme-stack",
+    "lay-cam-off-hud",
+    "lay-duo-cams",
+    "lay-wide-youtube",
+    "o2-make-vertical",
+    "o3-own-upload",
+    "q1-same-as-last",
+    "q2-pick-layout",
+    "q4-trim-start",
+    "q5-no-facecam",
+    "q6-save-and-reuse-look"
+  ],
+  "source": "runs/soc-v1-base (copied from el-v1-base-1625 + new flows)"
+}

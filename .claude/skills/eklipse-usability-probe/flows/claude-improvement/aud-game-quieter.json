@@ -1,0 +1,73 @@
+{
+  "id": "aud-game-quieter",
+  "flow": "A6",
+  "menu": "Audio",
+  "persona": "quick-user",
+  "target": "claude-improvement",
+  "weight": 0.2,
+  "mission": "The game is so loud you can barely hear yourself talk. Turn the game's own sound down to about half or lower (not off), then export.",
+  "start": {
+    "screen": "L00"
+  },
+  "checkpoints": [
+    {
+      "id": "quieter",
+      "check": "state.clipVolume > 0 && state.clipVolume <= 50 && !state.clipMuted",
+      "describe": "The game sound is at half or lower but not off"
+    },
+    {
+      "id": "export",
+      "check": "state.exported === true",
+      "describe": "The clip export has finished"
+    }
+  ],
+  "bestPath": [
+    {
+      "do": "click",
+      "selector": ".rail nav button:has-text('Audio')"
+    },
+    {
+      "do": "click",
+      "selector": "button[aria-label='Lower game sound by 10%']"
+    },
+    {
+      "do": "click",
+      "selector": "button[aria-label='Lower game sound by 10%']"
+    },
+    {
+      "do": "click",
+      "selector": "button[aria-label='Lower game sound by 10%']"
+    },
+    {
+      "do": "click",
+      "selector": "button[aria-label='Lower game sound by 10%']"
+    },
+    {
+      "do": "click",
+      "selector": "button[aria-label='Lower game sound by 10%']"
+    },
+    {
+      "do": "click",
+      "selector": ".tb-primary"
+    },
+    {
+      "do": "click",
+      "selector": ".export-primary"
+    }
+  ],
+  "bestTimeSeconds": null,
+  "budget": {
+    "minutes": 12
+  },
+  "why": {
+    "data": "No control lowers the clip's own sound on v1 (clipVolume exists but nothing sets it); quick users who hear game noise over their voice have no way to fix it.",
+    "source": "plans/261028-editor-menu-probes/reports/audio-report-1-pain-points.md"
+  },
+  "input": {
+    "clip": null
+  },
+  "playerIds": [
+    "quick-match",
+    "quick-differs"
+  ]
+}

@@ -1,0 +1,1 @@
+export function Tabs({items,value,onChange}:{items:readonly string[];value:string;onChange:(value:string)=>void}) {return <div className="ui-tabs" role="tablist">{items.map(item=><button role="tab" aria-selected={value===item} className={value===item?'active':''} key={item} onClick={()=>onChange(item)}>{item}</button>)}</div>;}

@@ -1,0 +1,44 @@
+{
+  "target": "claude-improvement",
+  "holdout": true,
+  "id": "elements-add-pog-emote",
+  "feature": "Elements",
+  "personaRefs": [
+    "returning-twitch-clipper",
+    "ai-edit-accepter",
+    "meme-heavy-power-editor"
+  ],
+  "start": {
+    "screen": "default"
+  },
+  "goal": "Put the Pog emote from Twitch chat on the clip, the surprised face one.",
+  "success": {
+    "check": "state.elements.some(e => e.category === 'Twitch Emotes' && /pog/i.test(e.label + ' ' + (e.media || '')))",
+    "describe": "The Pog emote is on the clip"
+  },
+  "budget": {
+    "steps": 8,
+    "scrolls": 4,
+    "minutes": 4
+  },
+  "bestPath": [
+    {
+      "do": "click",
+      "selector": ".rail nav button:has-text('Elements')"
+    },
+    {
+      "do": "type",
+      "selector": "input[placeholder='Search Twitch emotes']",
+      "text": "pog"
+    },
+    {
+      "do": "click",
+      "selector": "[title='EkPog'], .elements-tile:has-text('EkPog')"
+    }
+  ],
+  "why": {
+    "data": "User-added memes, emotes and reactions: +32.7 export points (same user), 6.2% use",
+    "source": "docs/knowledge/editor-direction-research.md"
+  },
+  "notes": "Held out for the Elements variant loop (2026-10-27). Emotes sit at the bottom of Elements."
+}

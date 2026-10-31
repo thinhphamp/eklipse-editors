@@ -1,0 +1,61 @@
+{
+  "id": "q4-trim-start",
+  "flow": "Q4",
+  "persona": "quick-user",
+  "target": "claude-improvement",
+  "weight": 0.1,
+  "mission": "The first few seconds are boring. Cut them and export.",
+  "start": {
+    "screen": "L00"
+  },
+  "checkpoints": [
+    {
+      "id": "trim",
+      "check": "state.removedRanges.some(r => r.start === 0)",
+      "describe": "The opening section is removed"
+    },
+    {
+      "id": "export",
+      "check": "state.exported === true",
+      "describe": "The clip export has finished"
+    }
+  ],
+  "bestPath": [
+    {
+      "do": "click",
+      "selector": ".video-block"
+    },
+    {
+      "do": "click",
+      "selector": ".ruler",
+      "positionRatio": 0.3
+    },
+    {
+      "do": "click",
+      "selector": "button[aria-label='Trim the start']"
+    },
+    {
+      "do": "click",
+      "selector": ".tb-primary"
+    },
+    {
+      "do": "click",
+      "selector": ".export-primary"
+    }
+  ],
+  "bestTimeSeconds": null,
+  "budget": {
+    "minutes": 12
+  },
+  "why": {
+    "data": "Trim is used in 22.9% of projects.",
+    "source": "plans/261027-usability-probe-skill/personas.md"
+  },
+  "input": {
+    "clip": null
+  },
+  "playerIds": [
+    "quick-match",
+    "quick-differs"
+  ]
+}

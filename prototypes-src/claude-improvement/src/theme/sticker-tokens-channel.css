@@ -1,0 +1,37 @@
+/* Colours for the Channel stickers tab (ch-stickers): platform colours, the 7 Eklipse swatches and the look art.
+   Hex allowed only in theme token files (scripts/check-hex.sh). */
+:root{
+  --ch-twitch:#9146ff;
+  --ch-youtube:#ff0033;
+  --ch-kick:#53fc18;
+  --ch-facebook:#1877f2;
+  --ch-tiktok:#111111;
+  --ch-instagram:#e1306c;
+  --ch-x:#0a0a0a;
+
+  --ch-sw-purple:#8f47f5;
+  --ch-sw-yellow:#f7c744;
+  --ch-sw-mint:#7ff29c;
+  --ch-sw-red:#e2434f;
+  --ch-sw-blue:#2f6df2;
+  --ch-sw-green:#61de45;
+  --ch-sw-black:#050505;
+
+  --ch-plate:#151515;
+  --ch-white:#ffffff;
+  --ch-ink:#0b0b0b;
+  --ch-black:#000000;
+  --ch-shadow:#00000059;
+  --ch-neon-blue:#2ec5ff;
+  --ch-star:#fff3b0;
+  --ch-live:#e5243b;
+  --ch-mint-soft:#9ff2d3;
+  --ch-bell-ink:#120c2e;
+
+  /* the look's own colour when "Original" is picked */
+  --ch-orig-soft:#6a3fd8;
+  --ch-orig-neon:#ff2e63;
+  --ch-orig-sparkle:#b05cf6;
+  --ch-orig-glow:#0e8c8c;
+  --ch-orig-bell:#9b87f5;
+}

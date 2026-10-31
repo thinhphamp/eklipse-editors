@@ -1,0 +1,67 @@
+{
+  "id": "aud-sfx-at-kill",
+  "flow": "A3",
+  "menu": "Audio",
+  "persona": "quick-user",
+  "target": "claude-improvement",
+  "weight": 0.2,
+  "mission": "Add a sound effect on the big kill, about halfway through the clip. Export it.",
+  "start": {
+    "screen": "L00"
+  },
+  "checkpoints": [
+    {
+      "id": "sfx",
+      "check": "state.audio.some(x => x.category !== 'Music' && x.category !== 'Uploaded')",
+      "describe": "A sound effect is on the clip"
+    },
+    {
+      "id": "halfway",
+      "check": "state.audio.some(x => x.category !== 'Music' && x.category !== 'Uploaded' && x.start >= 0.35 * state.duration && x.start <= 0.65 * state.duration)",
+      "describe": "It starts around the middle of the clip"
+    },
+    {
+      "id": "export",
+      "check": "state.exported === true",
+      "describe": "The clip export has finished"
+    }
+  ],
+  "bestPath": [
+    {
+      "do": "click",
+      "selector": ".ruler",
+      "positionRatio": 0.5
+    },
+    {
+      "do": "click",
+      "selector": ".rail nav button:has-text('Audio')"
+    },
+    {
+      "do": "click",
+      "selector": ".audio-row-title"
+    },
+    {
+      "do": "click",
+      "selector": ".tb-primary"
+    },
+    {
+      "do": "click",
+      "selector": ".export-primary"
+    }
+  ],
+  "bestTimeSeconds": null,
+  "budget": {
+    "minutes": 12
+  },
+  "why": {
+    "data": "Quick users take the first plausible control and want few clicks from open to export.",
+    "source": "plans/261027-usability-probe-skill/personas.md"
+  },
+  "input": {
+    "clip": null
+  },
+  "playerIds": [
+    "quick-match",
+    "quick-differs"
+  ]
+}

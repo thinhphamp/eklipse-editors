@@ -1,0 +1,20 @@
+{
+  "id": "frame-handle",
+  "problem": "Q1: make framing easier to find while matching the last clip",
+  "stack": [
+    "el-jump",
+    "style-lastclip",
+    "brand-platforms"
+  ],
+  "targets": [
+    "q1-same-as-last"
+  ],
+  "untouched": [
+    "h2-meme-stack",
+    "h3-fix-ai-edit",
+    "h4-brand-setup",
+    "o1-first-ai-clip",
+    "o2-make-vertical"
+  ],
+  "source": "targets from reports/flow-night.html; untouched = flows night-0011 did not run for this variant"
+}

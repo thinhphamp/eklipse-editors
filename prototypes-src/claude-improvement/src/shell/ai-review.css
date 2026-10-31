@@ -1,0 +1,17 @@
+/* Claude improvement C9: AI edit review strip under the top bar. Tokens only. */
+.ai-review{position:relative;z-index:8;flex:0 0 auto;margin:8px 14px 0;padding:8px 12px;border:1px solid var(--accent);border-radius:10px;background:var(--accent-veil);font-size:var(--fs-body);color:var(--text-1)}
+.ai-review-head{display:flex;align-items:center;gap:10px}
+.ai-review-head p{flex:1;margin:0;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ai-review-head p span{color:var(--text-3)}
+.ai-spark{color:var(--accent-text);font-size:15px}
+.ai-review-pop{position:absolute;left:-1px;right:-1px;top:calc(100% + 4px);max-height:min(320px,55vh);overflow:auto;padding:8px 12px 10px;border:1px solid var(--accent);border-radius:10px;background:var(--bg-panel,var(--bg-card));box-shadow:var(--shadow-lg,none)}
+.ai-review-list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:6px}
+.ai-review-list li{display:flex;align-items:center;gap:6px;padding:4px 6px;border:1px solid var(--border);border-radius:8px;background:var(--bg-card)}
+.ai-item-go{flex:1;min-width:0;display:flex;align-items:center;gap:6px;border:0;background:transparent;color:var(--text-1);text-align:left;padding:2px}
+.ai-item-go span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:600}
+.ai-item-go small{color:var(--text-3);white-space:nowrap}
+.ai-item-keep,.ai-item-remove,.ai-review-next button{display:inline-flex;align-items:center;gap:4px;height:26px;padding:0 8px;border:1px solid var(--border);border-radius:6px;background:var(--bg-card);color:var(--text-1);font-size:var(--fs-label);white-space:nowrap}
+.ai-item-remove{color:var(--danger-text)}
+.ai-item-keep:hover,.ai-review-next button:hover{background:var(--accent-veil)}
+.ai-item-remove:hover{background:var(--danger-soft)}
+.ai-review-next{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:8px;color:var(--text-3)}

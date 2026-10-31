@@ -1,0 +1,4 @@
+.timeline-resizer{position:relative;flex:0 0 6px;height:6px;cursor:row-resize;background:var(--bg-panel);touch-action:none;outline:none}
+.timeline-resizer::after{content:'';position:absolute;left:0;right:0;top:2px;height:2px;background:var(--border)}
+.timeline-resizer:hover::after,.timeline-resizer:focus-visible::after,.timeline-resizer.dragging::after{background:var(--accent);height:3px;top:1px}
+.editor-main .timeline,.editor-main .timeline.dense{height:var(--timeline-h,248px);flex-basis:var(--timeline-h,248px);overflow-y:auto}

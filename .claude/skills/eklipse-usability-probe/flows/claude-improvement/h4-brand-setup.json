@@ -1,0 +1,88 @@
+{
+  "id": "h4-brand-setup",
+  "flow": "H4",
+  "menu": "Elements",
+  "persona": "heavy-editor",
+  "target": "claude-improvement",
+  "weight": 0.15,
+  "mission": "Show both your YouTube and Twitch on the channel sticker, change the handle, and save it as your style.",
+  "start": {
+    "screen": "L00"
+  },
+  "checkpoints": [
+    {
+      "id": "sticker",
+      "check": "state.elements.some(x => x.category === 'Social Stickers')",
+      "describe": "A channel sticker is on the clip"
+    },
+    {
+      "id": "platforms",
+      "check": "state.elements.some(x => x.category === 'Social Stickers' && ['youtube','twitch'].every(p => String(x.style?.plats || '').split(',').includes(p)))",
+      "describe": "A sticker on the clip shows both YouTube and Twitch (state only; the old check read the card preview and failed when another page was open)"
+    },
+    {
+      "id": "handle",
+      "check": "state.elements.some(x => x.category === 'Social Stickers' && x.label !== 'thinhsocial')",
+      "describe": "The channel handle differs from its default"
+    },
+    {
+      "id": "style",
+      "check": "localStorage.getItem('ek-proto-templates') !== null",
+      "describe": "The finished setup is saved as a style"
+    }
+  ],
+  "bestPath": [
+    {
+      "do": "click",
+      "selector": ".rail nav button:has-text('Channel stickers')"
+    },
+    {
+      "do": "click",
+      "selector": "label:has-text('Multi')"
+    },
+    {
+      "do": "click",
+      "selector": "button[aria-label='YouTube']"
+    },
+    {
+      "do": "click",
+      "selector": "input.cs-field"
+    },
+    {
+      "do": "key",
+      "key": "Control+A"
+    },
+    {
+      "do": "type",
+      "selector": "input.cs-field",
+      "text": "thinhplays"
+    },
+    {
+      "do": "click",
+      "selector": ".tb-primary"
+    },
+    {
+      "do": "click",
+      "selector": ".save-template-button"
+    },
+    {
+      "do": "click",
+      "selector": ".template-actions button:last-child"
+    }
+  ],
+  "bestTimeSeconds": null,
+  "budget": {
+    "minutes": 12
+  },
+  "why": {
+    "data": "Two or more platform stickers appear in 9.7% of projects.",
+    "source": "plans/261027-usability-probe-skill/personas.md"
+  },
+  "input": {
+    "clip": null
+  },
+  "playerIds": [
+    "heavy-explorer",
+    "heavy-meticulous"
+  ]
+}

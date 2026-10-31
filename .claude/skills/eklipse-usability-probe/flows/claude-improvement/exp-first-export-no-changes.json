@@ -1,0 +1,44 @@
+{
+  "id": "exp-first-export-no-changes",
+  "flow": "X2",
+  "menu": "Export",
+  "persona": "one-and-done",
+  "target": "claude-improvement",
+  "weight": 0.2,
+  "mission": "This is your first clip and you do not want to change anything. Just get the finished video.",
+  "start": {
+    "screen": "L00"
+  },
+  "checkpoints": [
+    {
+      "id": "export",
+      "check": "state.exported === true",
+      "describe": "The clip export has finished"
+    }
+  ],
+  "bestPath": [
+    {
+      "do": "click",
+      "selector": ".tb-primary"
+    },
+    {
+      "do": "click",
+      "selector": ".export-primary"
+    }
+  ],
+  "bestTimeSeconds": null,
+  "budget": {
+    "minutes": 12
+  },
+  "why": {
+    "data": "63.4% of first projects are not exported and a first export under 2 min leads to 79.0% return; this flow tests export alone, with no edits before it.",
+    "source": "plans/261027-usability-probe-skill/personas.md"
+  },
+  "input": {
+    "clip": null
+  },
+  "playerIds": [
+    "once-novice",
+    "once-rusher"
+  ]
+}

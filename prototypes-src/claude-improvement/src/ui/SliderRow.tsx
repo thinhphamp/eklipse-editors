@@ -1,0 +1,1 @@
+export function SliderRow({label,value,min=0,max=100,unit='',onChange}:{label:string;value:number;min?:number;max?:number;unit?:string;onChange:(value:number)=>void}) {return <label className="slider-row"><span>{label}<output>{value}{unit}</output></span><input type="range" min={min} max={max} value={value} onChange={e=>onChange(Number(e.target.value))}/></label>;}

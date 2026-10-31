@@ -1,0 +1,29 @@
+{
+  "id": "heavy-editor",
+  "rank": 3,
+  "name": "Heavy editor",
+  "experience": "returning",
+  "behavior": "Edits most clips with several tools: trims, captions, text, memes, music and platform stickers. Wants precise control and fast access to named items.",
+  "knows": [
+    "captions",
+    "title",
+    "facecam",
+    "export"
+  ],
+  "does_not_know": [
+    "tool names in this editor"
+  ],
+  "patience": "high",
+  "words": [
+    "move this",
+    "find Another One",
+    "change the style"
+  ],
+  "tier": "power",
+  "fixtures": {
+    "storage": {}
+  },
+  "provenance": [
+    "Medium and heavy editing is 31.9% of projects; common edits include trim, captions, split, memes and text (plans/261027-usability-probe-skill/personas.md)"
+  ]
+}

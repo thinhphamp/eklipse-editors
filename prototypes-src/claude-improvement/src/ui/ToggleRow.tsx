@@ -1,0 +1,1 @@
+export function ToggleRow({label,value,onChange,compact=false}:{label:string;value:boolean;onChange:(value:boolean)=>void;compact?:boolean}) {return <label className={'toggle-row '+(compact?'compact':'')}><input type="checkbox" checked={value} onChange={e=>onChange(e.target.checked)}/><span className="switch"/><span>{label}</span></label>;}

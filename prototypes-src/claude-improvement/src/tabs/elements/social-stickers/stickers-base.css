@@ -1,0 +1,8 @@
+/* Shared box for every social sticker design; designs size themselves in em. */
+.sl-sticker{display:inline-flex;align-items:center;justify-content:center;line-height:1;white-space:nowrap;position:relative;font-family:inherit}
+:where(.sl-sticker) svg{width:1.6em;height:1.6em;flex:none} /* low specificity: design css sets its own icon sizes */
+/* Still (gallery thumbnail in other views, paused preview): show a frame from the middle of the loop, not the empty start. */
+.sl-sticker:not(.is-animated) *{animation-play-state:paused!important;animation-delay:-1.2s!important}
+.sl-fallback{display:inline-flex;align-items:center;gap:.5em;padding:.5em .8em;border-radius:.5em;background:var(--pf-twitch);color:var(--art-ffffff);font-weight:700}
+.sl-tile{height:84px;display:flex;align-items:center;justify-content:center;overflow:hidden;padding:4px}
+.sl-tile .sl-sticker{max-width:100%}

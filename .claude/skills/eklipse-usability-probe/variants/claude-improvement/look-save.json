@@ -1,0 +1,20 @@
+{
+  "id": "look-save",
+  "problem": "Q6: save a caption look and reuse it on the next clip",
+  "stack": [
+    "el-jump",
+    "style-lastclip",
+    "brand-platforms"
+  ],
+  "targets": [
+    "q6-save-and-reuse-look"
+  ],
+  "untouched": [
+    "h1-full-polish",
+    "h2-meme-stack",
+    "h3-fix-ai-edit",
+    "o2-make-vertical",
+    "o3-own-upload"
+  ],
+  "source": "targets from reports/flow-night.html; untouched = flows night-0011 did not run for this variant"
+}

@@ -1,0 +1,80 @@
+{
+  "id": "h3-fix-ai-edit",
+  "flow": "H3",
+  "menu": "Elements",
+  "persona": "heavy-editor",
+  "target": "claude-improvement",
+  "weight": 0.2,
+  "mission": "The AI added memes. Remove one you do not like, move another, add your own meme, then export.",
+  "start": {
+    "screen": "L00"
+  },
+  "checkpoints": [
+    {
+      "id": "ai-removed",
+      "check": "initial.elements.filter(x => x.ai).length > state.elements.filter(x => x.ai).length",
+      "describe": "One AI meme is removed"
+    },
+    {
+      "id": "ai-moved",
+      "check": "state.elements.some(x => x.ai && initial.elements.some(y => y.id === x.id && y.start !== x.start))",
+      "describe": "One AI meme is moved to a different moment"
+    },
+    {
+      "id": "user-meme",
+      "check": "state.elements.some(x => !x.ai && ['Gifs','Memes'].includes(x.category))",
+      "describe": "A user meme is on the clip"
+    },
+    {
+      "id": "export",
+      "check": "state.exported === true",
+      "describe": "The clip export has finished"
+    }
+  ],
+  "bestPath": [
+    {
+      "do": "click",
+      "selector": ".ai-review .tb-secondary"
+    },
+    {
+      "do": "click",
+      "selector": ".ai-item-remove"
+    },
+    {
+      "do": "drag",
+      "selector": ".timeline-chip.element.kind-gifs",
+      "to": ".timeline-content"
+    },
+    {
+      "do": "click",
+      "selector": ".rail nav button:has-text('Elements')"
+    },
+    {
+      "do": "click",
+      "selector": ".elt-tile:has-text('Big Speaker') >> nth=0"
+    },
+    {
+      "do": "click",
+      "selector": ".tb-primary"
+    },
+    {
+      "do": "click",
+      "selector": ".export-primary"
+    }
+  ],
+  "bestTimeSeconds": null,
+  "budget": {
+    "minutes": 12
+  },
+  "why": {
+    "data": "AI memes untouched exported at 44.4%; edited AI memes at 72.9%.",
+    "source": "plans/261027-usability-probe-skill/personas.md"
+  },
+  "input": {
+    "clip": "ai-bundle"
+  },
+  "playerIds": [
+    "heavy-explorer",
+    "heavy-meticulous"
+  ]
+}

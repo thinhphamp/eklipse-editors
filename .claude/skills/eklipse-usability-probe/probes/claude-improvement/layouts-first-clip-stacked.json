@@ -1,0 +1,34 @@
+{
+  "id": "layouts-first-clip-stacked",
+  "feature": "Layouts",
+  "personaRefs": [
+    "first-clip-newcomer"
+  ],
+  "target": "claude-improvement",
+  "scenario": "fresh-user",
+  "start": {
+    "screen": "L00"
+  },
+  "goal": "This is my first clip. Put my camera on top and the game underneath it, stacked, both full width.",
+  "success": {
+    "check": "state.layoutId === 'Split'",
+    "describe": "The stacked facecam-over-gameplay layout is applied"
+  },
+  "budget": {
+    "steps": 6,
+    "scrolls": 3,
+    "minutes": 3
+  },
+  "bestPath": [
+    {
+      "do": "click",
+      "selector": ".layout-grid .layout-tile:has-text('Split')"
+    }
+  ],
+  "why": {
+    "data": "43.7% of first projects are exported; an exported first project means 66.5% return vs 45.0%",
+    "source": "plans/261027-usability-probe-skill/personas.md"
+  },
+  "holdout": false,
+  "notes": "User state: fresh user, no Your style card and no Recently used row."
+}

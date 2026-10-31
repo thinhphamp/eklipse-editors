@@ -1,0 +1,70 @@
+{
+  "id": "cap-change-look",
+  "flow": "C2",
+  "menu": "Captions",
+  "persona": "quick-user",
+  "target": "claude-improvement",
+  "weight": 0.2,
+  "mission": "Put subtitles on this clip, but not in the look it starts with. Pick a different look for the words, then export.",
+  "start": {
+    "screen": "L00"
+  },
+  "checkpoints": [
+    {
+      "id": "captions",
+      "check": "state.captions.generated === true",
+      "describe": "Captions are generated"
+    },
+    {
+      "id": "look",
+      "check": "state.captions.preset !== 'Floating Words'",
+      "describe": "A different caption look is chosen"
+    },
+    {
+      "id": "export",
+      "check": "state.exported === true",
+      "describe": "The clip export has finished"
+    }
+  ],
+  "bestPath": [
+    {
+      "do": "click",
+      "selector": ".rail nav button:has-text(\"Captions\")"
+    },
+    {
+      "do": "click",
+      "selector": "button[aria-label=\"Preset of style THE HOOK.\"]"
+    },
+    {
+      "do": "click",
+      "text": "Generate captions"
+    },
+    {
+      "do": "click",
+      "selector": ".tb-primary"
+    },
+    {
+      "do": "click",
+      "text": "Wait, then export"
+    },
+    {
+      "do": "click",
+      "selector": ".export-primary"
+    }
+  ],
+  "bestTimeSeconds": null,
+  "budget": {
+    "minutes": 12
+  },
+  "why": {
+    "data": "Quick users export fast and rarely tune settings; the first look is offered inside the generate step, so this flow tests that a different look can be picked there.",
+    "source": "plans/261027-usability-probe-skill/personas.md"
+  },
+  "input": {
+    "clip": null
+  },
+  "playerIds": [
+    "quick-match",
+    "quick-differs"
+  ]
+}

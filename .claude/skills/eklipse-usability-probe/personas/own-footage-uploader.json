@@ -1,0 +1,39 @@
+{
+  "id": "own-footage-uploader",
+  "rank": 4,
+  "name": "Own-footage uploader",
+  "experience": "returning",
+  "behavior": "Uploads their own recording instead of an AI clip, sometimes vertical or odd-sized, and trims it before posting.",
+  "knows": [
+    "upload",
+    "trim",
+    "captions",
+    "export"
+  ],
+  "does_not_know": [
+    "which layout fits odd footage",
+    "tool names"
+  ],
+  "patience": "medium",
+  "words": [
+    "cut the start",
+    "my own video",
+    "it looks squished",
+    "fit the frame"
+  ],
+  "tier": "standard",
+  "fixtures": {
+    "storage": {
+      "ek-claude-brand": {
+        "handle": "pixelpanda",
+        "design": "sl-stw01",
+        "platform": "Twitch",
+        "auto": true
+      }
+    }
+  },
+  "provenance": [
+    "User upload 16.8% of projects: 59.0% export",
+    "Vertical source 7.0%; vertical to 9:16 median 5.3 min (plans/261027-usability-probe-skill/personas.md)"
+  ]
+}

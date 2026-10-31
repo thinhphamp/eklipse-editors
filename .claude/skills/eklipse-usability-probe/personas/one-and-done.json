@@ -1,0 +1,32 @@
+{
+  "id": "one-and-done",
+  "rank": 2,
+  "name": "One-and-done user",
+  "experience": "first-time",
+  "behavior": "This is your first clip here. You do not know editing terms, want to understand what was added, and need a finished clip quickly.",
+  "knows": [
+    "export",
+    "captions",
+    "title",
+    "facecam"
+  ],
+  "does_not_know": [
+    "tool names in this editor",
+    "keyboard shortcuts"
+  ],
+  "patience": "low",
+  "words": [
+    "what did it add?",
+    "make it fit my phone",
+    "my own clip"
+  ],
+  "tier": "new",
+  "fixtures": {
+    "storage": {
+      "ek-claude-history": "none"
+    }
+  },
+  "provenance": [
+    "63.4% of first projects are not exported; export under two minutes correlates with 79.0% return (plans/261027-usability-probe/personas.md)"
+  ]
+}

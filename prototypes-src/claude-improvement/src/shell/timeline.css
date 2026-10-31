@@ -1,0 +1,34 @@
+.timeline.dense .timeline-content{overflow:hidden}
+.timeline.dense .ruler{height:24px;padding:0 1px 2px;align-items:end}
+.timeline.dense .timeline-track.timeline-lane{height:27px;margin-bottom:2px;background:var(--timeline-lane);border-color:var(--border-subtle)}
+.timeline.dense .timeline-track.video{height:43px;margin-top:2px}
+.timeline-chip{display:flex;align-items:center;overflow:hidden;white-space:nowrap;min-width:12px;padding:0 5px;text-align:left;font-size:var(--fs-caption);font-weight:700;box-shadow:inset 0 0 0 1px var(--shadow-ink-soft)}
+.timeline-chip .chip-label{position:relative;z-index:1;overflow:hidden;text-overflow:ellipsis}
+.timeline-chip.element{background:var(--timeline-element)}.timeline-chip.kind-text-elements{background:var(--timeline-text-elements)}.timeline-chip.kind-social-stickers{background:var(--timeline-social-stickers)}.timeline-chip.kind-reactions{background:var(--timeline-reactions)}.timeline-chip.kind-animated-stickers{background:var(--timeline-animated-stickers)}.timeline-chip.kind-gifs{background:var(--timeline-gifs)}.timeline-chip.kind-twitch-emotes{background:var(--timeline-twitch-emotes)}
+.timeline-chip.effect{background:var(--timeline-effect)}.timeline-chip.kind-zoom{background:var(--timeline-zoom)}.timeline-chip.kind-speed-control{background:var(--timeline-speed-control)}.timeline-chip.kind-ai-word-censoring{background:var(--timeline-ai-word-censoring)}
+.timeline-chip.audio{background:var(--timeline-audio)}.timeline-chip.kind-music{background:var(--timeline-music)}.timeline-chip.kind-text-to-speech{background:var(--timeline-text-to-speech)}
+.timeline-chip.selected{outline:2px solid var(--text-1);outline-offset:1px}
+.chip-wave{position:absolute;inset:15% 3%;opacity:.4;background:repeating-linear-gradient(90deg,transparent 0 3px,var(--art-ffffff) 3px 5px,transparent 5px 7px);mask-image:repeating-linear-gradient(90deg,transparent 0 2px,var(--art-000000) 2px 5px,transparent 5px 7px)}
+.captions-lane{display:flex}.caption-segment{position:absolute;top:2px;bottom:2px;overflow:hidden;border:1px solid var(--border);border-radius:2px;background:var(--bg-card);color:var(--text-3);font-size:var(--fs-micro);white-space:nowrap}.caption-segment.selected{border:2px solid var(--accent);background:var(--accent-soft);color:var(--accent-text)}
+.timeline-toolbar .detach-caption{width:auto;height:27px;padding:0 14px;border:1px solid var(--accent);border-radius:4px;background:var(--bg-card);color:var(--accent-text);font-weight:700}
+.timeline-toolbar button:hover{background:var(--accent-soft)}
+.timeline .split-mark{position:absolute;top:0;bottom:0;z-index:1;border-left:2px solid var(--playhead)}
+.timeline .playhead{z-index:3}
+.timeline.zoom-max .timeline-zoom-lane{height:64px;margin-top:7px}.timeline.zoom-max .captions-lane{margin-top:5px}
+
+/* Deleted ranges stay visible on the video lane and are skipped on playback. */
+.timeline-track.video{position:relative}
+.removed-range{position:absolute;top:0;bottom:0;z-index:2;pointer-events:none;background:repeating-linear-gradient(135deg,var(--scrim-soft) 0 6px,transparent 6px 12px);border-left:1px solid var(--danger);border-right:1px solid var(--danger)}
+.ruler,.timeline-content{touch-action:none}
+.timeline{overflow-x:auto;overflow-y:hidden}.timeline-content{overflow:visible!important;min-width:calc(100% - 40px)}.video-segment{position:absolute;top:0;height:100%;z-index:1;border:0;background:transparent;cursor:pointer}.video-segment.selected{outline:2px solid var(--accent);outline-offset:-3px}.chip-trim{position:absolute;top:0;bottom:0;width:7px;z-index:3;background:var(--handle-fill);cursor:ew-resize}.chip-trim.left{left:0}.chip-trim.right{right:0}.timeline-selection-actions{position:absolute;right:12px;bottom:100%;display:flex;gap:4px;padding:3px;background:var(--bg-card);border:1px solid var(--border);z-index:4}.timeline-selection-actions button{width:auto!important;padding:0 8px!important}
+.timeline-toolbar{position:relative}.timeline-selection-actions{top:calc(100% + 3px);bottom:auto}
+.timeline-scroll{overflow-x:auto;overflow-y:hidden;scrollbar-width:thin}.timeline .timeline-content{min-width:100%!important}.timeline .ruler{position:relative}.timeline .ruler span{position:absolute;transform:translateX(-50%);white-space:nowrap}.timeline .ruler span:first-child{transform:none}.timeline .ruler span:last-child{transform:translateX(-100%)}
+.caption-bar{position:absolute;top:2px;bottom:2px;overflow:hidden;white-space:nowrap;display:flex;align-items:center;gap:4px;border:0;border-radius:2px;background:var(--timeline-element);color:var(--text-1);font-size:var(--fs-caption);font-weight:700}.caption-bar.selected{outline:2px solid var(--accent);outline-offset:-2px;background:var(--accent-soft)}
+.video-block{position:absolute;top:2px;bottom:2px;display:block;overflow:hidden;border:1px solid var(--border);border-radius:5px;padding:0;background:var(--bg-card);cursor:pointer}.video-block.selected{outline:2px solid var(--accent);outline-offset:-2px}.filmstrip-block{display:flex;height:100%;width:100%}.filmstrip-block i{display:block;flex:1;min-width:0;background-repeat:no-repeat}.video-handle{position:absolute;top:0;bottom:0;width:9px;background:var(--handle-fill);cursor:ew-resize;z-index:2}.video-handle.left{left:0}.video-handle.right{right:0}
+.timeline .timeline-track.captions-lane .caption-bar{background:var(--accent);color:var(--text-on-accent);border-radius:0}.timeline .timeline-track.captions-lane .caption-bar:first-child{border-radius:5px 0 0 5px}.timeline .timeline-track.captions-lane .caption-bar:last-child{border-radius:0 5px 5px 0}.timeline .timeline-track.captions-lane .caption-bar.selected{outline:2px solid var(--text-1);outline-offset:-2px}
+.timeline-toolbar .trim-start-quick{width:auto;height:25px;padding:0 9px;border:1px solid var(--accent);border-radius:4px;color:var(--accent-text);font-size:var(--fs-caption);font-weight:700}
+/* Channel name lane (30 Oct): the channel sticker gets its own lane, separate from Elements and Captions.
+   Tinted lane + "@" marker so it reads as the channel name, not another element. */
+.channel-lane{margin-top:4px;border-top:1px dashed var(--border);background:color-mix(in srgb,var(--timeline-social-stickers) 12%,var(--timeline-lane))}
+.channel-lane .timeline-chip{display:flex;align-items:center;gap:5px;padding-left:6px;border-radius:999px;background:var(--timeline-social-stickers);font-weight:700}
+.channel-lane .timeline-chip::before{content:'@';display:grid;place-items:center;width:15px;height:15px;flex:0 0 15px;border-radius:50%;background:color-mix(in srgb,var(--text-on-accent) 22%,transparent);font-size:var(--fs-micro);line-height:1}

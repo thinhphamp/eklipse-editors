@@ -1,0 +1,107 @@
+@import '../../../theme/sticker-tokens-youtube-kick-facebook.css';
+/* Styles for the youtube-kick-facebook sticker designs. Colours only from ../../../theme/sticker-tokens-youtube-kick-facebook.css. */
+
+.stk-youtube-kick-facebook-sticker{
+  position:relative;display:inline-flex;align-items:center;justify-content:flex-start;box-sizing:border-box;
+  min-height:2.55em;padding:.25em .62em;gap:.42em;white-space:nowrap;
+  color:var(--stk-ykf-white);font-family:'Hanken Grotesk',sans-serif;line-height:1;
+}
+.stk-youtube-kick-facebook-name{position:relative;z-index:2;font-size:1.78em;font-weight:700;letter-spacing:-.025em;line-height:1}
+.stk-youtube-kick-facebook-icon{position:relative;z-index:2;display:inline-flex;align-items:center;justify-content:center;color:inherit;flex:none}
+.stk-youtube-kick-facebook-sticker .stk-youtube-kick-facebook-icon svg{display:block;width:1.45em;height:1.45em}
+.stk-youtube-kick-facebook-youtube-icon rect{fill:var(--stk-ykf-white)}
+.stk-youtube-kick-facebook-youtube-icon path{fill:var(--stk-ykf-youtube-red)}
+.stk-youtube-kick-facebook-facebook-icon circle{fill:var(--stk-ykf-white)}
+.stk-youtube-kick-facebook-facebook-icon path{fill:var(--stk-ykf-facebook-blue)}
+
+.stk-youtube-kick-facebook-dark-plate,.stk-youtube-kick-facebook-facebook-plate{
+  border:.13em solid var(--stk-ykf-plate-border);border-radius:.1em;background:var(--stk-ykf-dark);
+  box-shadow:0 .18em .28em var(--stk-ykf-shadow-soft);
+}
+.stk-youtube-kick-facebook-facebook-plate{background:var(--stk-ykf-facebook-blue);border-color:var(--stk-ykf-facebook-border)}
+
+.stk-youtube-kick-facebook-youtube-block,.stk-youtube-kick-facebook-kick-block{
+  gap:0;padding:0;background:var(--stk-ykf-youtube-red);border-radius:.08em;overflow:hidden;
+}
+.stk-youtube-kick-facebook-kick-block{background:var(--stk-ykf-kick-green);color:var(--stk-ykf-black)}
+.stk-youtube-kick-facebook-youtube-block .stk-youtube-kick-facebook-icon,.stk-youtube-kick-facebook-kick-block .stk-youtube-kick-facebook-icon{
+  align-self:stretch;width:2.25em;background:var(--stk-ykf-black);color:var(--stk-ykf-white);
+}
+.stk-youtube-kick-facebook-kick-block .stk-youtube-kick-facebook-icon{color:var(--stk-ykf-kick-green)}
+.stk-youtube-kick-facebook-youtube-block .stk-youtube-kick-facebook-name,.stk-youtube-kick-facebook-kick-block .stk-youtube-kick-facebook-name{padding:.27em .36em .24em}
+
+.stk-youtube-kick-facebook-youtube-cap,.stk-youtube-kick-facebook-kick-cap{
+  gap:.35em;padding:0 .68em 0 0;border-radius:99em;background:var(--stk-ykf-black);overflow:visible;
+}
+.stk-youtube-kick-facebook-youtube-cap .stk-youtube-kick-facebook-icon,.stk-youtube-kick-facebook-kick-cap .stk-youtube-kick-facebook-icon{
+  width:2.65em;height:2.65em;border-radius:50%;background:var(--stk-ykf-white);color:var(--stk-ykf-black);
+}
+.stk-youtube-kick-facebook-youtube-cap .stk-youtube-kick-facebook-youtube-icon rect{fill:var(--stk-ykf-black)}
+.stk-youtube-kick-facebook-youtube-cap .stk-youtube-kick-facebook-youtube-icon path{fill:var(--stk-ykf-white)}
+.stk-youtube-kick-facebook-kick-cap{background:var(--stk-ykf-kick-green);color:var(--stk-ykf-black)}
+.stk-youtube-kick-facebook-kick-cap .stk-youtube-kick-facebook-icon{background:var(--stk-ykf-black);color:var(--stk-ykf-kick-green)}
+
+.stk-youtube-kick-facebook-youtube-shadow,.stk-youtube-kick-facebook-kick-shadow{
+  border-radius:.34em;background:var(--stk-ykf-youtube-red);box-shadow:0 .3em 0 var(--stk-ykf-lower-shadow),0 .38em .35em var(--stk-ykf-shadow-soft);
+}
+.stk-youtube-kick-facebook-kick-shadow{background:var(--stk-ykf-kick-green);color:var(--stk-ykf-black)}
+
+.stk-youtube-kick-facebook-blue-gradient{
+  border-radius:.34em;background:linear-gradient(105deg,var(--stk-ykf-cyan),var(--stk-ykf-blue));
+  box-shadow:0 .18em .3em var(--stk-ykf-shadow-soft);
+}
+
+.stk-youtube-kick-facebook-youtube-pale,.stk-youtube-kick-facebook-facebook-pale{
+  min-height:2.25em;padding:.18em .52em;border-radius:99em;background:var(--stk-ykf-pale-pink);color:var(--stk-ykf-youtube-red);
+  box-shadow:0 .12em .3em var(--stk-ykf-shadow-soft);
+}
+.stk-youtube-kick-facebook-facebook-pale{background:var(--stk-ykf-pale-blue);color:var(--stk-ykf-facebook-blue)}
+.stk-youtube-kick-facebook-youtube-pale .stk-youtube-kick-facebook-name,.stk-youtube-kick-facebook-facebook-pale .stk-youtube-kick-facebook-name{font-size:1.68em}
+.stk-youtube-kick-facebook-youtube-pale .stk-youtube-kick-facebook-youtube-icon rect,.stk-youtube-kick-facebook-youtube-neon .stk-youtube-kick-facebook-youtube-icon rect{fill:var(--stk-ykf-youtube-red)}
+.stk-youtube-kick-facebook-youtube-pale .stk-youtube-kick-facebook-youtube-icon path,.stk-youtube-kick-facebook-youtube-neon .stk-youtube-kick-facebook-youtube-icon path{fill:var(--stk-ykf-white)}
+.stk-youtube-kick-facebook-facebook-pale .stk-youtube-kick-facebook-facebook-icon circle{fill:var(--stk-ykf-facebook-blue)}
+.stk-youtube-kick-facebook-facebook-pale .stk-youtube-kick-facebook-facebook-icon path{fill:var(--stk-ykf-white)}
+
+.stk-youtube-kick-facebook-youtube-solid,.stk-youtube-kick-facebook-facebook-solid{
+  border-radius:.25em;background:var(--stk-ykf-youtube-red);box-shadow:0 .15em .28em var(--stk-ykf-shadow-soft);
+}
+.stk-youtube-kick-facebook-facebook-solid{background:var(--stk-ykf-facebook-blue)}
+
+.stk-youtube-kick-facebook-youtube-neon,.stk-youtube-kick-facebook-facebook-neon{
+  min-height:2.45em;padding:.2em .5em;gap:.28em;border-radius:.08em;background:var(--stk-ykf-black);
+  box-shadow:0 .1em .18em var(--stk-ykf-shadow-soft);
+}
+.stk-youtube-kick-facebook-youtube-neon .stk-youtube-kick-facebook-icon,.stk-youtube-kick-facebook-facebook-neon .stk-youtube-kick-facebook-icon{color:var(--stk-ykf-neon-red)}
+.stk-youtube-kick-facebook-facebook-neon .stk-youtube-kick-facebook-facebook-icon circle{fill:var(--stk-ykf-neon-red)}
+.stk-youtube-kick-facebook-facebook-neon .stk-youtube-kick-facebook-facebook-icon path{fill:var(--stk-ykf-white)}
+.stk-youtube-kick-facebook-youtube-neon .stk-youtube-kick-facebook-name,.stk-youtube-kick-facebook-facebook-neon .stk-youtube-kick-facebook-name{
+  font-size:1.56em;letter-spacing:.015em;text-transform:uppercase;
+  text-shadow:.08em 0 var(--stk-ykf-neon-red),-.08em 0 var(--stk-ykf-neon-blue),0 .08em var(--stk-ykf-neon-red);
+}
+
+.stk-youtube-kick-facebook-sparkle{
+  min-height:2.25em;padding:.18em .62em;border-radius:99em;
+  background:linear-gradient(105deg,var(--stk-ykf-purple),var(--stk-ykf-pink));
+  box-shadow:0 .12em .25em var(--stk-ykf-shadow-soft);
+}
+.stk-youtube-kick-facebook-sparkle .stk-youtube-kick-facebook-name{font-size:1.68em}
+.stk-youtube-kick-facebook-sparkles{
+  position:absolute;z-index:3;left:50%;top:50%;width:calc(100% + 2.5em);height:3.5em;overflow:visible;
+  color:var(--stk-ykf-sparkle-pink);fill:currentColor;transform:translate(-50%,-62%);pointer-events:none;
+}
+.stk-youtube-kick-facebook-sparkle .stk-youtube-kick-facebook-youtube-icon path{fill:var(--stk-ykf-purple)}
+.stk-youtube-kick-facebook-sparkle .stk-youtube-kick-facebook-facebook-icon path{fill:var(--stk-ykf-purple)}
+.stk-youtube-kick-facebook-pet-bar .stk-youtube-kick-facebook-youtube-icon path{fill:var(--stk-ykf-pet-purple)}
+.stk-youtube-kick-facebook-pet-bar .stk-youtube-kick-facebook-facebook-icon path{fill:var(--stk-ykf-pet-purple)}
+
+.stk-youtube-kick-facebook-pet-bar{
+  min-height:2.25em;padding:.18em .72em;border-radius:.15em;
+  background:linear-gradient(100deg,var(--stk-ykf-pet-purple),var(--stk-ykf-pet-pink),var(--stk-ykf-pet-pale));
+  box-shadow:0 .12em .25em var(--stk-ykf-shadow-soft);
+}
+.stk-youtube-kick-facebook-pet-bar .stk-youtube-kick-facebook-name{font-size:1.68em}
+.stk-youtube-kick-facebook-pet{position:absolute;z-index:3;display:block;overflow:visible;pointer-events:none}
+.stk-youtube-kick-facebook-pet-one-left{left:-.8em;top:-1.15em;width:3.35em;height:3.2em;transform:rotate(-7deg)}
+.stk-youtube-kick-facebook-pet-one-right{right:-.75em;top:-1em;width:3.35em;height:3.2em;transform:rotate(6deg)}
+.stk-youtube-kick-facebook-pet-two-left{left:-.65em;top:-.9em;width:3.45em;height:2.8em;transform:rotate(-5deg)}
+.stk-youtube-kick-facebook-pet-two-right{right:-.75em;top:-.8em;width:3.45em;height:2.8em;transform:rotate(5deg)}

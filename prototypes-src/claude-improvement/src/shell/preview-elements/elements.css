@@ -1,0 +1,49 @@
+.preview-item .selection-handle{pointer-events:auto;cursor:nwse-resize;z-index:2;padding:0}
+.preview-item .selection-handle.rotate{left:calc(50% - .9cqw);top:-5cqw;cursor:grab}
+.preview-item .selection-handle.rotate::after{content:'';position:absolute;left:50%;top:100%;height:3.2cqw;border-left:1px solid var(--accent)}
+.preview-item .element-image{width:100%;height:100%;object-fit:contain}
+.preview-item .lottie-playing{animation:element-bounce 1s ease-in-out infinite}
+@keyframes element-fade-in{from{opacity:0}to{opacity:1}}
+@keyframes element-reveal{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0)}}
+@keyframes element-reveal-slow-zoom{from{opacity:0;scale:.7}to{opacity:1;scale:1}}
+@keyframes element-slide{from{translate:-30% 0;opacity:0}to{translate:0;opacity:1}}
+@keyframes element-slide-in{from{translate:-30% 0;opacity:0}to{translate:0;opacity:1}}
+@keyframes element-shrink{from{scale:1.4;opacity:0}to{scale:1;opacity:1}}
+@keyframes element-bounce{0%{scale:.5;opacity:0}65%{scale:1.15;opacity:1}100%{scale:1;opacity:1}}
+@keyframes element-bounce-in{0%{scale:.5;opacity:0}65%{scale:1.15;opacity:1}100%{scale:1;opacity:1}}
+
+
+@keyframes letter-stick{0%,100%{transform:none;opacity:1}45%{transform:translateY(-8%);opacity:.75}}
+@keyframes letter-appear{0%,100%{transform:none;opacity:1}45%{transform:scale(.6);opacity:.75}}
+@keyframes letter-land{0%,100%{transform:none;opacity:1}45%{transform:translateY(12%);opacity:.75}}
+@keyframes letter-pop{0%,100%{transform:none;opacity:1}45%{transform:scale(1.3);opacity:.75}}
+@keyframes letter-slide{0%,100%{transform:none;opacity:1}45%{transform:translateX(-12%);opacity:.75}}
+@keyframes letter-unfold{0%,100%{transform:none;opacity:1}45%{transform:rotateY(80deg);opacity:.75}}
+@keyframes letter-emerge{0%,100%{transform:none;opacity:1}45%{transform:translateY(20%) scale(.5);opacity:.75}}
+@keyframes letter-burst{0%,100%{transform:none;opacity:1}45%{transform:scale(1.4) rotate(-12deg);opacity:.75}}
+@keyframes letter-rotate{0%,100%{transform:none;opacity:1}45%{transform:rotate(-25deg);opacity:.75}}
+@keyframes letter-jump{0%,100%{transform:none;opacity:1}45%{transform:translateY(-25%);opacity:.75}}
+@keyframes letter-shrink{0%,100%{transform:none;opacity:1}45%{transform:scale(1.35);opacity:.75}}
+@keyframes letter-glide{0%,100%{transform:none;opacity:1}45%{transform:translateX(15%);opacity:.75}}
+@keyframes letter-flip{0%,100%{transform:none;opacity:1}45%{transform:rotateY(160deg);opacity:.75}}
+@keyframes letter-float{0%,100%{transform:none;opacity:1}45%{transform:translateY(-10%);opacity:.75}}
+@keyframes letter-impact{0%,100%{transform:none;opacity:1}45%{transform:scale(1.5);opacity:.75}}
+@keyframes letter-hop{0%,100%{transform:none;opacity:1}45%{transform:translateY(-20%) rotate(7deg);opacity:.75}}
+@keyframes letter-drift{0%,100%{transform:none;opacity:1}45%{transform:translateX(-8%);opacity:.75}}
+@keyframes letter-sway{0%,100%{transform:none;opacity:1}45%{transform:rotate(9deg);opacity:.75}}
+@keyframes letter-groove{0%,100%{transform:none;opacity:1}45%{transform:rotate(-9deg) scale(1.2);opacity:.75}}
+@keyframes letter-bounce{0%,100%{transform:none;opacity:1}45%{transform:translateY(-15%) scale(1.2);opacity:.75}}
+@keyframes letter-shake{0%,100%{transform:none;opacity:1}45%{transform:translateX(5%) rotate(6deg);opacity:.75}}
+@keyframes letter-whirl{0%,100%{transform:none;opacity:1}45%{transform:rotate(180deg);opacity:.75}}
+.opacity-popover input[type=range] { flex: 1 1 auto; }
+.opacity-popover input[type=text] { width: 8cqw; flex: 0 0 8cqw; min-width: 0; border: 1px solid var(--border); border-radius: .6cqw; padding: 1cqw .5cqw; text-align: center; font-size: 1.8cqw; }
+
+
+.preview-item.category-text-elements .selection-handle.left,.preview-item.category-text-elements .selection-handle.right{top:calc(50% - .9cqw);cursor:ew-resize}
+.preview-item.category-text-elements .selection-handle.left{left:-.9cqw}
+.preview-item.category-text-elements .selection-handle.right{right:-.9cqw;left:auto}
+
+.duplicate-preview-art .element-image{opacity:0}
+.preview-item .element-text[data-visual="Rainbow"]{background:linear-gradient(90deg,var(--art-ff403b),var(--art-f4f400),var(--art-47fa4b),var(--art-207bff),var(--art-e877e9));background-clip:text;-webkit-text-fill-color:transparent}
+.preview-item .element-text[data-visual="Holographic"]{background:linear-gradient(120deg,var(--art-13f3d0),var(--art-d0b7ff),var(--art-e877e9));background-clip:text;-webkit-text-fill-color:transparent}
+.preview-item .element-text[data-visual="Neon Pulse"]{color:var(--art-13f3d0)}

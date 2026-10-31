@@ -1,0 +1,49 @@
+{
+  "id": "elements-rename-handle-everywhere",
+  "feature": "Elements",
+  "personaRefs": [
+    "multi-platform-brand-builder",
+    "returning-twitch-clipper"
+  ],
+  "target": "claude-improvement",
+  "start": {
+    "screen": "default"
+  },
+  "goal": "I changed my channel name to pixelpanda_tv. Fix the name on this clip, and make my next clips use the new name too.",
+  "success": {
+    "check": "state.elements.some(e => e.category === 'Social Stickers' && e.label === 'pixelpanda_tv') && JSON.parse(localStorage.getItem('ek-claude-brand') || '{}').handle === 'pixelpanda_tv'",
+    "describe": "The sticker on the clip and the saved brand both read pixelpanda_tv"
+  },
+  "budget": {
+    "steps": 8,
+    "scrolls": 3,
+    "minutes": 4
+  },
+  "bestPath": [
+    {
+      "do": "click",
+      "selector": ".rail nav button:has-text('Elements')"
+    },
+    {
+      "do": "click",
+      "selector": ".brand-card-handle input"
+    },
+    {
+      "do": "key",
+      "key": "ControlOrMeta+a"
+    },
+    {
+      "do": "type",
+      "selector": ".brand-card-handle input",
+      "text": "pixelpanda_tv"
+    }
+  ],
+  "firstClickAlso": [
+    "^Brand"
+  ],
+  "why": {
+    "data": "Channel-name sticker in 73.1% of web projects; 2+ platforms 79.4% export",
+    "source": "plans/261027-usability-probe-skill/personas.md"
+  },
+  "holdout": false
+}

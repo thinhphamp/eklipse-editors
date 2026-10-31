@@ -1,0 +1,406 @@
+{
+ "source": "media/demo.mp4",
+ "language": "en",
+ "durationMs": 60000,
+ "method": "Local mlx_whisper large-v3-turbo, word timestamps; hand-corrected against SL transcript; speakers hand-assigned (mock diarisation)",
+ "speakers": [
+  {
+   "id": "S1",
+   "name": "Speaker 1 (streamer)",
+   "color": "#FFD23F"
+  },
+  {
+   "id": "S2",
+   "name": "Speaker 2",
+   "color": "#4ADE80"
+  },
+  {
+   "id": "S3",
+   "name": "Speaker 3",
+   "color": "#38BDF8"
+  },
+  {
+   "id": "S4",
+   "name": "Speaker 4",
+   "color": "#F472B6"
+  },
+  {
+   "id": "S5",
+   "name": "Speaker 5",
+   "color": "#A78BFA"
+  }
+ ],
+ "words": [
+  {
+   "text": "Reloading.",
+   "startMs": 7100,
+   "endMs": 7500,
+   "speaker": "S1",
+   "sentence": 0
+  },
+  {
+   "text": "He's",
+   "startMs": 8860,
+   "endMs": 9260,
+   "speaker": "S1",
+   "sentence": 1
+  },
+  {
+   "text": "not",
+   "startMs": 9260,
+   "endMs": 9460,
+   "speaker": "S1",
+   "sentence": 1
+  },
+  {
+   "text": "gonna",
+   "startMs": 9460,
+   "endMs": 9580,
+   "speaker": "S1",
+   "sentence": 1
+  },
+  {
+   "text": "hit.",
+   "startMs": 9580,
+   "endMs": 9980,
+   "speaker": "S1",
+   "sentence": 1
+  },
+  {
+   "text": "Ah,",
+   "startMs": 15400,
+   "endMs": 15800,
+   "speaker": "S2",
+   "sentence": 2
+  },
+  {
+   "text": "2A,",
+   "startMs": 16820,
+   "endMs": 17180,
+   "speaker": "S2",
+   "sentence": 2
+  },
+  {
+   "text": "Reyna",
+   "startMs": 17380,
+   "endMs": 17760,
+   "speaker": "S2",
+   "sentence": 2
+  },
+  {
+   "text": "and",
+   "startMs": 17760,
+   "endMs": 17960,
+   "speaker": "S2",
+   "sentence": 2
+  },
+  {
+   "text": "a",
+   "startMs": 17960,
+   "endMs": 18020,
+   "speaker": "S2",
+   "sentence": 2
+  },
+  {
+   "text": "Jett.",
+   "startMs": 18020,
+   "endMs": 18300,
+   "speaker": "S2",
+   "sentence": 2
+  },
+  {
+   "text": "3,",
+   "startMs": 22320,
+   "endMs": 22520,
+   "speaker": "S3",
+   "sentence": 3
+  },
+  {
+   "text": "2,",
+   "startMs": 22520,
+   "endMs": 22720,
+   "speaker": "S3",
+   "sentence": 3
+  },
+  {
+   "text": "1,",
+   "startMs": 22760,
+   "endMs": 22860,
+   "speaker": "S3",
+   "sentence": 3
+  },
+  {
+   "text": "A",
+   "startMs": 22860,
+   "endMs": 22980,
+   "speaker": "S3",
+   "sentence": 3
+  },
+  {
+   "text": "site,",
+   "startMs": 22980,
+   "endMs": 23160,
+   "speaker": "S3",
+   "sentence": 3
+  },
+  {
+   "text": "go",
+   "startMs": 23240,
+   "endMs": 23380,
+   "speaker": "S3",
+   "sentence": 3
+  },
+  {
+   "text": "go",
+   "startMs": 23380,
+   "endMs": 23460,
+   "speaker": "S3",
+   "sentence": 3
+  },
+  {
+   "text": "peek,",
+   "startMs": 23460,
+   "endMs": 23620,
+   "speaker": "S3",
+   "sentence": 3
+  },
+  {
+   "text": "go",
+   "startMs": 23660,
+   "endMs": 23760,
+   "speaker": "S3",
+   "sentence": 3
+  },
+  {
+   "text": "peek,",
+   "startMs": 23760,
+   "endMs": 23940,
+   "speaker": "S3",
+   "sentence": 3
+  },
+  {
+   "text": "go",
+   "startMs": 23940,
+   "endMs": 24000,
+   "speaker": "S3",
+   "sentence": 3
+  },
+  {
+   "text": "peek,",
+   "startMs": 24000,
+   "endMs": 24060,
+   "speaker": "S3",
+   "sentence": 3
+  },
+  {
+   "text": "I",
+   "startMs": 24060,
+   "endMs": 24120,
+   "speaker": "S3",
+   "sentence": 3
+  },
+  {
+   "text": "said.",
+   "startMs": 24120,
+   "endMs": 24320,
+   "speaker": "S3",
+   "sentence": 3
+  },
+  {
+   "text": "Spike",
+   "startMs": 27440,
+   "endMs": 27840,
+   "speaker": "S4",
+   "sentence": 4
+  },
+  {
+   "text": "down",
+   "startMs": 27840,
+   "endMs": 28240,
+   "speaker": "S4",
+   "sentence": 4
+  },
+  {
+   "text": "A.",
+   "startMs": 28240,
+   "endMs": 28700,
+   "speaker": "S4",
+   "sentence": 4
+  },
+  {
+   "text": "One",
+   "startMs": 30060,
+   "endMs": 30600,
+   "speaker": "S2",
+   "sentence": 5
+  },
+  {
+   "text": "more",
+   "startMs": 30600,
+   "endMs": 31100,
+   "speaker": "S2",
+   "sentence": 5
+  },
+  {
+   "text": "Reyna.",
+   "startMs": 31100,
+   "endMs": 31540,
+   "speaker": "S2",
+   "sentence": 5
+  },
+  {
+   "text": "I",
+   "startMs": 31540,
+   "endMs": 31840,
+   "speaker": "S1",
+   "sentence": 6
+  },
+  {
+   "text": "got",
+   "startMs": 31840,
+   "endMs": 32040,
+   "speaker": "S1",
+   "sentence": 6
+  },
+  {
+   "text": "spike.",
+   "startMs": 32040,
+   "endMs": 32480,
+   "speaker": "S1",
+   "sentence": 6
+  },
+  {
+   "text": "Reyna",
+   "startMs": 32960,
+   "endMs": 33160,
+   "speaker": "S3",
+   "sentence": 7
+  },
+  {
+   "text": "low,",
+   "startMs": 33160,
+   "endMs": 33440,
+   "speaker": "S3",
+   "sentence": 7
+  },
+  {
+   "text": "Reyna",
+   "startMs": 33520,
+   "endMs": 33900,
+   "speaker": "S3",
+   "sentence": 7
+  },
+  {
+   "text": "low",
+   "startMs": 33900,
+   "endMs": 34060,
+   "speaker": "S3",
+   "sentence": 7
+  },
+  {
+   "text": "Reyna.",
+   "startMs": 34060,
+   "endMs": 34700,
+   "speaker": "S3",
+   "sentence": 7
+  },
+  {
+   "text": "2A.",
+   "startMs": 37020,
+   "endMs": 37520,
+   "speaker": "S2",
+   "sentence": 8
+  },
+  {
+   "text": "Let's",
+   "startMs": 38380,
+   "endMs": 38820,
+   "speaker": "S5",
+   "sentence": 9
+  },
+  {
+   "text": "go",
+   "startMs": 38820,
+   "endMs": 38920,
+   "speaker": "S5",
+   "sentence": 9
+  },
+  {
+   "text": "B?",
+   "startMs": 38920,
+   "endMs": 39080,
+   "speaker": "S5",
+   "sentence": 9
+  },
+  {
+   "text": "There's",
+   "startMs": 39500,
+   "endMs": 39900,
+   "speaker": "S5",
+   "sentence": 10
+  },
+  {
+   "text": "2,",
+   "startMs": 39900,
+   "endMs": 40040,
+   "speaker": "S5",
+   "sentence": 10
+  },
+  {
+   "text": "2A.",
+   "startMs": 40100,
+   "endMs": 40360,
+   "speaker": "S5",
+   "sentence": 10
+  },
+  {
+   "text": "Last",
+   "startMs": 41780,
+   "endMs": 42660,
+   "speaker": "S1",
+   "sentence": 11
+  },
+  {
+   "text": "player",
+   "startMs": 42660,
+   "endMs": 43120,
+   "speaker": "S1",
+   "sentence": 11
+  },
+  {
+   "text": "standing.",
+   "startMs": 43120,
+   "endMs": 43660,
+   "speaker": "S1",
+   "sentence": 11
+  },
+  {
+   "text": "Oh,",
+   "startMs": 43660,
+   "endMs": 44440,
+   "speaker": "S5",
+   "sentence": 12
+  },
+  {
+   "text": "unfortunate.",
+   "startMs": 44440,
+   "endMs": 45140,
+   "speaker": "S5",
+   "sentence": 12
+  },
+  {
+   "text": "I'm",
+   "startMs": 58700,
+   "endMs": 59420,
+   "speaker": "S1",
+   "sentence": 13
+  },
+  {
+   "text": "out.",
+   "startMs": 59420,
+   "endMs": 59720,
+   "speaker": "S1",
+   "sentence": 13
+  }
+ ]
+}

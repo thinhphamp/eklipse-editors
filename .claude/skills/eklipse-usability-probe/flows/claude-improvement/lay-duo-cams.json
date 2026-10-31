@@ -1,0 +1,53 @@
+{
+  "id": "lay-duo-cams",
+  "flow": "L2",
+  "menu": "Layouts",
+  "persona": "one-and-done",
+  "target": "claude-improvement",
+  "weight": 0.2,
+  "mission": "You played with a friend and both of your webcams are in this recording. Make a vertical clip that shows both of your faces with the game, and export it.",
+  "start": {
+    "screen": "L00"
+  },
+  "checkpoints": [
+    {
+      "id": "layout",
+      "check": "['Dual facecam', 'Duo Split'].includes(state.layoutId) && state.outputRatio === '9:16'",
+      "describe": "A two-facecam vertical layout is applied"
+    },
+    {
+      "id": "export",
+      "check": "state.exported === true",
+      "describe": "The clip export has finished"
+    }
+  ],
+  "bestPath": [
+    {
+      "do": "click",
+      "selector": ".tpl-card:has(strong:text-is('Dual facecam'))"
+    },
+    {
+      "do": "click",
+      "selector": ".tb-primary"
+    },
+    {
+      "do": "click",
+      "selector": ".export-primary"
+    }
+  ],
+  "bestTimeSeconds": null,
+  "budget": {
+    "minutes": 12
+  },
+  "why": {
+    "data": "Layouts menu coverage (Thinh, 28 Oct): two-facecam layouts exist in the production layout list but no flow tested whether a first-time user finds them.",
+    "source": "docs/feature-maps/eklipse-4.0.md"
+  },
+  "input": {
+    "clip": null
+  },
+  "playerIds": [
+    "once-novice",
+    "once-rusher"
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "id": "soc-tiktok-instead",
+  "flow": "S2",
+  "menu": "Elements",
+  "persona": "one-and-done",
+  "target": "claude-improvement",
+  "weight": 0.2,
+  "mission": "Most of your viewers follow you on TikTok, not Twitch. Make the follow tag on the clip point to your TikTok instead. Export it.",
+  "start": {
+    "screen": "L00"
+  },
+  "checkpoints": [
+    {
+      "id": "tiktok",
+      "check": "state.elements.some(x => x.category === 'Social Stickers' && String(x.style?.plats || '').split(',').includes('tiktok') && !String(x.style?.plats || '').split(',').includes('twitch'))",
+      "describe": "A follow sticker that shows TikTok is on the clip"
+    },
+    {
+      "id": "export",
+      "check": "state.exported === true",
+      "describe": "The clip export has finished"
+    }
+  ],
+  "bestPath": [
+    {
+      "do": "click",
+      "selector": ".rail nav button:has-text(\"Channel stickers\")"
+    },
+    {
+      "do": "click",
+      "selector": "button[aria-label='TikTok']"
+    },
+    {
+      "do": "click",
+      "selector": ".tb-primary"
+    },
+    {
+      "do": "click",
+      "selector": ".export-primary"
+    }
+  ],
+  "bestTimeSeconds": null,
+  "budget": {
+    "minutes": 12
+  },
+  "input": {
+    "clip": null
+  },
+  "why": {
+    "data": "First-time users who export under 2 minutes return 79.0% of the time; the follow sticker is on every clip (product rule, docs/knowledge/feature-edit-export.md:150), so switching its platform must be quick.",
+    "source": "plans/261027-usability-probe-skill/personas.md"
+  },
+  "playerIds": [
+    "once-novice",
+    "once-rusher"
+  ]
+}

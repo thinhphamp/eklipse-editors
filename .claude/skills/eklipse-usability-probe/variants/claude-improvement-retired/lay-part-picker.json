@@ -1,0 +1,28 @@
+{
+  "id": "lay-part-picker",
+  "problem": "L4: give each part of a split clip its own layout",
+  "menu": "Layouts",
+  "stack": [
+    "el-jump",
+    "style-lastclip",
+    "brand-platforms",
+    "look-save",
+    "frame-handle",
+    "layout-describe"
+  ],
+  "targets": [
+    "lay-two-parts"
+  ],
+  "untouched": [
+    "h1-full-polish",
+    "h2-meme-stack",
+    "h3-fix-ai-edit",
+    "h4-brand-setup",
+    "o1-first-ai-clip",
+    "q3-captions",
+    "q4-trim-start",
+    "q6-save-and-reuse-look",
+    "o3-own-upload"
+  ],
+  "source": "plans/261028-editor-menu-probes/reports/layouts-report-1-pain-points.md"
+}

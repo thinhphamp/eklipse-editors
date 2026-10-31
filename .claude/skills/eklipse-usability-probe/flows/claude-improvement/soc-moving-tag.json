@@ -1,0 +1,61 @@
+{
+  "id": "soc-moving-tag",
+  "flow": "S1",
+  "menu": "Elements",
+  "persona": "quick-user",
+  "target": "claude-improvement",
+  "weight": 0.2,
+  "mission": "The little tag on the clip that tells people where to follow you looks plain. Swap it for one that moves. Export it.",
+  "start": {
+    "screen": "L00"
+  },
+  "checkpoints": [
+    {
+      "id": "moving",
+      "check": "state.elements.some(x => x.category === 'Social Stickers' && (['slide','pulse','bell','bounce','drop'].includes(String(x.style?.look || '')) || !['','None','none',undefined,null].includes(x.animationIn)))",
+      "describe": "A moving (animated) follow sticker is on the clip"
+    },
+    {
+      "id": "export",
+      "check": "state.exported === true",
+      "describe": "The clip export has finished"
+    }
+  ],
+  "bestPath": [
+    {
+      "do": "click",
+      "selector": ".rail nav button:has-text(\"Channel stickers\")"
+    },
+    {
+      "do": "click",
+      "selector": "button[role=tab]:has-text('Animated')"
+    },
+    {
+      "do": "click",
+      "selector": ".cs-tile .cs-hov button >> nth=0"
+    },
+    {
+      "do": "click",
+      "selector": ".tb-primary"
+    },
+    {
+      "do": "click",
+      "selector": ".export-primary"
+    }
+  ],
+  "bestTimeSeconds": null,
+  "budget": {
+    "minutes": 12
+  },
+  "input": {
+    "clip": null
+  },
+  "why": {
+    "data": "Quick users keep the Twitch sticker by default (sticker font kept 84.7%); Thinh, 29 Oct: the social sticker is the part most users use, so changing its look must be easy to find.",
+    "source": "plans/261027-usability-probe-skill/personas.md"
+  },
+  "playerIds": [
+    "quick-match",
+    "quick-differs"
+  ]
+}

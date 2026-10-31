@@ -1,0 +1,36 @@
+{
+  "id": "layouts-find-by-look",
+  "feature": "Layouts",
+  "personaRefs": [
+    "first-clip-newcomer",
+    "returning-twitch-clipper",
+    "ai-edit-accepter",
+    "own-footage-uploader"
+  ],
+  "target": "claude-improvement",
+  "start": {
+    "screen": "default"
+  },
+  "goal": "I want my face in a little round bubble on top of the gameplay, with the game filling the whole frame.",
+  "success": {
+    "check": "state.layoutId === 'Circle facecam' && state.outputRatio === '9:16'",
+    "describe": "The clip uses the round facecam layout and is still vertical"
+  },
+  "budget": {
+    "steps": 6,
+    "scrolls": 3,
+    "minutes": 3
+  },
+  "bestPath": [
+    {
+      "do": "click",
+      "selector": ".layout-grid:not(.recent-grid) .layout-tile:has-text('Circle facecam')"
+    }
+  ],
+  "why": {
+    "data": "A layout preset is used in 85.7% of web projects; layout reuse goes with 76.5% export (web projects 5-22 Oct 2026)",
+    "source": "plans/261026-1500-editor-direction-claude/recheck-261027-web-adoption.md"
+  },
+  "holdout": false,
+  "notes": "Layouts is already the open tab on the default screen, so the best path is one click."
+}

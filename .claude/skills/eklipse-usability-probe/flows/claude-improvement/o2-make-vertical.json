@@ -1,0 +1,70 @@
+{
+  "id": "o2-make-vertical",
+  "flow": "O2",
+  "menu": "Layouts",
+  "persona": "one-and-done",
+  "target": "claude-improvement",
+  "weight": 0.3,
+  "mission": "This clip is wide. Make it fit TikTok, add subtitles, and export.",
+  "start": {
+    "screen": "L00"
+  },
+  "checkpoints": [
+    {
+      "id": "ratio",
+      "check": "state.outputRatio === '9:16'",
+      "describe": "The clip is vertical"
+    },
+    {
+      "id": "captions",
+      "check": "state.captions.generated === true",
+      "describe": "Captions are generated"
+    },
+    {
+      "id": "export",
+      "check": "state.exported === true",
+      "describe": "The clip export has finished"
+    }
+  ],
+  "bestPath": [
+    {
+      "do": "click",
+      "selector": ".tpl-card:has(strong:text-is('Split'))"
+    },
+    {
+      "do": "click",
+      "selector": ".rail nav button:has-text('Captions')"
+    },
+    {
+      "do": "click",
+      "text": "Generate captions"
+    },
+    {
+      "do": "click",
+      "selector": ".tb-primary"
+    },
+    {
+      "do": "click",
+      "text": "Wait, then export"
+    },
+    {
+      "do": "click",
+      "selector": ".export-primary"
+    }
+  ],
+  "bestTimeSeconds": null,
+  "budget": {
+    "minutes": 12
+  },
+  "why": {
+    "data": "16:9 clips export at 41.0%, compared with 66.0% when made vertical.",
+    "source": "plans/261027-usability-probe-skill/personas.md"
+  },
+  "input": {
+    "clip": "horizontal-kept"
+  },
+  "playerIds": [
+    "once-novice",
+    "once-rusher"
+  ]
+}

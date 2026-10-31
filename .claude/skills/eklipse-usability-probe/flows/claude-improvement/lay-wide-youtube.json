@@ -1,0 +1,49 @@
+{
+  "id": "lay-wide-youtube",
+  "flow": "L3",
+  "menu": "Layouts",
+  "persona": "one-and-done",
+  "target": "claude-improvement",
+  "weight": 0.2,
+  "mission": "This clip is going to YouTube, so keep it wide like the original recording instead of making it tall. Export it.",
+  "start": {
+    "screen": "L00"
+  },
+  "checkpoints": [
+    {
+      "id": "wide",
+      "check": "state.outputRatio === '16:9'",
+      "describe": "The clip stays 16:9"
+    },
+    {
+      "id": "export",
+      "check": "state.exported === true",
+      "describe": "The clip export has finished"
+    }
+  ],
+  "bestPath": [
+    {
+      "do": "click",
+      "selector": ".tb-primary"
+    },
+    {
+      "do": "click",
+      "selector": ".export-primary"
+    }
+  ],
+  "bestTimeSeconds": null,
+  "budget": {
+    "minutes": 12
+  },
+  "why": {
+    "data": "8.2% of web projects keep horizontal footage at 16:9 (5-22 Oct); the editor pushes vertical, so keeping wide must still be easy.",
+    "source": "plans/261027-usability-probe-skill/personas.md"
+  },
+  "input": {
+    "clip": "horizontal-kept"
+  },
+  "playerIds": [
+    "once-novice",
+    "once-rusher"
+  ]
+}

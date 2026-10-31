@@ -1,0 +1,53 @@
+{
+  "id": "exp-lower-quality",
+  "flow": "X1",
+  "menu": "Export",
+  "persona": "quick-user",
+  "target": "claude-improvement",
+  "weight": 0.2,
+  "mission": "Your connection is slow and you want this clip to be ready fast. Export it in the smallest, quickest version.",
+  "start": {
+    "screen": "L00"
+  },
+  "checkpoints": [
+    {
+      "id": "quality",
+      "check": "state.quality === '720p30'",
+      "describe": "The lowest quality is chosen"
+    },
+    {
+      "id": "export",
+      "check": "state.exported === true",
+      "describe": "The clip export has finished"
+    }
+  ],
+  "bestPath": [
+    {
+      "do": "click",
+      "selector": ".tb-primary"
+    },
+    {
+      "do": "click",
+      "selector": ".quality-option:has-text('Standard 720p')"
+    },
+    {
+      "do": "click",
+      "selector": ".export-primary"
+    }
+  ],
+  "bestTimeSeconds": null,
+  "budget": {
+    "minutes": 12
+  },
+  "why": {
+    "data": "Quick users export fast and rarely tune settings; export is the last step of every quick flow, so this tests that the quality choice and the export are easy to find and finish.",
+    "source": "plans/261027-usability-probe-skill/personas.md"
+  },
+  "input": {
+    "clip": null
+  },
+  "playerIds": [
+    "quick-match",
+    "quick-differs"
+  ]
+}
