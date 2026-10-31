@@ -1,0 +1,57 @@
+{
+  "id": "pv-zoom-check-facecam",
+  "flow": "R4",
+  "menu": "Export",
+  "persona": "heavy-editor",
+  "target": "claude-improvement",
+  "weight": 0.2,
+  "mission": "Before you export, zoom the preview in to at least 100% and check that the facecam looks sharp. Then export.",
+  "start": {
+    "screen": "L00"
+  },
+  "checkpoints": [
+    {
+      "id": "zoom",
+      "check": "!state.zoom.startsWith('Fit') && parseInt(state.zoom, 10) >= 100",
+      "describe": "The preview is zoomed to 100% or more"
+    },
+    {
+      "id": "export",
+      "check": "state.exported === true",
+      "describe": "The clip export has finished"
+    }
+  ],
+  "bestPath": [
+    {
+      "do": "click",
+      "selector": ".pv-strip .pv-pct"
+    },
+    {
+      "do": "click",
+      "selector": ".pv-menu-zoom [role=menuitemradio]:has-text('100%')"
+    },
+    {
+      "do": "click",
+      "selector": ".tb-primary"
+    },
+    {
+      "do": "click",
+      "selector": ".export-primary"
+    }
+  ],
+  "bestTimeSeconds": null,
+  "budget": {
+    "minutes": 12
+  },
+  "why": {
+    "data": "Zoom now sits in the same icon strip; its label shows the real Fit percentage instead of a fixed 33%.",
+    "source": "design-drafts/261030-preview-controls/decisions.md"
+  },
+  "input": {
+    "clip": null
+  },
+  "playerIds": [
+    "heavy-explorer",
+    "heavy-meticulous"
+  ]
+}

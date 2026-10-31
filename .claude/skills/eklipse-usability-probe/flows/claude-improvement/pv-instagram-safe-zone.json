@@ -1,0 +1,57 @@
+{
+  "id": "pv-instagram-safe-zone",
+  "flow": "R4",
+  "menu": "Export",
+  "persona": "quick-user",
+  "target": "claude-improvement",
+  "weight": 0.2,
+  "mission": "You post this clip on Instagram Reels. Show Instagram's safe area on the preview so you can see what its buttons will cover, then export.",
+  "start": {
+    "screen": "L00"
+  },
+  "checkpoints": [
+    {
+      "id": "zone",
+      "check": "state.safeZone === 'Instagram preview'",
+      "describe": "The preview shows the Instagram safe zone"
+    },
+    {
+      "id": "export",
+      "check": "state.exported === true",
+      "describe": "The clip export has finished"
+    }
+  ],
+  "bestPath": [
+    {
+      "do": "click",
+      "selector": ".pv-strip button[title^='Safe zone']"
+    },
+    {
+      "do": "click",
+      "selector": ".pv-menu [role=menuitemradio]:has-text('Instagram')"
+    },
+    {
+      "do": "click",
+      "selector": ".tb-primary"
+    },
+    {
+      "do": "click",
+      "selector": ".export-primary"
+    }
+  ],
+  "bestTimeSeconds": null,
+  "budget": {
+    "minutes": 12
+  },
+  "why": {
+    "data": "The CTO moved safe zone and zoom into an icon-only strip beside the player (pv-strip) and asked whether a newcomer still finds the safe zone.",
+    "source": "design-drafts/261030-preview-controls/decisions.md"
+  },
+  "input": {
+    "clip": null
+  },
+  "playerIds": [
+    "quick-match",
+    "quick-differs"
+  ]
+}

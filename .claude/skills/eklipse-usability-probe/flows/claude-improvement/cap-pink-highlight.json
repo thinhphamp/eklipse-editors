@@ -1,0 +1,82 @@
+{
+  "id": "cap-pink-highlight",
+  "flow": "R4",
+  "menu": "Captions",
+  "persona": "heavy-editor",
+  "target": "claude-improvement",
+  "weight": 0.2,
+  "mission": "Add captions where the word being spoken lights up pink, then export.",
+  "start": {
+    "screen": "L00"
+  },
+  "checkpoints": [
+    {
+      "id": "captions",
+      "check": "state.captions.generated === true",
+      "describe": "Captions are on the clip"
+    },
+    {
+      "id": "pink",
+      "check": "(()=>{let c;try{c=JSON.parse(state.captions.text)}catch(e){return false}const s=c.style||{};return s.highlight && s.highlight !== 'None' && s.highlightColor === 'var(--art-fa90df)'})()",
+      "describe": "The spoken word is highlighted in pink"
+    },
+    {
+      "id": "export",
+      "check": "state.exported === true",
+      "describe": "The clip export has finished"
+    }
+  ],
+  "bestPath": [
+    {
+      "do": "click",
+      "selector": ".rail nav button:has-text('Captions')"
+    },
+    {
+      "do": "click",
+      "text": "Generate captions"
+    },
+    {
+      "do": "click",
+      "selector": ".side-panel button:has-text('Presets')"
+    },
+    {
+      "do": "click",
+      "selector": ".captions-edit-chip"
+    },
+    {
+      "do": "click",
+      "selector": ".cap-d1-seg button:has-text('Color')"
+    },
+    {
+      "do": "click",
+      "selector": "button[aria-label='highlightColor Pink']"
+    },
+    {
+      "do": "click",
+      "text": "Apply to this clip"
+    },
+    {
+      "do": "click",
+      "selector": ".tb-primary"
+    },
+    {
+      "do": "click",
+      "selector": ".export-primary"
+    }
+  ],
+  "bestTimeSeconds": null,
+  "budget": {
+    "minutes": 12
+  },
+  "why": {
+    "data": "Highlight colour took 15-25 actions on v1; v2/v3 moved it into the preset editor popup, which round 3 never measured.",
+    "source": "plans/261028-editor-menu-probes/reports/captions-report-1-pain-points.md"
+  },
+  "input": {
+    "clip": null
+  },
+  "playerIds": [
+    "heavy-explorer",
+    "heavy-meticulous"
+  ]
+}

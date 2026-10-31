@@ -1,0 +1,66 @@
+{
+  "id": "aud-find-whoosh",
+  "flow": "R4",
+  "menu": "Audio",
+  "persona": "quick-user",
+  "target": "claude-improvement",
+  "weight": 0.2,
+  "mission": "Find a whoosh sound effect and put it on the clip, then export.",
+  "start": {
+    "screen": "L00"
+  },
+  "checkpoints": [
+    {
+      "id": "whoosh",
+      "check": "state.audio.some(x => /whoosh/i.test(x.label))",
+      "describe": "A whoosh sound is on the clip"
+    },
+    {
+      "id": "export",
+      "check": "state.exported === true",
+      "describe": "The clip export has finished"
+    }
+  ],
+  "bestPath": [
+    {
+      "do": "click",
+      "selector": ".rail nav button:has-text('Audio')"
+    },
+    {
+      "do": "click",
+      "selector": "input[placeholder='Search for sound effects']"
+    },
+    {
+      "do": "type",
+      "text": "whoosh",
+      "selector": "input[placeholder='Search for sound effects']"
+    },
+    {
+      "do": "click",
+      "selector": ".audio-row-title:has-text('Whoosh')"
+    },
+    {
+      "do": "click",
+      "selector": ".tb-primary"
+    },
+    {
+      "do": "click",
+      "selector": ".export-primary"
+    }
+  ],
+  "bestTimeSeconds": null,
+  "budget": {
+    "minutes": 12
+  },
+  "why": {
+    "data": "v3 replaces the Search button with a search field that filters as you type and turns the sound cards into compact rows.",
+    "source": "plans/261028-editor-menu-probes/reports/audio-report-1-pain-points.md"
+  },
+  "input": {
+    "clip": null
+  },
+  "playerIds": [
+    "quick-match",
+    "quick-differs"
+  ]
+}
